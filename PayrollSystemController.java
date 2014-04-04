@@ -101,13 +101,13 @@ public class PayrollSystemController{
 	//Add DTR button in main menu
 	class addDTRListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
-			File f = view.fileChooser();
+			File f = new File(view.getDTRFileLocation());
 			if(f!=null){
-				int i = model.addDTR(f, periodStartDate);
-				if(i == 0){
+				int add = model.addDTR(f, periodStartDate);
+				if(add == 0){
 					view.showSuccess();
 				}else{
-					view.showErrorDTR(i);
+					view.showErrorDTR(add);
 				}
 			}else{
 				System.out.println("No file chosen");
