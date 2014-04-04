@@ -61,7 +61,7 @@ import java.io.File;
 import javax.swing.JOptionPane;
 
 public class PayrollSystemView extends JPanel {
-
+	private PayrollSystemModel model;
 	private BufferedImage top_img, side_img, title_img; 
 	private BufferedImage import_img, view_img, generate_img, misc_img;
 	private BufferedImage total_img, date_img;
@@ -121,13 +121,15 @@ public class PayrollSystemView extends JPanel {
 	private boolean is_home;
 	
 	public PayrollSystemView(PayrollSystemModel model)
-	{
+	{	
+		this.model = model; 
 		homepane1 = new JPanel();
 		homepane2 = new JPanel();
 		homepane3 = new JPanel();
 		homepane4 = new JPanel();
 		menuPanel = new JPanel();
 		
+
 		status1 = new JLabel("Last Checked: 03-16-14", loadScaledImage("/icons/clock.png",.55f),JLabel.RIGHT);
 		status2 = new JLabel("Last Updated Data: 01-01-14 ( FedEx )", loadScaledImage("/icons/paper.png",.55f),JLabel.RIGHT);
 		status3 = new JLabel("Last Generated Report: 01-01-14 ( LBC )", loadScaledImage("/icons/paper.png",.55f),JLabel.RIGHT);
@@ -136,8 +138,9 @@ public class PayrollSystemView extends JPanel {
 		status6 = new JLabel("Last Back-Up: 01-01-14", loadScaledImage("/icons/disk.png",.55f),JLabel.RIGHT);
 		
 		credits = new JLabel("MADE BY: TEAM KATRINA");
+
 		versionLbl = new JLabel("VERSION 2.0", loadScaledImage("/icons/sun.png",.55f),JLabel.RIGHT);
-		
+
 		clientCnt = new JLabel("2");
 		clientLbl = new JLabel("CLIENT");
 		employeeCnt = new JLabel("72");
@@ -171,6 +174,7 @@ public class PayrollSystemView extends JPanel {
 		
 		mainPanel = new JLayeredPane();
 		blackPane = new JPanel(){
+			private static final long serialVersionUID=100L;
 			public void paintComponent(Graphics g) {
 		        super.paintComponent(g);
 		        g.setColor(new Color(0,0,0,200));
@@ -886,6 +890,7 @@ public class PayrollSystemView extends JPanel {
 				blackPane.setVisible(true);
 			}
 		});
+		
 	}
 	
 	public void paintComponent(Graphics g)
@@ -960,7 +965,7 @@ public class PayrollSystemView extends JPanel {
 	}
 	
 	private BufferedImage loadImage(String img_url)
-	{
+	{	
 		try
 		{
 			return ImageIO.read(getClass().getResource(img_url));
@@ -972,19 +977,39 @@ public class PayrollSystemView extends JPanel {
 	}
 	
 	private ImageIcon loadScaledImage(String img_url, float percent)
-	{
-		ImageIcon img_icon = new ImageIcon(getClass().getResource(img_url));
+	{	
+		ImageIcon img_icon = new ImageIcon(this.getClass().getResource(img_url));
 		int new_width = (int) (img_icon.getIconWidth()*percent);
 		int new_height = (int) (img_icon.getIconHeight()*percent);
 		Image img = img_icon.getImage().getScaledInstance(new_width,new_height,java.awt.Image.SCALE_SMOOTH);  
 		img_icon = new ImageIcon(img);
 		return img_icon;
 	}
-	/*
-	public void setAddPersonnelListener(ActionListener list){
-		addPersonnelBtn.addActionListener(list);
+	public void setAddDTRListener(ActionListener list){
+		((DTRView) addDTRPanel).setAddDTRListener(list);
 	}
-	public void setRemovePListener(ActionListener list){}
+	public void setDTRFileLocationListener(ActionListener list){
+		((DTRView) addDTRPanel).setFileLocationListener(list);
+	}
+	public String getDTRFileLocation(){
+		return ((PersonnelView) addPersPanel).getFileLocation();
+	}
+	public void setDTRFileLocation(String location){
+		((PersonnelView) addPersPanel).setFileLocation(location);
+	}
+	public void setAddPersonnelListener(ActionListener list){
+		((PersonnelView) addPersPanel).setAddPersonnelListener(list);
+	}
+	public void setPersonnelFileLocationListener(ActionListener list){
+		((PersonnelView) addPersPanel).setFileLocationListener(list);
+	}
+	public String getPersonnelFileLocation(){
+		return ((PersonnelView) addPersPanel).getFileLocation();
+	}
+	public void setPersonnelFileLocation(String location){
+		((PersonnelView) addPersPanel).setFileLocation(location);
+	}
+	/*public void setRemovePListener(ActionListener list){}
 	public void setViewPListener(ActionListener list){}
 	public void setAddDTRListener(ActionListener list){
 		addDTRBtn.addActionListener(list);
@@ -1080,7 +1105,7 @@ public class PayrollSystemView extends JPanel {
 	}
 	
 	public void updateTimePeriod(String psd){
-		//viewPeriodLbl.setText("Date: " + psd);
+		currentDate.setText(psd);
 	}
 	
 	public boolean askConfirmation(){

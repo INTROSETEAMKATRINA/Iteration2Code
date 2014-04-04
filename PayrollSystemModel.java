@@ -59,7 +59,6 @@ public class PayrollSystemModel {
         try{
 			File file = fileDirectory;
 			
-				
 			String ext = getExtension(fileDirectory.toString());
 			if(!ext.equals("xls")){
 				return 8;

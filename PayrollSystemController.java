@@ -35,11 +35,6 @@ public class PayrollSystemController{
 	private Date periodStartDate;
 	private PayrollSystemModel model;
 	private PayrollSystemView view;
-	private RemoveAdjustmentsView removeAdjustments;
-	private AddAdjustmentsView addAdjustments;
-	private ViewSummaryReportView viewSummaryReport;
-	private ChangePasswordView changePassword;
-	private GeneratePayslipsView generatePayslips;
 	private String directory = "periodStartDate.txt";
 	
 	public PayrollSystemController(PayrollSystemModel model, PayrollSystemView view, Connection con){
@@ -50,44 +45,27 @@ public class PayrollSystemController{
 			Scanner in = new Scanner(this.getClass().getResourceAsStream(directory));
 			String s = in.next();
 			periodStartDate = sdf.parse(s);
-			//view.updateTimePeriod(sdf.format(periodStartDate));
+			view.updateTimePeriod(sdf.format(periodStartDate));
 			in.close();
 		}catch(Exception ex){
 			System.out.println("ERROR!");
-			//view.showPeriodStartDateNotFound();
+			view.showPeriodStartDateNotFound();
 			System.exit(1);
 		}
-	/*	model.setPeriodStartDate(periodStartDate);
-		removeAdjustments = new RemoveAdjustmentsView(model);
-		addAdjustments = new AddAdjustmentsView(model);
-		viewSummaryReport = new ViewSummaryReportView(model);
-		changePassword = new ChangePasswordView();
-		generatePayslips = new GeneratePayslipsView(model);
+		model.setPeriodStartDate(periodStartDate);
+		
+		
 		view.setAddPersonnelListener(new addPersonnelListener());
+		view.setPersonnelFileLocationListener(new personnelFileLocationListener());
 		view.setAddDTRListener(new addDTRListener());
+		view.setDTRFileLocationListener(new dtrFileLocationListener());
+		/*	
+		
 		view.setAddAdjustmentListener(new addAdjustmentListener());
 		view.setRemoveAdjustmentListener(new removeAdjustmentListener());
-		view.setViewSummaryReportListener(new viewSummaryReportListener());
 		view.setGeneratePayslipsListener(new generatePayslipsListener());
 		view.setChangePasswordListener(new changePasswordListener());
 		view.setNextTimeListener(new nextTimePeriod());
-		changePassword.setChangeListener(new changePasswordButtonListener());
-		changePassword.setCancelListener(new cancelChangePasswordButtonListener());
-		changePassword.setShowListener(new showPasswordListener());
-		addAdjustments.setClientListener(new clientListAddAdjustmentListener());
-		addAdjustments.setAddListener(new addAdjustmentButtonListener());
-		addAdjustments.setCancelListener(new cancelAddAdjustmentButtonListener());
-		removeAdjustments.setRemoveListener(new removeAdjustmentButtonListener());
-		removeAdjustments.setCancelListener(new cancelRemoveAdjustmentButtonListener());
-		removeAdjustments.setClientListener(new clientListRemoveAdjustmentListener());
-		removeAdjustments.setPersonnelListener(new personnelListRemoveAdjustmentListener());
-		generatePayslips.setSelectFileListener(new fileSaverGeneratePayslipsButtonListener());
-		generatePayslips.setClientListener(new clientListGeneratePayslipsListener());
-		generatePayslips.setGenerateListener(new generatePayslipsButtonListener());
-		generatePayslips.setCancelListener(new cancelGeneratePayslipsButtonListener());
-		viewSummaryReport.setPeriodStartDateListener(new addPeriodStartDateListener());
-		viewSummaryReport.setViewListener(new viewReportListener());
-		viewSummaryReport.backListener(new cancelViewSummaryReportListener());
 		*/
 	}
 
@@ -96,7 +74,7 @@ public class PayrollSystemController{
 	//Add Personnel Button in Main Menu
 	class addPersonnelListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
-			File f = view.fileChooser();
+			File f = new File(view.getPersonnelFileLocation());
 			if(f!=null){
 				int add = model.addPersonnel(f, periodStartDate);
 				if(add == 0){
@@ -109,7 +87,17 @@ public class PayrollSystemController{
 			}
 		}
 	}
-
+	
+	class personnelFileLocationListener implements ActionListener{
+		public void actionPerformed(ActionEvent e) {
+			File f = view.fileChooser();
+			if(f!=null){
+				view.setPersonnelFileLocation(f.getPath());
+			}else{
+				System.out.println("No file chosen");
+			}
+		}
+	}
 	//Add DTR button in main menu
 	class addDTRListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
@@ -126,44 +114,55 @@ public class PayrollSystemController{
 			}
 		}
 	}
-
+	class dtrFileLocationListener implements ActionListener{
+		public void actionPerformed(ActionEvent e) {
+			File f = view.fileChooser();
+			if(f!=null){
+				view.setDTRFileLocation(f.getPath());
+			}else{
+				System.out.println("No file chosen");
+			}
+		}
+	}
+	
+/*
 	//Add adjustment button in main menu
 	class addAdjustmentListener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
-			addAdjustments.updateClientList();
-			addAdjustments.setVisible(true);
+		//	addAdjustments.updateClientList();
+		//	addAdjustments.setVisible(true);
 		}
 	}
 
 	//Remove adjustment button in main menu
 	class removeAdjustmentListener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
-			removeAdjustments.updateClientList();
-			removeAdjustments.setVisible(true);
+		//	removeAdjustments.updateClientList();
+		//	removeAdjustments.setVisible(true);
 		}
 	}
 
 	//Change password button in main menu
 	class changePasswordListener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
-			changePassword.setVisible(true);
+		//	changePassword.setVisible(true);
 		}
 	}
 
 	//View summary report button in main menu
 	class viewSummaryReportListener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
-			viewSummaryReport.updateClientList();
-			viewSummaryReport.updateViewList();
-			viewSummaryReport.setVisible(true);
+		//	viewSummaryReport.updateClientList();
+		//	viewSummaryReport.updateViewList();
+		//	viewSummaryReport.setVisible(true);
 		}
 	}
 
 	//Generate payslips button in main menu
 	class generatePayslipsListener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
-			generatePayslips.updateClientList();
-			generatePayslips.setVisible(true);
+		//	generatePayslips.updateClientList();
+		//	generatePayslips.setVisible(true);
 		}
 	}
 
@@ -390,5 +389,5 @@ public class PayrollSystemController{
 				view.updateTimePeriod(sdf.format(periodStartDate));
 			}
 		}
-	}
+	}*/
 }

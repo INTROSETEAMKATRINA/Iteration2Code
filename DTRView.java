@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -30,7 +31,7 @@ public class DTRView extends JPanel {
 		
 		saveLbl = new JLabel("Save Location: ");
 		locationLbl = new JLabel("C:// ");
-		statusLbl = new JLabel("Status: DTR successfully added!");
+		statusLbl = new JLabel("Status: ");
 		
 		modifyUI();
 	}
@@ -138,5 +139,17 @@ public class DTRView extends JPanel {
 		g2d.fillRect(0, this.getHeight()-Utils.HEIGHT, this.getWidth(), Utils.HEIGHT);
 		g2d.setColor(Color.LIGHT_GRAY);
 		g2d.drawLine(0, this.getHeight()-Utils.HEIGHT, this.getWidth(), this.getHeight()-Utils.HEIGHT);
+	}
+	public void setFileLocationListener(ActionListener list){
+		selSaveBtn.addActionListener(list);
+	}
+	public void setAddDTRListener(ActionListener list){
+		addBtn.addActionListener(list);
+	}
+	public void setFileLocation(String location){
+		locationLbl.setText(location);
+	}
+	public String getFileLocation(){
+		return locationLbl.getText();
 	}
 }

@@ -5,17 +5,22 @@ import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.io.File;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class PersonnelView extends JPanel {
 
+	private static final long serialVersionUID = 1L;
 	private JLabel saveLbl;
 	private JLabel locationLbl;
 	private JLabel statusLbl;
@@ -30,7 +35,7 @@ public class PersonnelView extends JPanel {
 		
 		saveLbl = new JLabel("Save Location: ");
 		locationLbl = new JLabel("C:// ");
-		statusLbl = new JLabel("Status: DTR successfully added!");
+		statusLbl = new JLabel("Status:");
 		
 		modifyUI();
 		initFont();
@@ -138,5 +143,17 @@ public class PersonnelView extends JPanel {
 		g2d.fillRect(0, this.getHeight()-Utils.HEIGHT, this.getWidth(), Utils.HEIGHT);
 		g2d.setColor(Color.LIGHT_GRAY);
 		g2d.drawLine(0, this.getHeight()-Utils.HEIGHT, this.getWidth(), this.getHeight()-Utils.HEIGHT);
+	}
+	public void setFileLocationListener(ActionListener list){
+		selSaveBtn.addActionListener(list);
+	}
+	public void setAddPersonnelListener(ActionListener list){
+		addBtn.addActionListener(list);
+	}
+	public void setFileLocation(String location){
+		locationLbl.setText(location);
+	}
+	public String getFileLocation(){
+		return locationLbl.getText();
 	}
 }
