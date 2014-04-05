@@ -16,6 +16,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
+import java.awt.event.ActionListener;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -166,23 +168,15 @@ public class ChangePasswordView extends JPanel {
 	}
 	
 	public void clear(){
-		oldPassTxtFld.setText("");
-		newPassTxtFld.setText("");
-		conPassTxtFld.setText("");
+		oldPassTxtFld.setText(null);
+		newPassTxtFld.setText(null);
+		conPassTxtFld.setText(null);
 	}
 	
-	/*public void setChangeListener(ActionListener list){
-		changeBtn.addActionListener(list);
+	public void setChangeListener(ActionListener list){
+		applyBtn.addActionListener(list);
 	}
 	
-	public void setCancelListener(ActionListener list){
-		cancelBtn.addActionListener(list);
-	}
-	
-	public void setShowListener(ItemListener list){
-		showPassBox.addItemListener(list);
-	}
-	*/
 	public boolean askConfirmation(){ 
 		int confirmation = JOptionPane.showConfirmDialog(null, "Please confirm!", "Please confirm!",
 		

@@ -32,7 +32,7 @@ public class SettingsView extends JPanel  {
 	private BufferedImage settings_img, side_img;
 	
 	private JPanel sidePane;
-	private JPanel changePassPanel;
+	private ChangePasswordView changePassPanel;
 	private JPanel accessPanel;
 	private JPanel modifyVarPanel;
 	
@@ -238,5 +238,9 @@ public class SettingsView extends JPanel  {
 		g2d.fillRect(0, 0, this.getWidth(), 50);
 		g2d.setColor(Color.WHITE);
 		g2d.drawImage(settings_img, 20, 16, settings_img.getWidth()/2, settings_img.getHeight()/2, null);
+	}
+	
+	public ChangePasswordView getChangePasswordPanel(){
+		return changePassPanel;
 	}
 }

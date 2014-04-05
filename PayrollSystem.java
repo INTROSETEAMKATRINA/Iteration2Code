@@ -32,9 +32,10 @@ public class PayrollSystem{
 			JPasswordField pwd = new JPasswordField(10);
 			int action = JOptionPane.OK_OPTION;
 			PayrollSystemModel model = new PayrollSystemModel(con);
-			PayrollSystemView view = new PayrollSystemView(model);
+			SettingsView sView = new SettingsView();
+			PayrollSystemView view = new PayrollSystemView(sView, model);
 			view.setVisible(true);
-			PayrollSystemController controller = new PayrollSystemController(model, view, con);
+			PayrollSystemController controller = new PayrollSystemController(model, view, sView, con);
 			/*while(action == JOptionPane.OK_OPTION && !loggedIn){
 				pwd = new JPasswordField(10);
 				pwd.addAncestorListener(new RequestFocusListener());

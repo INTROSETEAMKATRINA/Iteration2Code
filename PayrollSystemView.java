@@ -120,7 +120,7 @@ public class PayrollSystemView extends JPanel {
 	private boolean resize;
 	private boolean is_home;
 	
-	public PayrollSystemView(PayrollSystemModel model)
+	public PayrollSystemView(SettingsView sView, PayrollSystemModel model)
 	{	
 		this.model = model; 
 		homepane1 = new JPanel();
@@ -167,7 +167,7 @@ public class PayrollSystemView extends JPanel {
 		removePersPanel = new RemovePersonnelView(model); 
 		viewPersPanel = new ViewPersonnelView(model); 
 		viewSummPanel = new ViewSummaryReportView(model);
-		settingsPanel = new SettingsView();
+		settingsPanel = sView;
 		loginPanel = new LogInView();
 		addDTRPanel = new DTRView();
 		addPersPanel = new PersonnelView();

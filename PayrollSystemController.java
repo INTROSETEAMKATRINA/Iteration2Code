@@ -35,15 +35,19 @@ public class PayrollSystemController{
 	private Date periodStartDate;
 	private PayrollSystemModel model;
 	private PayrollSystemView view;
+	private SettingsView sView;
 	private String directory = "periodStartDate.txt";
 	private LogInView loginPanel;
 	private GeneratePayslipsView generatePayslips;
 	private AddAdjustmentsView addAdjustments;
 	private RemoveAdjustmentsView removeAdjustments;
-	public PayrollSystemController(PayrollSystemModel model, PayrollSystemView view, Connection con){
+	private ChangePasswordView changePassword;
+	
+	public PayrollSystemController(PayrollSystemModel model, PayrollSystemView view, SettingsView sView, Connection con){
 		this.model = model;
 		this.view = view;
 		this.con = con;
+		this.sView = sView;
 		try{
 			Scanner in = new Scanner(this.getClass().getResourceAsStream(directory));
 			String s = in.next();
@@ -72,6 +76,9 @@ public class PayrollSystemController{
 		removeAdjustments.setClientListener(new clientListRemoveAdjustmentListener());
 		removeAdjustments.setPersonnelListener(new personnelListRemoveAdjustmentListener());
 		removeAdjustments.setRemoveListener(new removeAdjustmentButtonListener());
+		
+		changePassword = sView.getChangePasswordPanel();
+		changePassword.setChangeListener(new changePasswordButtonListener());
 		
 		view.setAddPersonnelListener(new addPersonnelListener());
 		view.setPersonnelFileLocationListener(new personnelFileLocationListener());
@@ -214,6 +221,38 @@ public class PayrollSystemController{
 		}
 	}
 	
+	//listeners in change password view
+	//change password button in change password view
+	class changePasswordButtonListener implements ActionListener{
+		public void actionPerformed(ActionEvent e){
+			try{
+				if(changePassword.askConfirmation()){
+					Statement st = con.createStatement();
+					ResultSet rs = st.executeQuery("select password from password");
+					rs.next();
+					String oldPass = changePassword.getOldPass();
+					if(oldPass.equals(rs.getString("password"))){//GetPasswordFromDatabase
+						String newPass = changePassword.getNewPass();
+						String confirmNewPass = changePassword.getConfirmNewPass();
+						if(newPass.equals(confirmNewPass)){
+							if(model.changePassword(oldPass, newPass)==1){
+								changePassword.showSuccess();
+								changePassword.clear();
+							}else{
+								changePassword.showError(0);
+							}
+						}else{
+							changePassword.showError(1);
+						}
+					}else{
+						changePassword.showError(2);
+					}
+				}
+			}catch(Exception ex){
+				System.out.println(ex);
+			}
+		}
+	}
 /*
 	//Add adjustment button in main menu
 	class addAdjustmentListener implements ActionListener{
@@ -274,39 +313,7 @@ public class PayrollSystemController{
 	}
 	
 	
-	//listeners in change password view
-	//change password button in change password view
-	class changePasswordButtonListener implements ActionListener{
-		public void actionPerformed(ActionEvent e){
-			try{
-				if(changePassword.askConfirmation()){
-					Statement st = con.createStatement();
-					ResultSet rs = st.executeQuery("select password from password");
-					rs.next();
-					String oldPass = changePassword.getOldPass();
-					if(oldPass.equals(rs.getString("password"))){//GetPasswordFromDatabase
-						String newPass = changePassword.getNewPass();
-						String confirmNewPass = changePassword.getConfirmNewPass();
-						if(newPass.equals(confirmNewPass)){
-							if(model.changePassword(oldPass, newPass)==1){
-								changePassword.showSuccess();
-								changePassword.clear();
-								changePassword.setVisible(false);
-							}else{
-								changePassword.showError(0);
-							}
-						}else{
-							changePassword.showError(1);
-						}
-					}else{
-						changePassword.showError(2);
-					}
-				}
-			}catch(Exception ex){
-				System.out.println(ex);
-			}
-		}
-	}
+	
 
 	//cancel change password button in change password view
 	class cancelChangePasswordButtonListener implements ActionListener{
