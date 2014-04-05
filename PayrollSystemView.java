@@ -144,9 +144,9 @@ public class PayrollSystemView extends JPanel {
 		clientCnt = new JLabel("2");
 		clientLbl = new JLabel("CLIENT");
 		employeeCnt = new JLabel("72");
-		employeeLbl = new JLabel("EMPLOYEES");
-		
-		currentDate = new JLabel("01/01/14");
+		employeeLbl = new JLabel("PERSONNEL");
+		setCount();
+		currentDate = new JLabel();
 		dateLbl = new JLabel("         MONTH            /            DAY            /            YEAR",JLabel.CENTER);
 		
 		title_img = loadImage("images/appTitle.png");
@@ -1009,6 +1009,9 @@ public class PayrollSystemView extends JPanel {
 	public void setPersonnelFileLocation(String location){
 		((PersonnelView) addPersPanel).setFileLocation(location);
 	}
+	public void setNextTimeListener(ActionListener list){
+		nextBtn.addActionListener(list);
+	}
 	/*public void setRemovePListener(ActionListener list){}
 	public void setViewPListener(ActionListener list){}
 	public void setAddDTRListener(ActionListener list){
@@ -1023,9 +1026,7 @@ public class PayrollSystemView extends JPanel {
 	public void setViewSummaryReportListener(ActionListener list){
 		viewSummaryReportBtn.addActionListener(list);
 	}
-	public void setNextTimeListener(ActionListener list){
-		nextTimePerBtn.addActionListener(list);
-	}
+
 	public void setGenerateSummaryReportListener(ActionListener list){}
 	public void setModifyTaxTableListener(ActionListener list){}
 	public void setModifyClientVarListener(ActionListener list){}
@@ -1118,7 +1119,13 @@ public class PayrollSystemView extends JPanel {
 		return false;
 	}
 	
+	public void setCount(){
+		clientCnt.setText(model.countClient() + "");
+		employeeCnt.setText(model.countEmployee() + "");
+	}
+	
 	public LogInView getLogInView(){
 		return loginPanel;
 	}
+	
 }

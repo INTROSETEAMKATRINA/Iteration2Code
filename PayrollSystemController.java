@@ -60,20 +60,21 @@ public class PayrollSystemController{
 		view.setPersonnelFileLocationListener(new personnelFileLocationListener());
 		view.setAddDTRListener(new addDTRListener());
 		view.setDTRFileLocationListener(new dtrFileLocationListener());
+		view.setNextTimeListener(new nextTimePeriod());
 		/*	
 		
 		view.setAddAdjustmentListener(new addAdjustmentListener());
 		view.setRemoveAdjustmentListener(new removeAdjustmentListener());
 		view.setGeneratePayslipsListener(new generatePayslipsListener());
 		view.setChangePasswordListener(new changePasswordListener());
-		view.setNextTimeListener(new nextTimePeriod());
+		
 		*/
 	}
 
 	//Login Button Listener
 	class loginListener implements ActionListener{
 		public void actionPerformed(ActionEvent arg0) {
-			if(!loginPanel.getPassword().equals("INTROSE")){
+			if(!model.checkPassword(loginPanel.getPassword())){
 				loginPanel.fadeInBallon();
 			}
 			else{
@@ -384,6 +385,8 @@ public class PayrollSystemController{
 		}
 	}
 	
+	
+	*/
 	//next time period listener
 	class nextTimePeriod implements ActionListener{
 		public void actionPerformed(ActionEvent e){
@@ -402,5 +405,5 @@ public class PayrollSystemController{
 				view.updateTimePeriod(sdf.format(periodStartDate));
 			}
 		}
-	}*/
+	}
 }

@@ -420,7 +420,21 @@ public class PayrollSystemModel {
 			System.out.println(ex);
         }
 	}
-
+	
+	public boolean checkPassword(String pass){
+		try{
+			Statement st = con.createStatement();	
+			ResultSet rs = st.executeQuery("select password from password where password = '"+pass+"'");
+			int rowCount = 0;  
+			if(rs.next()){
+				return true;
+			}
+			return false;
+		}catch (SQLException ex){
+			System.out.println(ex);
+		}
+		return false;
+	}
 	public int changePassword(String oldPass, String newPass){
 		int x = 0;
 		
@@ -1251,5 +1265,31 @@ public class PayrollSystemModel {
 	private static String getExtension(String s){
 		int dot = s.lastIndexOf(".");
 		return s.substring(dot + 1);
+	}
+	
+	public int countClient(){
+		try{
+			String sql = "SELECT count(*) FROM client";
+			Statement st = con.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			rs.next();
+			return rs.getInt(1);
+		}catch(SQLException ex){
+			System.out.println(ex);
+		}
+		return 0;
+	}
+	
+	public int countEmployee(){
+		try{
+			String sql = "SELECT count(*) FROM client,personnel where personnel.assignment = client.name";
+			Statement st = con.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			rs.next();
+			return rs.getInt(1);
+		}catch(SQLException ex){
+			System.out.println(ex);
+		}
+		return 0;
 	}
 }
