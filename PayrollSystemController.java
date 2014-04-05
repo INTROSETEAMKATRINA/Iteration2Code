@@ -42,6 +42,7 @@ public class PayrollSystemController{
 	private AddAdjustmentsView addAdjustments;
 	private RemoveAdjustmentsView removeAdjustments;
 	private ChangePasswordView changePassword;
+	private ModifyClientVariablesView modifyClientsVar;
 	
 	public PayrollSystemController(PayrollSystemModel model, PayrollSystemView view, SettingsView sView, Connection con){
 		this.model = model;
@@ -80,6 +81,9 @@ public class PayrollSystemController{
 		changePassword = sView.getChangePasswordPanel();
 		changePassword.setChangeListener(new changePasswordButtonListener());
 		
+		modifyClientsVar = sView.getModifyVarsPanel();
+		modifyClientsVar.setClientListener(new updateVariables());
+		modifyClientsVar.setModifyListener(new modifyVariables());
 		view.setAddPersonnelListener(new addPersonnelListener());
 		view.setPersonnelFileLocationListener(new personnelFileLocationListener());
 		view.setAddDTRListener(new addDTRListener());
@@ -401,6 +405,30 @@ public class PayrollSystemController{
 				writer.println(sdf.format(periodStartDate));
 				writer.close();
 				view.updateTimePeriod(sdf.format(periodStartDate));
+			}
+		}
+	}
+	
+	class updateVariables implements ActionListener{
+		public void actionPerformed(ActionEvent e){
+			try{
+				float var[] = model.getVariables(modifyClientsVar.getClient());
+				modifyClientsVar.setVariables(var);
+			}catch(Exception ex){
+				modifyClientsVar.setVariablesToDefault();
+				System.out.println(ex);
+			}
+		}
+	}
+	
+	class modifyVariables implements ActionListener{
+		public void actionPerformed(ActionEvent e){
+			try{
+				float[] variables = modifyClientsVar.getVariables();
+				String client = modifyClientsVar.getClient();
+				model.modifyVariables(variables, client);
+			}catch(Exception ex){
+				System.out.println(ex);
 			}
 		}
 	}

@@ -1253,7 +1253,6 @@ public class PayrollSystemModel {
 	}
 	
 	private static float tryGetFloat(String s){
-		
 		try{
 			return Float.parseFloat(s);
 		}catch(Exception e){
@@ -1291,5 +1290,46 @@ public class PayrollSystemModel {
 			System.out.println(ex);
 		}
 		return 0;
+	}
+	
+	public float[] getVariables(String client) throws Exception{
+		Statement stmt = null;
+		float variables[] = new float[12];
+            try{
+				String sql="Select rotVar, rnsdVar, lhRate, lhVar, lhOTVar," +
+					"lhNSDVar, lhRDVar, shRate, shVar, shOTVar, shNSDVar," +
+					"shRDVar FROM `client` where client.name = '"+client+"';";
+				Statement st = con.createStatement();
+				ResultSet rs = st.executeQuery(sql);
+				if(rs.next()){
+					for(int i = 1;i < 13; i++){
+						variables[i-1] = rs.getFloat(i);
+					}
+				}else{
+					throw new Exception();
+				}
+            } catch (Exception ex) {
+				throw ex;
+            }
+		return variables;
+	}
+	
+	public boolean modifyVariables(float variables[], String client){
+		
+		try {
+			String sql = "REPLACE INTO client " +
+			"(name, rotVar, rnsdVar, lhRate, lhVar, lhOTVar," + 
+			"lhNSDVar, lhRDVar, shRate, shVar, shOTVar, shNSDVar," + 
+			"shRDVar) VALUES ('"+client+"', " +
+			variables[0] +", " + variables[1] +", " + variables[2] +", " + 
+			variables[3] +", " + variables[4] +", " + variables[5] +", " + 
+			variables[6] +", " + variables[7] +", " + variables[8] +", " + 
+			variables[9] +", " + variables[10] +", " + variables[11] +");";
+			Statement stmt = con.prepareStatement(sql);
+			stmt.execute(sql);
+        } catch (SQLException ex) {
+			System.out.println(ex);
+		}
+		return true;
 	}
 }

@@ -14,6 +14,7 @@ import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -81,8 +82,9 @@ public class ModifyClientVariablesView extends JPanel {
 	private final static int TEXTBOX_WIDTH = 180;
 	private final static int TEXTBOX_HEIGHT = 41;
 	
-	public ModifyClientVariablesView(){
-		
+	private PayrollSystemModel model;
+	public ModifyClientVariablesView(PayrollSystemModel model){
+		this.model = model;
 		selectClientLbl = new JLabel("Select Client: ");
 		clientCBox = new JComboBox();
 		
@@ -302,5 +304,73 @@ public class ModifyClientVariablesView extends JPanel {
 		
 		g2d.setColor(Color.LIGHT_GRAY);
 		g2d.drawLine(0, this.getHeight()-FOOTER_HEIGHT, this.getWidth(), this.getHeight()-FOOTER_HEIGHT);
+	}
+	
+	public String getClient(){
+		return (String)clientCBox.getSelectedItem();
+	}
+	
+	public void setVariablesToDefault(){
+		var1TxtFld.setText(Float.toString(rotVar));
+		var2TxtFld.setText(Float.toString(rnsdVar));
+		var3TxtFld.setText(Float.toString(lhRate));
+		var4TxtFld.setText(Float.toString(lhVar));
+		var5TxtFld.setText(Float.toString(lhOTVar));
+		var6TxtFld.setText(Float.toString(lhNSDVar));
+		var7TxtFld.setText(Float.toString(lhRDVar));
+		var8TxtFld.setText(Float.toString(shRate));
+		var9TxtFld.setText(Float.toString(shVar));
+		var10TxtFld.setText(Float.toString(shOTVar));
+		var11TxtFld.setText(Float.toString(shNSDVar));
+		var12TxtFld.setText(Float.toString(shRDVar));
+	}
+	
+	public void setVariables(float[] vars){
+		var1TxtFld.setText(Float.toString(vars[0]));
+		var2TxtFld.setText(Float.toString(vars[1]));
+		var3TxtFld.setText(Float.toString(vars[2]));
+		var4TxtFld.setText(Float.toString(vars[3]));
+		var5TxtFld.setText(Float.toString(vars[4]));
+		var6TxtFld.setText(Float.toString(vars[5]));
+		var7TxtFld.setText(Float.toString(vars[6]));
+		var8TxtFld.setText(Float.toString(vars[7]));
+		var9TxtFld.setText(Float.toString(vars[8]));
+		var10TxtFld.setText(Float.toString(vars[9]));
+		var11TxtFld.setText(Float.toString(vars[10]));
+		var12TxtFld.setText(Float.toString(vars[11]));
+	}
+	
+	public float[] getVariables(){
+		float variables[] = new float[12];
+		variables[0] = Float.parseFloat(var1TxtFld.getText());
+		variables[1] = Float.parseFloat(var2TxtFld.getText());
+		variables[2] = Float.parseFloat(var3TxtFld.getText());
+		variables[3] = Float.parseFloat(var4TxtFld.getText());
+		variables[4] = Float.parseFloat(var5TxtFld.getText());
+		variables[5] = Float.parseFloat(var6TxtFld.getText());
+		variables[6] = Float.parseFloat(var7TxtFld.getText());
+		variables[7] = Float.parseFloat(var8TxtFld.getText());
+		variables[8] = Float.parseFloat(var9TxtFld.getText());
+		variables[9] = Float.parseFloat(var10TxtFld.getText());
+		variables[10] = Float.parseFloat(var11TxtFld.getText());
+		variables[11] = Float.parseFloat(var12TxtFld.getText());
+		return variables;
+	}
+	
+	public void updateClientList(){
+		clientCBox.removeAllItems();
+		ArrayList<String> clients = model.getClientList();
+		
+		for(String t : clients){
+			clientCBox.addItem(t);
+		}
+	}
+	
+	public void setClientListener(ActionListener list){
+		clientCBox.addActionListener(list);
+	}
+	
+	public void setModifyListener(ActionListener list){
+		applyBtn.addActionListener(list);
 	}
 }

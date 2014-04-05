@@ -204,7 +204,7 @@ public class PayrollSystemView extends JPanel {
 		/*Initialize Application Frame*/
 		payrollSystemFrame = new JFrame();
 		payrollSystemFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		payrollSystemFrame.setSize(1064, 720);
+		payrollSystemFrame.setSize(1064, 750);
 		payrollSystemFrame.setContentPane(mainPanel);
 		payrollSystemFrame.setTitle("A Payroll System");
 		payrollSystemFrame.setResizable(true);

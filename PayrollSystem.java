@@ -32,7 +32,7 @@ public class PayrollSystem{
 			JPasswordField pwd = new JPasswordField(10);
 			int action = JOptionPane.OK_OPTION;
 			PayrollSystemModel model = new PayrollSystemModel(con);
-			SettingsView sView = new SettingsView();
+			SettingsView sView = new SettingsView(model);
 			PayrollSystemView view = new PayrollSystemView(sView, model);
 			view.setVisible(true);
 			PayrollSystemController controller = new PayrollSystemController(model, view, sView, con);

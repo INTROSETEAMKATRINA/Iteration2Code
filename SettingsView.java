@@ -34,10 +34,12 @@ public class SettingsView extends JPanel  {
 	private JPanel sidePane;
 	private ChangePasswordView changePassPanel;
 	private JPanel accessPanel;
-	private JPanel modifyVarPanel;
+	private ModifyClientVariablesView modifyVarPanel;
 	
-	public SettingsView()
-	{
+	private PayrollSystemModel model;
+	public SettingsView(PayrollSystemModel model){
+		this.model = model;
+		
 		sideGroup = new ButtonGroup();
 		changePassBtn = new CustomToggleButton("Change Password");
 		accessBtn= new CustomToggleButton("Accessibility");
@@ -47,7 +49,7 @@ public class SettingsView extends JPanel  {
 		sidePane = new JPanel();
 		changePassPanel = new ChangePasswordView();
 		accessPanel = new JPanel();
-		modifyVarPanel = new ModifyClientVariablesView();
+		modifyVarPanel = new ModifyClientVariablesView(model);
 		try {
 			settings_img = ImageIO.read(getClass().getResource("images/settings.png"));
 			side_img = ImageIO.read(getClass().getResource("images/side_white.png"));
@@ -194,6 +196,7 @@ public class SettingsView extends JPanel  {
 		modifyVarBtn.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				modifyVarPanel.updateClientList();
 				changePassPanel.setVisible(false);
 				accessPanel.setVisible(false);
 				modifyVarPanel.setVisible(true);
@@ -242,5 +245,9 @@ public class SettingsView extends JPanel  {
 	
 	public ChangePasswordView getChangePasswordPanel(){
 		return changePassPanel;
+	}
+	
+	public ModifyClientVariablesView getModifyVarsPanel(){
+		return modifyVarPanel;
 	}
 }
