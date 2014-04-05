@@ -52,7 +52,7 @@ public class PayrollSystemModel {
 		periodStartDate = psd;
 	}
 
-	public int addPersonnel(File fileDirectory, Date periodStartDate) {
+	public boolean addPersonnel(File fileDirectory, Date periodStartDate) throws Exception{
     	ArrayList<Personnel> personnels = new ArrayList<Personnel>();
 		String assignment = "";
 		
@@ -61,7 +61,7 @@ public class PayrollSystemModel {
 			
 			String ext = getExtension(fileDirectory.toString());
 			if(!ext.equals("xls")){
-				return 8;
+				throw new Exception("File is not an excel file.");
 			}
 			
 			Workbook workbook = Workbook.getWorkbook(file);
@@ -78,7 +78,7 @@ public class PayrollSystemModel {
 
 			assignment = sheet.getCell(column,row).getContents();
 			if(assignment.length() <= 0){
-				return 7;
+				throw new Exception("No client name in excel file.");
 			}
 			psd = null;
 			row++;
@@ -89,14 +89,14 @@ public class PayrollSystemModel {
 					DateCell date = (DateCell)cell;
 					psd = sdf.parse(sdf.format(date.getDate()));
 				}else{
-					return 1;
+					throw new Exception("B2 is not formtted to Date!");
 				}
 			}catch(Exception e){
-				System.out.println(e);
+				throw new Exception("B2 is not formtted to Date!");
 			}
 
 			if(!sdf.format(psd).equals(sdf.format(periodStartDate))){
-				return 2;
+				throw new Exception("Date not equal to system date!");
 			}
 
 			row += 2;
@@ -118,7 +118,7 @@ public class PayrollSystemModel {
 						column++;
 						rates[i] = tryGetFloat(sheet.getCell(column,row).getContents());
 						if(rates[i] < 0){
-							return 6;
+							throw new Exception("Negative deduction or rate.");
 						}
 					}
 					dailyRate = rates[0];
@@ -128,7 +128,7 @@ public class PayrollSystemModel {
 					column++;
 					tin = sheet.getCell(column,row).getContents();
 					if(tin.length() == 0){
-						return 3;
+						throw new Exception("Lacking tin!");
 					}
 					column++;
 					taxStatus = sheet.getCell(column,row).getContents();
@@ -138,7 +138,7 @@ public class PayrollSystemModel {
 						column++;
 						deductions[i] = tryGetFloat(sheet.getCell(column,row).getContents());
 						if(deductions[i]<0){
-							return 6;
+							throw new Exception("Negative deduction or rate.");
 						}
 					}
 					
@@ -155,13 +155,13 @@ public class PayrollSystemModel {
 												 sss, sssLoan, phic, hdmf,hdmfLoan, payrollAdvance, houseRental,
 												 uniformAndOthers, dailyRate, colaRate, monthlyRate));
 				}else{
-					return 5;
+					throw new Exception("Lacking name!");
 				}
 				row++;
 			}
 		}catch(Exception e){
 			System.out.println(e);
-			return 4;
+			throw e;
 		}
 
         //ADD TO DATABASE
@@ -228,10 +228,10 @@ public class PayrollSystemModel {
 				System.out.println(ex);
             }
         }
-		return 0;
+		return true;
 	}
 
-	public int addDTR(File fileDirectory, Date periodStartDate) {
+	public boolean addDTR(File fileDirectory, Date periodStartDate) throws Exception{
     	ArrayList<DTR> dtrs = new ArrayList<DTR>();
 
         try{
@@ -239,7 +239,7 @@ public class PayrollSystemModel {
 			
 			String ext = getExtension(fileDirectory.toString());
 			if(!ext.equals("xls")){
-				return 8;
+				throw new Exception("File is not an excel file.");
 			}
 			
 			
@@ -263,14 +263,14 @@ public class PayrollSystemModel {
 					DateCell date = (DateCell)cell;
 					psd = sdf.parse(sdf.format(date.getDate()));
 				}else{
-					return 1;
+					throw new Exception("B2 is not formtted to Date!");
 				}
 			}catch(Exception e){
-				System.out.println(e);
+				throw new Exception("B2 is not formtted to Date!");
 			}
 
 			if(!sdf.format(psd).equals(sdf.format(periodStartDate))){
-				return 2;
+				throw new Exception("Date not equal to system date!");
 			}
 
 			row += 2;
@@ -285,7 +285,7 @@ public class PayrollSystemModel {
 					column++;
 					tin = sheet.getCell(column,row).getContents();
 					if(tin.length() == 0){
-						return 3;
+						throw new Exception("Lacking tin!");
 					}
 					
 					float timeWorked[] = new float[12];
@@ -294,7 +294,7 @@ public class PayrollSystemModel {
 						column++;
 						timeWorked[i] = tryGetFloat(sheet.getCell(column,row).getContents());
 						if(timeWorked[i] < 0){
-							return 6;
+							throw new Exception("Negative days worked or hours.");
 						}
 					}
 					
@@ -316,14 +316,14 @@ public class PayrollSystemModel {
 			   								 legalHoliday, legalHolidayOvertime, legalHolidayNightShiftDifferential,
 			   								 legalHolidayOnRestDay, specialHolidayOnRestDay, late, periodStartDate));
 				}else{
-					return 5;
+					throw new Exception("Lacking name!");
 				}
 				row++;
 			}
 
 		}catch(Exception e){
 			System.out.println(e);
-			return 4;
+			throw e;
 		}
 		
         //ADD TO DATABASE
@@ -366,12 +366,12 @@ public class PayrollSystemModel {
 							sql = "ROLLBACK;";
 							stmt=con.prepareStatement(sql);
 							stmt.execute(sql);	
-							return 7;
+							throw new Exception("Adding dtr to a personnel not in the database.");
 						}catch(SQLException ex2){
 							System.out.println(ex2);
 						}
 					}
-					return 8;
+					throw new Exception("Unknown error.");
                 }
             }
 		try{
@@ -381,7 +381,7 @@ public class PayrollSystemModel {
         }catch(SQLException ex){
 			System.out.println(ex);
 		}
-		return 0;
+		return true;
 	}
 
 	public void removePersonnel(String client){

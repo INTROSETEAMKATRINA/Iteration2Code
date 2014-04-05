@@ -34,7 +34,7 @@ public class PersonnelView extends JPanel {
 		selSaveBtn = new JButton(new ImageIcon(getClass().getResource("images/buttons/select.png")));
 		
 		saveLbl = new JLabel("Save Location: ");
-		locationLbl = new JLabel("C:// ");
+		locationLbl = new JLabel();
 		statusLbl = new JLabel("Status:");
 		
 		modifyUI();
@@ -155,5 +155,8 @@ public class PersonnelView extends JPanel {
 	}
 	public String getFileLocation(){
 		return locationLbl.getText();
+	}
+	public void setStatus(String e){
+		statusLbl.setText(e);
 	}
 }

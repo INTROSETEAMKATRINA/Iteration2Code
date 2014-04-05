@@ -218,11 +218,11 @@ public class RemoveAdjustmentsView extends JPanel {
 	}
 	
 	public void showSuccess(){
-		JOptionPane.showMessageDialog(null, "Successfully removed adjustment!", "Successfully removed adjustment!", JOptionPane.PLAIN_MESSAGE); 
+		statusLbl.setText("Successfully removed adjustment!"); 
 	}
 
 	public void showNoAdjustments(){
-		JOptionPane.showMessageDialog(null, "No adjustments to be removed!", "No adjustments to be removed!", JOptionPane.ERROR_MESSAGE); 
+		statusLbl.setText("No adjustments to be removed!"); 
 	}
 		
 	public void updatePersonnelList(){

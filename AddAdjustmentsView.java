@@ -267,11 +267,11 @@ public class AddAdjustmentsView extends JPanel {
 	}
 	
 	public void showSuccess(){
-		JOptionPane.showMessageDialog(null, "Successfully added adjustment!", "Successfully added adjustment!", JOptionPane.PLAIN_MESSAGE); 
+		statusLbl.setText("Successfully added adjustment!");
 	}
 	
 	public void showWrongInput(){
-		JOptionPane.showMessageDialog(null, "Wrong input!", "Wrong input!", JOptionPane.ERROR_MESSAGE); 
+		statusLbl.setText("Wrong input!"); 
 	}
 	
 	public void clear(){

@@ -7,7 +7,6 @@
 	 *  Functionality: View
 	 *  Visibility: public
 	 *******************************************************/
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -19,14 +18,17 @@ import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
-
 public class ModifyClientVariablesView extends JPanel {
+	
+	private JLabel selectClientLbl;
+	private JComboBox clientCBox;
 	
 	private JLabel var1Lbl;
 	private JLabel var2Lbl;
@@ -80,6 +82,10 @@ public class ModifyClientVariablesView extends JPanel {
 	private final static int TEXTBOX_HEIGHT = 41;
 	
 	public ModifyClientVariablesView(){
+		
+		selectClientLbl = new JLabel("Select Client: ");
+		clientCBox = new JComboBox();
+		
 		applyBtn = new JButton(new ImageIcon(getClass().getResource("images/buttons/apply.png")));
 		
 		var1Lbl = new JLabel("Regular Overtime: ");
@@ -122,6 +128,10 @@ public class ModifyClientVariablesView extends JPanel {
 		
 		panel.setBackground(Color.WHITE);
 		
+		clientCBox.setPreferredSize(new Dimension(300,20));
+		clientCBox.setBackground(Utils.comboBoxBGColor);
+		clientCBox.setForeground(Utils.comboBoxFGColor);
+		
 		scrollPane.setBackground(Color.WHITE);
 		scrollPane.setBorder(null);
 		
@@ -141,7 +151,7 @@ public class ModifyClientVariablesView extends JPanel {
 		var12TxtFld.setPreferredSize(new Dimension(TEXTBOX_WIDTH,TEXTBOX_HEIGHT));
 		
 		panel.setPreferredSize(new Dimension(400,500));
-		scrollPane.setPreferredSize(new Dimension(470,290));
+		scrollPane.setPreferredSize(new Dimension(470,250));
 		
 		applyBtn.setContentAreaFilled(false);
 		applyBtn.setBorder(null);
@@ -210,27 +220,44 @@ public class ModifyClientVariablesView extends JPanel {
 		}
 		
 		gbc.fill = GridBagConstraints.NONE;
-		gbc.insets = new Insets(60,0,0,0);
-		gbc.gridwidth = 2;
+		gbc.insets = new Insets(60,10,0,10);
+		gbc.gridwidth = 1;
 		gbc.gridx = 0;
 		gbc.gridy = 0;
+		add(selectClientLbl, gbc);
+		
+		gbc.fill = GridBagConstraints.NONE;
+		gbc.insets = new Insets(60,0,0,0);
+		gbc.gridwidth = 1;
+		gbc.gridx = 1;
+		gbc.gridy = 0;
+		add(clientCBox, gbc);
+		
+		gbc.fill = GridBagConstraints.NONE;
+		gbc.insets = new Insets(10,0,0,0);
+		gbc.gridwidth = 2;
+		gbc.gridx = 0;
+		gbc.gridy = 1;
 		add(scrollPane, gbc);
 		
 		gbc.fill = GridBagConstraints.NONE;
-		gbc.insets = new Insets(30,10,0,0);
+		gbc.insets = new Insets(40,10,0,0);
 		gbc.gridx = 0;
-		gbc.gridy = 1;
+		gbc.gridy = 2;
 		add(statusLbl, gbc);
 		
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.EAST;
-		gbc.insets = new Insets(30,0,0,10);
+		gbc.insets = new Insets(40,0,0,10);
 		gbc.gridx = 1;
-		gbc.gridy = 1;
+		gbc.gridy = 2;
 		add(applyBtn, gbc);
 	}
 	
 	public void initFont(){
+		selectClientLbl.setFont(Utils.labelFont);
+		clientCBox.setFont(Utils.comboBoxFont);
+		
 		var1Lbl.setFont(Utils.labelFont);
 		var2Lbl.setFont(Utils.labelFont);
 		var3Lbl.setFont(Utils.labelFont);
@@ -276,20 +303,4 @@ public class ModifyClientVariablesView extends JPanel {
 		g2d.setColor(Color.LIGHT_GRAY);
 		g2d.drawLine(0, this.getHeight()-FOOTER_HEIGHT, this.getWidth(), this.getHeight()-FOOTER_HEIGHT);
 	}
-	
-	public String getClient(){ 
-		return null;
-	}
-	
-	public float getSHVariable(){
-		return 0f; 
-	}
-	
-	public float getLHVariable(){ 
-		return 0f; 
-	}
-	
-	public void setModifyListener(){}
-	public void setCancelListener(){}
-	
 }

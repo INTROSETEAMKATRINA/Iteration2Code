@@ -112,14 +112,15 @@ public class PayrollSystemController{
 	//Add Personnel Button in Main Menu
 	class addPersonnelListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
+			view.setStatusPersonnel("Importing...");
 			File f = new File(view.getPersonnelFileLocation());
 			if(f.isFile()){
-				int add = model.addPersonnel(f, periodStartDate);
-				if(add == 0){
-					view.showSuccess();
+				try{
+					model.addPersonnel(f, periodStartDate);
+					view.setStatusPersonnel("Excel successfully added!");
 					view.setCount();
-				}else{
-					view.showErrorPersonnel(add);
+				}catch(Exception ex){
+					view.setStatusPersonnel(ex.getMessage());
 				}
 			}else{
 				System.out.println("No file chosen");
@@ -140,13 +141,14 @@ public class PayrollSystemController{
 	//Add DTR button in main menu
 	class addDTRListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
+			view.setStatusDTR("Importing...");
 			File f = new File(view.getDTRFileLocation());
 			if(f!=null){
-				int add = model.addDTR(f, periodStartDate);
-				if(add == 0){
-					view.showSuccess();
-				}else{
-					view.showErrorDTR(add);
+				try{
+					model.addDTR(f, periodStartDate);
+					view.setStatusDTR("Excel successfully added!");
+				}catch(Exception ex){
+					view.setStatusDTR(ex.getMessage());
 				}
 			}else{
 				System.out.println("No file chosen");
@@ -344,6 +346,7 @@ public class PayrollSystemController{
 			File f = generatePayslips.getFileDirectory();
 			String client = generatePayslips.getClient();
 			String psd = sdf.format(periodStartDate);
+			generatePayslips.setStatus("Generating...");
 			if(model.checkPeriodForDTR(client,psd)){
 				if(f!=null){
 					boolean go = true;
@@ -352,17 +355,17 @@ public class PayrollSystemController{
 					}
 					if(go){
 						if(model.generatePayslips(f, client, psd)==0){
-							generatePayslips.showSuccess();
+							generatePayslips.setStatus("Success!");
 							generatePayslips.setFileDirectory(null);
 						}else{
-							generatePayslips.showError(2);
+							generatePayslips.setStatus("File is in use!");
 						}
 					}
 				}else{
-					generatePayslips.showError(1);
+					generatePayslips.setStatus("No file chosen!");
 				}
 			}else{
-				generatePayslips.showError(0);
+				generatePayslips.setStatus("No personnel DTR in client!");
 			}
 		}
 	}

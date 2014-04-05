@@ -79,8 +79,8 @@ public class PayrollSystemView extends JPanel {
 	
 	private JPanel menuPanel;
 	private AddAdjustmentsView addAdjPanel;
-	private JPanel addDTRPanel;
-	private JPanel addPersPanel;
+	private DTRView addDTRPanel;
+	private PersonnelView addPersPanel;
 	private GeneratePayslipsView genPayslipsPanel;
 	private JPanel genSummaryPanel;
 	private JPanel modifyTaxPanel;
@@ -1062,48 +1062,12 @@ public class PayrollSystemView extends JPanel {
 		JOptionPane.showMessageDialog(null, error, error, JOptionPane.ERROR_MESSAGE); 
 	}
 	
-	public void showErrorDTR(int i){
-		String error = "";
-		if(i == 1){
-			error = "B2 is not formtted to Date!";
-		}else if(i == 2){
-			error = "Date not equal to system date!";
-		}else if(i == 3){
-			error = "Lacking tin!";
-		}else if(i == 4){
-			error = "Unknown error.";
-		}else if(i == 5){
-			error = "Lacking name!";
-		}else if(i == 6){
-			error = "Negative days worked or hours.";
-		}else if(i == 7){
-			error = "Adding dtr to a personnel not in the database.";
-		}else if(i == 8){
-			error = "File is not an excel file.";
-		}
-		JOptionPane.showMessageDialog(null, error, error, JOptionPane.ERROR_MESSAGE); 
+	public void setStatusDTR(String e){
+		addDTRPanel.setStatus(e);
 	}
 	
-	public void showErrorPersonnel(int i){
-		String error = "";
-		if(i == 1){
-			error = "B2 is not formtted to Date!";
-		}else if(i == 2){
-			error = "Date not equal to system date!";
-		}else if(i == 3){
-			error = "Lacking tin!";
-		}else if(i == 4){
-			error = "Unknown error.";
-		}else if(i == 5){
-			error = "Lacking name!";
-		}else if(i == 6){
-			error = "Negative deduction or rate.";
-		}else if(i == 7){
-			error = "No client name in excel file.";
-		}else if(i == 8){
-			error = "File is not an excel file.";
-		}
-		JOptionPane.showMessageDialog(null, error, error, JOptionPane.ERROR_MESSAGE); 
+	public void setStatusPersonnel(String e){
+		addPersPanel.setStatus(e);
 	}
 	
 	public void updateTimePeriod(String psd){
