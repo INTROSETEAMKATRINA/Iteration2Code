@@ -37,6 +37,7 @@ public class PayrollSystemController{
 	private PayrollSystemView view;
 	private String directory = "periodStartDate.txt";
 	private LogInView loginPanel;
+	private GeneratePayslipsView generatePayslips;
 	public PayrollSystemController(PayrollSystemModel model, PayrollSystemView view, Connection con){
 		this.model = model;
 		this.view = view;
@@ -56,6 +57,11 @@ public class PayrollSystemController{
 		
 		loginPanel = view.getLogInView();
 		loginPanel.setLoginListener(new loginListener());
+		
+		generatePayslips = view.getGenPayslips();
+		generatePayslips.setSelectFileListener(new fileSaverGeneratePayslipsButtonListener());
+		generatePayslips.setGenerateListener(new generatePayslipsButtonListener());
+		
 		view.setAddPersonnelListener(new addPersonnelListener());
 		view.setPersonnelFileLocationListener(new personnelFileLocationListener());
 		view.setAddDTRListener(new addDTRListener());
@@ -93,6 +99,7 @@ public class PayrollSystemController{
 				int add = model.addPersonnel(f, periodStartDate);
 				if(add == 0){
 					view.showSuccess();
+					view.setCount();
 				}else{
 					view.showErrorPersonnel(add);
 				}
@@ -332,14 +339,17 @@ public class PayrollSystemController{
 			}
 		}
 	}
-
+	
+	*/
+	
+	
 	//listeners in generate payslips view
 	//generate payslips in generate payslips view
 	class generatePayslipsButtonListener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
 			File f = generatePayslips.getFileDirectory();
 			String client = generatePayslips.getClient();
-			String psd = generatePayslips.getPeriodStartDate();
+			String psd = sdf.format(periodStartDate);
 			if(model.checkPeriodForDTR(client,psd)){
 				if(f!=null){
 					boolean go = true;
@@ -378,15 +388,6 @@ public class PayrollSystemController{
 		}
 	}
 	
-	//client list combo box listener to automatically change avaiable dates
-	class clientListGeneratePayslipsListener implements ActionListener{
-		public void actionPerformed(ActionEvent e){
-			generatePayslips.updateDateList();
-		}
-	}
-	
-	
-	*/
 	//next time period listener
 	class nextTimePeriod implements ActionListener{
 		public void actionPerformed(ActionEvent e){

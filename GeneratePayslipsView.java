@@ -45,7 +45,11 @@ public class GeneratePayslipsView extends JPanel {
 
 	private JComboBox clientCBox;
 	
-	public GeneratePayslipsView(){
+	private PayrollSystemModel model;
+	
+	private File file;
+	public GeneratePayslipsView(PayrollSystemModel model){
+		this.model = model;
 		generateBtn = new JButton(new ImageIcon(getClass().getResource("images/buttons/generate.png")));
 		selSaveBtn = new JButton(new ImageIcon(getClass().getResource("images/buttons/select.png")));
 		
@@ -188,10 +192,6 @@ public class GeneratePayslipsView extends JPanel {
 		selSaveBtn.addActionListener(list);
 	}
 	
-	public void setClientListener(ActionListener list){
-		clientCBox.addActionListener(list);
-	}
-	
 	public void setGenerateListener(ActionListener list){
 		generateBtn.addActionListener(list);
 	}
@@ -224,21 +224,17 @@ public class GeneratePayslipsView extends JPanel {
 	}
 	
 	public void setFileDirectory(File f){
-	/*	file = f;
+		file = f;
 		
 		if(f!=null){
-			saveTxtLbl.setText(file.getPath());
+			locationLbl.setText(file.getPath());
 		}else{
-			saveTxtLbl.setText("");
-		}*/
-	}
-	
-	public String getPeriodStartDate(){
-		return null;//(String) timePerCBox.getSelectedItem();
+			locationLbl.setText("");
+		}
 	}
 	
 	public File getFileDirectory(){
-		return null;//file;
+		return file;
 	}
 	
 	public void showError(int i){
@@ -256,21 +252,12 @@ public class GeneratePayslipsView extends JPanel {
 	
 	
 	public void updateClientList(){
-	/*	clientCBox.removeAllItems();
+		clientCBox.removeAllItems();
 		ArrayList<String> clients = model.getClientList();
 		
 		for(String t : clients){
 			clientCBox.addItem(t);
-		}*/
-	}
-	
-	public void updateDateList(){
-	/*	timePerCBox.removeAllItems();
-		ArrayList<String> dates = model.getDateListDTR(getClient());
-		
-		for(String t : dates){
-			timePerCBox.addItem(t);
-		}	*/	
+		}
 	}
 	
 	public boolean askConfirmation(){
