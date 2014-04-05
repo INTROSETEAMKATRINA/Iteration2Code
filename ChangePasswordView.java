@@ -40,17 +40,17 @@ public class ChangePasswordView extends JPanel {
 	private final static int TEXTBOX_HEIGHT = 41;
 	
 	public ChangePasswordView() {
-		applyBtn = new JButton(new ImageIcon(getClass().getResource("/buttons/apply.png")));
+		applyBtn = new JButton(new ImageIcon(getClass().getResource("images/buttons/apply.png")));
 		
 		oldPassLbl = new JLabel("Old Password: ");
 		newPassLbl = new JLabel("New Password: ");
 		conPassLbl = new JLabel("Confirm Password: ");
 		statusLbl = new JLabel("Status: Adjustment \"N?A\" successfully added!");
 		
-		oldPassTxtFld = new CustomPTextField("*****", "/effects/in.png", "/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
-		newPassTxtFld = new CustomPTextField("*****", "/effects/in.png", "/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
-		conPassTxtFld = new CustomPTextField("*****", "/effects/in.png", "/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
-
+		oldPassTxtFld = new CustomPTextField("*****", "images/effects/in.png", "images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
+		newPassTxtFld = new CustomPTextField("*****", "images/effects/in.png", "images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
+		conPassTxtFld = new CustomPTextField("*****", "images/effects/in.png", "images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
+		
 		modifyUI();
 		initFont();
 	}
@@ -70,8 +70,8 @@ public class ChangePasswordView extends JPanel {
 		applyBtn.setOpaque(false);
 		applyBtn.setForeground(null);
 		applyBtn.setFocusPainted(false);
-		applyBtn.setRolloverIcon(new ImageIcon(getClass().getResource("/buttons/apply-r.png")));
-		applyBtn.setPressedIcon(new ImageIcon(getClass().getResource("/buttons/apply-p.png")));
+		applyBtn.setRolloverIcon(new ImageIcon(getClass().getResource("images/buttons/apply-r.png")));
+		applyBtn.setPressedIcon(new ImageIcon(getClass().getResource("images/buttons/apply-p.png")));
 		applyBtn.setSize(new Dimension(applyBtn.getIcon().getIconWidth(), applyBtn.getIcon().getIconHeight()));
 		
 		addComponentsToPane();

@@ -40,7 +40,7 @@ public class RemoveAdjustmentsView extends JPanel {
 	private JComboBox adjCBox;
 	
 	public RemoveAdjustmentsView(PayrollSystemModel model) {
-		removeBtn = new JButton(new ImageIcon(getClass().getResource("/buttons/remove.png")));
+		removeBtn = new JButton(new ImageIcon(getClass().getResource("images/buttons/remove.png")));
 		
 		adjCBox = new JComboBox();
 		
@@ -77,8 +77,8 @@ public class RemoveAdjustmentsView extends JPanel {
 		removeBtn.setOpaque(false);
 		removeBtn.setForeground(null);
 		removeBtn.setFocusPainted(false);
-		removeBtn.setRolloverIcon(new ImageIcon(getClass().getResource("/buttons/remove-r.png")));
-		removeBtn.setPressedIcon(new ImageIcon(getClass().getResource("/buttons/remove-p.png")));
+		removeBtn.setRolloverIcon(new ImageIcon(getClass().getResource("images/buttons/remove-r.png")));
+		removeBtn.setPressedIcon(new ImageIcon(getClass().getResource("images/buttons/remove-p.png")));
 		removeBtn.setSize(new Dimension(removeBtn.getIcon().getIconWidth(), removeBtn.getIcon().getIconHeight()));
 		
 		addComponentsToPane();

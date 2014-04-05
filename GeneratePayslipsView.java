@@ -46,8 +46,8 @@ public class GeneratePayslipsView extends JPanel {
 	private JComboBox clientCBox;
 	
 	public GeneratePayslipsView(){
-		generateBtn = new JButton(new ImageIcon(getClass().getResource("/buttons/generate.png")));
-		selSaveBtn = new JButton(new ImageIcon(getClass().getResource("/buttons/select.png")));
+		generateBtn = new JButton(new ImageIcon(getClass().getResource("images/buttons/generate.png")));
+		selSaveBtn = new JButton(new ImageIcon(getClass().getResource("images/buttons/select.png")));
 		
 		selectClientLbl = new JLabel("Select Client: ");
 		saveLbl = new JLabel("Save Location: ");
@@ -77,8 +77,8 @@ public class GeneratePayslipsView extends JPanel {
 		generateBtn.setOpaque(false);
 		generateBtn.setForeground(null);
 		generateBtn.setFocusPainted(false);
-		generateBtn.setRolloverIcon(new ImageIcon(getClass().getResource("/buttons/generate-r.png")));
-		generateBtn.setPressedIcon(new ImageIcon(getClass().getResource("/buttons/generate-p.png")));
+		generateBtn.setRolloverIcon(new ImageIcon(getClass().getResource("images/buttons/generate-r.png")));
+		generateBtn.setPressedIcon(new ImageIcon(getClass().getResource("images/buttons/generate-p.png")));
 		generateBtn.setSize(new Dimension(generateBtn.getIcon().getIconWidth(), generateBtn.getIcon().getIconHeight()));
 		
 		selSaveBtn.setContentAreaFilled(false);
@@ -86,8 +86,8 @@ public class GeneratePayslipsView extends JPanel {
 		selSaveBtn.setOpaque(false);
 		selSaveBtn.setForeground(null);
 		selSaveBtn.setFocusPainted(false);
-		selSaveBtn.setRolloverIcon(new ImageIcon(getClass().getResource("/buttons/select-r.png")));
-		selSaveBtn.setPressedIcon(new ImageIcon(getClass().getResource("/buttons/select-p.png")));
+		selSaveBtn.setRolloverIcon(new ImageIcon(getClass().getResource("images/buttons/select-r.png")));
+		selSaveBtn.setPressedIcon(new ImageIcon(getClass().getResource("images/buttons/select-p.png")));
 		selSaveBtn.setPreferredSize(new Dimension(selSaveBtn.getIcon().getIconWidth(), selSaveBtn.getIcon().getIconHeight()));
 		
 		initFont();

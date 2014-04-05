@@ -56,7 +56,7 @@ public class AddAdjustmentsView extends JPanel {
 	private final static int TEXTBOX_HEIGHT = 41;
 	
 	public AddAdjustmentsView() {
-		addBtn = new JButton(new ImageIcon(getClass().getResource("/buttons/add.png")));
+		addBtn = new JButton(new ImageIcon(getClass().getResource("images/buttons/add.png")));
 		
 		selectClientLbl = new JLabel("Select Client: ");
 		selectPersLbl = new JLabel("Select Personnel: ");
@@ -64,8 +64,8 @@ public class AddAdjustmentsView extends JPanel {
 		reasonLbl = new JLabel("Reason: ");
 		statusLbl = new JLabel("Status: Adjustment \"N?A\" successfully added!");
 		
-		amountTextFld = new CustomTextField("Amount", "/effects/in.png", "/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
-		reasonTextFld = new CustomTextField("Reason", "/effects/in.png", "/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
+		amountTextFld = new CustomTextField("Amount", "images/effects/in.png", "images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
+		reasonTextFld = new CustomTextField("Reason", "images/effects/in.png", "images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
 		
 		personnelCBox = new JComboBox();
 		clientCBox = new JComboBox();
@@ -95,8 +95,8 @@ public class AddAdjustmentsView extends JPanel {
 		addBtn.setOpaque(false);
 		addBtn.setForeground(null);
 		addBtn.setFocusPainted(false);
-		addBtn.setRolloverIcon(new ImageIcon(getClass().getResource("/buttons/add-r.png")));
-		addBtn.setPressedIcon(new ImageIcon(getClass().getResource("/buttons/add-p.png")));
+		addBtn.setRolloverIcon(new ImageIcon(getClass().getResource("images/buttons/add-r.png")));
+		addBtn.setPressedIcon(new ImageIcon(getClass().getResource("images/buttons/add-p.png")));
 		addBtn.setSize(new Dimension(addBtn.getIcon().getIconWidth(), addBtn.getIcon().getIconHeight()));
 		
 		addComponentsToPane();

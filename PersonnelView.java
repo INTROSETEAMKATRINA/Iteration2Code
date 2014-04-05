@@ -30,8 +30,8 @@ public class PersonnelView extends JPanel {
 	
 	public PersonnelView() {
 		
-		addBtn = new JButton(new ImageIcon(getClass().getResource("/buttons/add.png")));
-		selSaveBtn = new JButton(new ImageIcon(getClass().getResource("/buttons/select.png")));
+		addBtn = new JButton(new ImageIcon(getClass().getResource("images/buttons/add.png")));
+		selSaveBtn = new JButton(new ImageIcon(getClass().getResource("images/buttons/select.png")));
 		
 		saveLbl = new JLabel("Save Location: ");
 		locationLbl = new JLabel("C:// ");
@@ -55,8 +55,8 @@ public class PersonnelView extends JPanel {
 		addBtn.setOpaque(false);
 		addBtn.setForeground(null);
 		addBtn.setFocusPainted(false);
-		addBtn.setRolloverIcon(new ImageIcon(getClass().getResource("/buttons/add-r.png")));
-		addBtn.setPressedIcon(new ImageIcon(getClass().getResource("/buttons/add-p.png")));
+		addBtn.setRolloverIcon(new ImageIcon(getClass().getResource("images/buttons/add-r.png")));
+		addBtn.setPressedIcon(new ImageIcon(getClass().getResource("images/buttons/add-p.png")));
 		addBtn.setSize(new Dimension(addBtn.getIcon().getIconWidth(), addBtn.getIcon().getIconHeight()));
 		
 		selSaveBtn.setContentAreaFilled(false);
@@ -64,8 +64,8 @@ public class PersonnelView extends JPanel {
 		selSaveBtn.setOpaque(false);
 		selSaveBtn.setForeground(null);
 		selSaveBtn.setFocusPainted(false);
-		selSaveBtn.setRolloverIcon(new ImageIcon(getClass().getResource("/buttons/select-r.png")));
-		selSaveBtn.setPressedIcon(new ImageIcon(getClass().getResource("/buttons/select-p.png")));
+		selSaveBtn.setRolloverIcon(new ImageIcon(getClass().getResource("images/buttons/select-r.png")));
+		selSaveBtn.setPressedIcon(new ImageIcon(getClass().getResource("images/buttons/select-p.png")));
 		selSaveBtn.setPreferredSize(new Dimension(selSaveBtn.getIcon().getIconWidth(), selSaveBtn.getIcon().getIconHeight()));
 		
 		addComponentsToPane();

@@ -24,15 +24,18 @@ public class PayrollSystem{
 			Class.forName("com.mysql.jdbc.Driver");
 			String url = "jdbc:mysql://localhost:3306/payroll system";
 			String uname = "root";
-			String pass = "1991829";
+			String pass = "p@ssword";
 			con = DriverManager.getConnection (url, uname, pass);
 			System.out.println("Connected!");
 			String inputPass = null;
 			boolean loggedIn = false;
 			JPasswordField pwd = new JPasswordField(10);
 			int action = JOptionPane.OK_OPTION;
-			
-			while(action == JOptionPane.OK_OPTION && !loggedIn){
+			PayrollSystemModel model = new PayrollSystemModel(con);
+			PayrollSystemView view = new PayrollSystemView(model);
+			view.setVisible(true);
+			PayrollSystemController controller = new PayrollSystemController(model, view, con);
+			/*while(action == JOptionPane.OK_OPTION && !loggedIn){
 				pwd = new JPasswordField(10);
 				pwd.addAncestorListener(new RequestFocusListener());
 				//RequestFocusListener is an External Class
@@ -53,7 +56,7 @@ public class PayrollSystem{
 					}
 					rs.close();
 				}
-			}
+			}*/
 		}catch(Exception e){
 			JOptionPane.showMessageDialog(null, "Database not found! Program will now exit.", "Database not found! Program will now exit.", JOptionPane.ERROR_MESSAGE); 
 			System.out.println("Error: " + e);

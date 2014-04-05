@@ -48,10 +48,9 @@ public class SettingsView extends JPanel  {
 		changePassPanel = new ChangePasswordView();
 		accessPanel = new JPanel();
 		modifyVarPanel = new ModifyClientVariablesView();
-		
 		try {
-			settings_img = ImageIO.read(getClass().getResource("/settings.png"));
-			side_img = ImageIO.read(getClass().getResource("/side_white.png"));
+			settings_img = ImageIO.read(getClass().getResource("images/settings.png"));
+			side_img = ImageIO.read(getClass().getResource("images/side_white.png"));
 		} catch (IOException e) {}
 		
 		modifyUI();
@@ -112,9 +111,9 @@ public class SettingsView extends JPanel  {
 
 	private void initButtons()
 	{
-		ImageIcon normal = loadScaledImage("/effects/normal.png", .5f);
-		ImageIcon hover = loadScaledImage("/effects/hover.png", .5f);
-		ImageIcon pressed = loadScaledImage("/effects/pressed.png", .5f);
+		ImageIcon normal = loadScaledImage("images/effects/normal.png", .5f);
+		ImageIcon hover = loadScaledImage("images/effects/hover.png", .5f);
+		ImageIcon pressed = loadScaledImage("images/effects/pressed.png", .5f);
 		
 		changePassBtn.setContentAreaFilled(false);
 		changePassBtn.setBorder(null);

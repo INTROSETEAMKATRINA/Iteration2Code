@@ -89,7 +89,7 @@ public class PayrollSystemView extends JPanel {
 	private JPanel viewPersPanel;
 	private JPanel viewSummPanel;
 
-	private JPanel loginPanel;
+	private LogInView loginPanel;
 	private JPanel settingsPanel;
 	private static JPanel blackPane;
 	
@@ -128,18 +128,18 @@ public class PayrollSystemView extends JPanel {
 		homepane3 = new JPanel();
 		homepane4 = new JPanel();
 		menuPanel = new JPanel();
-		
 
-		status1 = new JLabel("Last Checked: 03-16-14", loadScaledImage("/icons/clock.png",.55f),JLabel.RIGHT);
-		status2 = new JLabel("Last Updated Data: 01-01-14 ( FedEx )", loadScaledImage("/icons/paper.png",.55f),JLabel.RIGHT);
-		status3 = new JLabel("Last Generated Report: 01-01-14 ( LBC )", loadScaledImage("/icons/paper.png",.55f),JLabel.RIGHT);
-		status4 = new JLabel("Last Client Modified: 01-01-14 ( LBC )", loadScaledImage("/icons/paper.png",.55f),JLabel.RIGHT);
-		status5 = new JLabel("Last Generated Payslips: 01-01-14 ( LBC )", loadScaledImage("/icons/files.png",.55f),JLabel.RIGHT);
-		status6 = new JLabel("Last Back-Up: 01-01-14", loadScaledImage("/icons/disk.png",.55f),JLabel.RIGHT);
+
+		status1 = new JLabel("Last Checked: 03-16-14", loadScaledImage("images/icons/clock.png",.55f),JLabel.RIGHT);
+		status2 = new JLabel("Last Updated Data: 01-01-14 ( FedEx )", loadScaledImage("images/icons/paper.png",.55f),JLabel.RIGHT);
+		status3 = new JLabel("Last Generated Report: 01-01-14 ( LBC )", loadScaledImage("images/icons/paper.png",.55f),JLabel.RIGHT);
+		status4 = new JLabel("Last Client Modified: 01-01-14 ( LBC )", loadScaledImage("images/icons/paper.png",.55f),JLabel.RIGHT);
+		status5 = new JLabel("Last Generated Payslips: 01-01-14 ( LBC )", loadScaledImage("images/icons/files.png",.55f),JLabel.RIGHT);
+		status6 = new JLabel("Last Back-Up: 01-01-14", loadScaledImage("images/icons/disk.png",.55f),JLabel.RIGHT);
 		
 		credits = new JLabel("MADE BY: TEAM KATRINA");
 
-		versionLbl = new JLabel("VERSION 2.0", loadScaledImage("/icons/sun.png",.55f),JLabel.RIGHT);
+		versionLbl = new JLabel("VERSION 2.0", loadScaledImage("images/icons/sun.png",.55f),JLabel.RIGHT);
 
 		clientCnt = new JLabel("2");
 		clientLbl = new JLabel("CLIENT");
@@ -149,15 +149,15 @@ public class PayrollSystemView extends JPanel {
 		currentDate = new JLabel("01/01/14");
 		dateLbl = new JLabel("         MONTH            /            DAY            /            YEAR",JLabel.CENTER);
 		
-		title_img = loadImage("/appTitle.png");
-		top_img = loadImage("/top_white.png");
-		side_img = loadImage("/side_white.png");
-		import_img = loadImage("/import.jpg");
-		generate_img = loadImage("/generate.jpg");
-		view_img = loadImage("/view.jpg");
-		misc_img = loadImage("/misc.jpg");
-		total_img = loadImage("/total_records.jpg");
-		date_img = loadImage("/current_time.jpg");
+		title_img = loadImage("images/appTitle.png");
+		top_img = loadImage("images/top_white.png");
+		side_img = loadImage("images/side_white.png");
+		import_img = loadImage("images/import.jpg");
+		generate_img = loadImage("images/generate.jpg");
+		view_img = loadImage("images/view.jpg");
+		misc_img = loadImage("images/misc.jpg");
+		total_img = loadImage("images/total_records.jpg");
+		date_img = loadImage("images/current_time.jpg");
 		
 		addAdjPanel = new AddAdjustmentsView(); 
 		genPayslipsPanel = new GeneratePayslipsView();
@@ -166,7 +166,7 @@ public class PayrollSystemView extends JPanel {
 		removeAdjPanel = new RemoveAdjustmentsView(model); 
 		removePersPanel = new RemovePersonnelView(model); 
 		viewPersPanel = new ViewPersonnelView(model); 
-		viewSummPanel = new ViewSummaryReportView(model); 
+		viewSummPanel = new ViewSummaryReportView(model);
 		settingsPanel = new SettingsView();
 		loginPanel = new LogInView();
 		addDTRPanel = new DTRView();
@@ -188,8 +188,8 @@ public class PayrollSystemView extends JPanel {
 		homeBtn = new CustomToggleButton("Home                                ");
 		addAdjBtn = new CustomToggleButton("Add Adjustments           ");
 		remAdjBtn = new CustomToggleButton("Remove Adjustments   ");
-		settingsBtn = new JButton(loadScaledImage("/buttons/settings.png", .50f));
-		nextBtn = new JButton(loadScaledImage("/buttons/next.png", .50f));
+		settingsBtn = new JButton(loadScaledImage("images/buttons/settings.png", .50f));
+		nextBtn = new JButton(loadScaledImage("images/buttons/next.png", .50f));
 		backUpBtn = new CustomToggleButton("Back Up Data                  ");
 		addPersonnelBtn = new CustomToggleButton("  Personnel                           ");
 		addDTRBtn = new CustomToggleButton("   DTR (Daily Time Record)");
@@ -551,8 +551,8 @@ public class PayrollSystemView extends JPanel {
 		nextBtn.setOpaque(false);
 		nextBtn.setForeground(null);
 		nextBtn.setFocusPainted(false);
-		nextBtn.setRolloverIcon(loadScaledImage("/buttons/next-r.png", .5f));
-		nextBtn.setPressedIcon(loadScaledImage("/buttons/next-p.png", .5f));
+		nextBtn.setRolloverIcon(loadScaledImage("images/buttons/next-r.png", .5f));
+		nextBtn.setPressedIcon(loadScaledImage("images/buttons/next-p.png", .5f));
 		nextBtn.setPreferredSize(new Dimension(nextBtn.getIcon().getIconWidth(), nextBtn.getIcon().getIconHeight()));
 		nextBtn.setSize(new Dimension(nextBtn.getIcon().getIconWidth(), nextBtn.getIcon().getIconHeight()));
 		
@@ -561,14 +561,14 @@ public class PayrollSystemView extends JPanel {
 		settingsBtn.setOpaque(false);
 		settingsBtn.setForeground(null);
 		settingsBtn.setFocusPainted(false);
-		settingsBtn.setRolloverIcon(loadScaledImage("/buttons/settings-r.png", .5f));
-		settingsBtn.setPressedIcon(loadScaledImage("/buttons/settings-p.png", .5f));
+		settingsBtn.setRolloverIcon(loadScaledImage("images/buttons/settings-r.png", .5f));
+		settingsBtn.setPressedIcon(loadScaledImage("images/buttons/settings-p.png", .5f));
 		settingsBtn.setPreferredSize(new Dimension(settingsBtn.getIcon().getIconWidth(), settingsBtn.getIcon().getIconHeight()));
 		settingsBtn.setSize(new Dimension(settingsBtn.getIcon().getIconWidth(), settingsBtn.getIcon().getIconHeight()));
 		
-		ImageIcon normal = loadScaledImage("/effects/normal.png", .5f);
-		ImageIcon hover = loadScaledImage("/effects/hover.png", .5f);
-		ImageIcon pressed = loadScaledImage("/effects/pressed.png", .5f);
+		ImageIcon normal = loadScaledImage("images/effects/normal.png", .5f);
+		ImageIcon hover = loadScaledImage("images/effects/hover.png", .5f);
+		ImageIcon pressed = loadScaledImage("images/effects/pressed.png", .5f);
 		
 		homeBtn.setContentAreaFilled(false);
 		homeBtn.setBorder(null);
@@ -1116,5 +1116,9 @@ public class PayrollSystemView extends JPanel {
 			return true;
 		}
 		return false;
+	}
+	
+	public LogInView getLogInView(){
+		return loginPanel;
 	}
 }

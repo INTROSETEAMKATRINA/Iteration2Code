@@ -80,7 +80,7 @@ public class ModifyClientVariablesView extends JPanel {
 	private final static int TEXTBOX_HEIGHT = 41;
 	
 	public ModifyClientVariablesView(){
-		applyBtn = new JButton(new ImageIcon(getClass().getResource("/buttons/apply.png")));
+		applyBtn = new JButton(new ImageIcon(getClass().getResource("images/buttons/apply.png")));
 		
 		var1Lbl = new JLabel("Regular Overtime: ");
 		var2Lbl = new JLabel("Regular NSD: ");
@@ -96,18 +96,18 @@ public class ModifyClientVariablesView extends JPanel {
 		var12Lbl = new JLabel("Special Holiday RD: ");
 		statusLbl = new JLabel("Status: Variables succesfully updated!");
 		
-		var1TxtFld = new CustomTextField(Float.toString(rotVar), "/effects/in.png", "/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
-		var2TxtFld = new CustomTextField(Float.toString(rnsdVar), "/effects/in.png", "/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
-		var3TxtFld = new CustomTextField(Float.toString(lhRate), "/effects/in.png", "/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
-		var4TxtFld = new CustomTextField(Float.toString(lhVar), "/effects/in.png", "/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
-		var5TxtFld = new CustomTextField(Float.toString(lhOTVar), "/effects/in.png", "/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
-		var6TxtFld = new CustomTextField(Float.toString(lhNSDVar), "/effects/in.png", "/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
-		var7TxtFld = new CustomTextField(Float.toString(lhRDVar), "/effects/in.png", "/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
-		var8TxtFld = new CustomTextField(Float.toString(shRate), "/effects/in.png", "/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
-		var9TxtFld = new CustomTextField(Float.toString(shVar), "/effects/in.png", "/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
-		var10TxtFld = new CustomTextField(Float.toString(shOTVar), "/effects/in.png", "/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
-		var11TxtFld = new CustomTextField(Float.toString(shNSDVar), "/effects/in.png", "/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
-		var12TxtFld = new CustomTextField(Float.toString(shRDVar), "/effects/in.png", "/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
+		var1TxtFld = new CustomTextField(Float.toString(rotVar), "images/effects/in.png", "images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
+		var2TxtFld = new CustomTextField(Float.toString(rnsdVar), "images/effects/in.png", "images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
+		var3TxtFld = new CustomTextField(Float.toString(lhRate), "images/effects/in.png", "images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
+		var4TxtFld = new CustomTextField(Float.toString(lhVar), "images/effects/in.png", "images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
+		var5TxtFld = new CustomTextField(Float.toString(lhOTVar), "images/effects/in.png", "images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
+		var6TxtFld = new CustomTextField(Float.toString(lhNSDVar), "images/effects/in.png", "images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
+		var7TxtFld = new CustomTextField(Float.toString(lhRDVar), "images/effects/in.png", "images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
+		var8TxtFld = new CustomTextField(Float.toString(shRate), "images/effects/in.png", "images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
+		var9TxtFld = new CustomTextField(Float.toString(shVar), "images/effects/in.png", "images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
+		var10TxtFld = new CustomTextField(Float.toString(shOTVar), "images/effects/in.png", "images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
+		var11TxtFld = new CustomTextField(Float.toString(shNSDVar), "images/effects/in.png", "images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
+		var12TxtFld = new CustomTextField(Float.toString(shRDVar), "images/effects/in.png", "images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
 		
 		panel = new JPanel();
 		scrollPane = new JScrollPane(panel);
@@ -148,8 +148,8 @@ public class ModifyClientVariablesView extends JPanel {
 		applyBtn.setOpaque(false);
 		applyBtn.setForeground(null);
 		applyBtn.setFocusPainted(false);
-		applyBtn.setRolloverIcon(new ImageIcon(getClass().getResource("/buttons/apply-r.png")));
-		applyBtn.setPressedIcon(new ImageIcon(getClass().getResource("/buttons/apply-p.png")));
+		applyBtn.setRolloverIcon(new ImageIcon(getClass().getResource("images/buttons/apply-r.png")));
+		applyBtn.setPressedIcon(new ImageIcon(getClass().getResource("images/buttons/apply-p.png")));
 		applyBtn.setSize(new Dimension(applyBtn.getIcon().getIconWidth(), applyBtn.getIcon().getIconHeight()));
 		
 		addComponentsToPane();

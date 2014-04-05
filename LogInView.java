@@ -47,14 +47,14 @@ public class LogInView extends JPanel  {
 	private static Color transparent_red = new Color(242,109,125,200);
 	
 	public LogInView() {
-		loginBtn = new JButton(loadScaledImage("/buttons/login.png",.5f));
-		helpBtn = new JButton(loadScaledImage("/icons/help.png",.5f));
+		loginBtn = new JButton(loadScaledImage("images/buttons/login.png",.5f));
+		helpBtn = new JButton(loadScaledImage("images/icons/help.png",.5f));
 		
 		try {
-			help_img = ImageIO.read(getClass().getResource("/icons/help.png"));
+			help_img = ImageIO.read(getClass().getResource("images/icons/help.png"));
 		} catch (IOException e1) {}
 				
-		passwordTxtFld = new CustomPTextField("Enter password",  "/effects/in.png", "/effects/out.png", 250, 47);
+		passwordTxtFld = new CustomPTextField("Enter password",  "images/effects/in.png", "images/effects/out.png", 250, 47);
 		
 		modifyUI();
 		
@@ -98,22 +98,6 @@ public class LogInView extends JPanel  {
 		label.setForeground(Color.WHITE);
 		
 		btip1 = new BalloonTip(passwordTxtFld, label, rbs, Orientation.LEFT_BELOW, AttachLocation.SOUTH, 60, 10, false);
-		loginBtn.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent arg0) {
-				if(!passwordTxtFld.getText().equals("INTROSE"))
-				{
-					FadingUtils.fadeInBalloon(btip1, new ActionListener(){
-						public void actionPerformed(ActionEvent e) { btip1.setVisible(true); }
-		        		}, 200, 16);
-				}
-				else
-				{
-					setVisible(false);
-					PayrollSystemView.showBlackPane(false);
-				}
-			}
-		});
 		
 		passwordTxtFld.addFocusListener(new FocusListener()
 		{
@@ -139,8 +123,8 @@ public class LogInView extends JPanel  {
 		loginBtn.setOpaque(false);
 		loginBtn.setForeground(null);
 		loginBtn.setFocusPainted(false);
-		loginBtn.setRolloverIcon(loadScaledImage("/buttons/login-r.png", .5f));
-		loginBtn.setPressedIcon(loadScaledImage("/buttons/login-p.png", .5f));
+		loginBtn.setRolloverIcon(loadScaledImage("images/buttons/login-r.png", .5f));
+		loginBtn.setPressedIcon(loadScaledImage("images/buttons/login-p.png", .5f));
 		loginBtn.setPreferredSize(new Dimension(loginBtn.getIcon().getIconWidth(), loginBtn.getIcon().getIconHeight()));
 		loginBtn.setSize(new Dimension(loginBtn.getIcon().getIconWidth(), loginBtn.getIcon().getIconHeight()));
 		
@@ -149,8 +133,8 @@ public class LogInView extends JPanel  {
 		helpBtn.setOpaque(false);
 		helpBtn.setForeground(null);
 		helpBtn.setFocusPainted(false);
-		helpBtn.setRolloverIcon(loadScaledImage("/icons/help.png", .5f));
-		helpBtn.setPressedIcon(loadScaledImage("/icons/help.png", .5f));
+		helpBtn.setRolloverIcon(loadScaledImage("images/icons/help.png", .5f));
+		helpBtn.setPressedIcon(loadScaledImage("images/icons/help.png", .5f));
 		helpBtn.setPreferredSize(new Dimension(helpBtn.getIcon().getIconWidth(), helpBtn.getIcon().getIconHeight()));
 		helpBtn.setSize(new Dimension(helpBtn.getIcon().getIconWidth(), helpBtn.getIcon().getIconHeight()));
 		helpBtn.setVisible(false);
@@ -196,5 +180,19 @@ public class LogInView extends JPanel  {
 		Image img = img_icon.getImage().getScaledInstance(new_width,new_height,java.awt.Image.SCALE_SMOOTH);  
 		img_icon = new ImageIcon(img);
 		return img_icon;
+	}
+	
+	public void setLoginListener(ActionListener a){
+		loginBtn.addActionListener(a);
+	}
+	
+	public void fadeInBallon(){
+		FadingUtils.fadeInBalloon(btip1, new ActionListener(){
+			public void actionPerformed(ActionEvent e) { btip1.setVisible(true); }
+		}, 100, 16);
+	}
+	
+	public String getPassword(){
+		return passwordTxtFld.getText();
 	}
 }

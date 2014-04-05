@@ -36,7 +36,7 @@ public class PayrollSystemController{
 	private PayrollSystemModel model;
 	private PayrollSystemView view;
 	private String directory = "periodStartDate.txt";
-	
+	private LogInView loginPanel;
 	public PayrollSystemController(PayrollSystemModel model, PayrollSystemView view, Connection con){
 		this.model = model;
 		this.view = view;
@@ -54,7 +54,8 @@ public class PayrollSystemController{
 		}
 		model.setPeriodStartDate(periodStartDate);
 		
-		
+		loginPanel = view.getLogInView();
+		loginPanel.setLoginListener(new loginListener());
 		view.setAddPersonnelListener(new addPersonnelListener());
 		view.setPersonnelFileLocationListener(new personnelFileLocationListener());
 		view.setAddDTRListener(new addDTRListener());
@@ -69,6 +70,18 @@ public class PayrollSystemController{
 		*/
 	}
 
+	//Login Button Listener
+	class loginListener implements ActionListener{
+		public void actionPerformed(ActionEvent arg0) {
+			if(!loginPanel.getPassword().equals("INTROSE")){
+				loginPanel.fadeInBallon();
+			}
+			else{
+				loginPanel.setVisible(false);
+				PayrollSystemView.showBlackPane(false);
+			}
+		}
+	}
 	//Main Menu Buttons Listeners
 
 	//Add Personnel Button in Main Menu
@@ -91,7 +104,7 @@ public class PayrollSystemController{
 	class personnelFileLocationListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			File f = view.fileChooser();
-			if(f!=null){
+			if(f.isFile()){
 				view.setPersonnelFileLocation(f.getPath());
 			}else{
 				System.out.println("No file chosen");
@@ -102,7 +115,7 @@ public class PayrollSystemController{
 	class addDTRListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			File f = new File(view.getDTRFileLocation());
-			if(f.isFile()){
+			if(f!=null){
 				int add = model.addDTR(f, periodStartDate);
 				if(add == 0){
 					view.showSuccess();
