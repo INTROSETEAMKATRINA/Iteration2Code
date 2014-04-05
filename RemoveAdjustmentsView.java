@@ -18,6 +18,7 @@ import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -26,6 +27,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JOptionPane;
 
+import java.util.ArrayList;
 public class RemoveAdjustmentsView extends JPanel {
 	
 	private JLabel selectClientLbl;
@@ -39,7 +41,9 @@ public class RemoveAdjustmentsView extends JPanel {
 	private JComboBox clientCBox;
 	private JComboBox adjCBox;
 	
+	private PayrollSystemModel model;
 	public RemoveAdjustmentsView(PayrollSystemModel model) {
+		this.model = model;
 		removeBtn = new JButton(new ImageIcon(getClass().getResource("images/buttons/remove.png")));
 		
 		adjCBox = new JComboBox();
@@ -200,13 +204,9 @@ public class RemoveAdjustmentsView extends JPanel {
 		}
 		return false;
 	}
-	/*
+	
 	public void setRemoveListener(ActionListener list){
 		removeBtn.addActionListener(list);
-	}
-	
-	public void setCancelListener(ActionListener list){
-		cancelBtn.addActionListener(list);
 	}
 	
 	public void setClientListener(ActionListener list){
@@ -215,7 +215,7 @@ public class RemoveAdjustmentsView extends JPanel {
 	
 	public void setPersonnelListener(ActionListener list){
 		personnelCBox.addActionListener(list);
-	}*/
+	}
 	
 	public void showSuccess(){
 		JOptionPane.showMessageDialog(null, "Successfully removed adjustment!", "Successfully removed adjustment!", JOptionPane.PLAIN_MESSAGE); 
@@ -226,27 +226,27 @@ public class RemoveAdjustmentsView extends JPanel {
 	}
 		
 	public void updatePersonnelList(){
-	/*	personnelCBox.removeAllItems();
+		personnelCBox.removeAllItems();
 		ArrayList<String> personnel = model.getPersonnelList(getClient());
 		
 		for(String t : personnel)
-			personnelCBox.addItem(t);*/
+			personnelCBox.addItem(t);
 	}
 	
 	public void updateClientList(){
-	/*	clientCBox.removeAllItems();
+		clientCBox.removeAllItems();
 		ArrayList<String> clients = model.getClientList();
 		
 		for(String t : clients)
-			clientCBox.addItem(t);*/
+			clientCBox.addItem(t);
 	}
 	
 	public void updateAdjustmentsList(){
-		/*adjCBox.removeAllItems();
+		adjCBox.removeAllItems();
 		ArrayList<String> adjustments = model.getAdjustmentsList(getTIN());
 		
 		for(String t : adjustments)
-			adjCBox.addItem(t);*/
+			adjCBox.addItem(t);
 	}
 	
 	public String getClient(){ 

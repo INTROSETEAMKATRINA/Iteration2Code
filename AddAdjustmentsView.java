@@ -55,7 +55,9 @@ public class AddAdjustmentsView extends JPanel {
 	private final static int TEXTBOX_WIDTH = 180;
 	private final static int TEXTBOX_HEIGHT = 41;
 	
-	public AddAdjustmentsView() {
+	private PayrollSystemModel model;
+	public AddAdjustmentsView(PayrollSystemModel model) {
+		this.model = model;
 		addBtn = new JButton(new ImageIcon(getClass().getResource("images/buttons/add.png")));
 		
 		selectClientLbl = new JLabel("Select Client: ");
@@ -233,10 +235,6 @@ public class AddAdjustmentsView extends JPanel {
 		addBtn.addActionListener(list);
 	}
 	
-	/*public void setCancelListener(ActionListener list){
-		cancelBtn.addActionListener(list);
-	}*/
-	
 	public void setClientListener(ActionListener list){
 		clientCBox.addActionListener(list);
 	}
@@ -282,20 +280,20 @@ public class AddAdjustmentsView extends JPanel {
 	}
 	
 	public void updatePersonnelList(){
-		//personnelCBox.removeAllItems();
-		//ArrayList<String> personnel = model.getPersonnelList((String)clientCBox.getSelectedItem());
+		personnelCBox.removeAllItems();
+		ArrayList<String> personnel = model.getPersonnelList((String)clientCBox.getSelectedItem());
 		
-		//for(String t : personnel){
-		//	personnelCBox.addItem(t);
-	//	}
+		for(String t : personnel){
+			personnelCBox.addItem(t);
+		}
 	}
 	
 	public void updateClientList(){
-		//clientCBox.removeAllItems();
-		//ArrayList<String> clients = model.getClientList();
-		//for(String t : clients){
-		//	clientCBox.addItem(t);
-		//}
+		clientCBox.removeAllItems();
+		ArrayList<String> clients = model.getClientList();
+		for(String t : clients){
+			clientCBox.addItem(t);
+		}
 	}
 	
 }

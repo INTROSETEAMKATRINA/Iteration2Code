@@ -38,6 +38,8 @@ public class PayrollSystemController{
 	private String directory = "periodStartDate.txt";
 	private LogInView loginPanel;
 	private GeneratePayslipsView generatePayslips;
+	private AddAdjustmentsView addAdjustments;
+	private RemoveAdjustmentsView removeAdjustments;
 	public PayrollSystemController(PayrollSystemModel model, PayrollSystemView view, Connection con){
 		this.model = model;
 		this.view = view;
@@ -61,6 +63,15 @@ public class PayrollSystemController{
 		generatePayslips = view.getGenPayslips();
 		generatePayslips.setSelectFileListener(new fileSaverGeneratePayslipsButtonListener());
 		generatePayslips.setGenerateListener(new generatePayslipsButtonListener());
+		
+		addAdjustments = view.getAdjPanel();
+		addAdjustments.setClientListener(new clientListAddAdjustmentListener());
+		addAdjustments.setAddListener(new addAdjustmentButtonListener());
+		
+		removeAdjustments = view.getRemAdjPanel();
+		removeAdjustments.setClientListener(new clientListRemoveAdjustmentListener());
+		removeAdjustments.setPersonnelListener(new personnelListRemoveAdjustmentListener());
+		removeAdjustments.setRemoveListener(new removeAdjustmentButtonListener());
 		
 		view.setAddPersonnelListener(new addPersonnelListener());
 		view.setPersonnelFileLocationListener(new personnelFileLocationListener());
@@ -146,6 +157,63 @@ public class PayrollSystemController{
 		}
 	}
 	
+	//Listeners in Adjustments view
+	//Add adjustments button in add adjustments view
+	class addAdjustmentButtonListener implements ActionListener{
+		public void actionPerformed(ActionEvent e){
+			String type = addAdjustments.getTypeAdjustment();
+			float adjustment = addAdjustments.getAdjustment();
+			String tin = addAdjustments.getTIN();
+			if(type.length()!=0 && adjustment !=0 && tin.length() != 0){
+				if(addAdjustments.askConfirmation()){
+					model.addAdjustment(type, adjustment, tin, periodStartDate);
+					addAdjustments.showSuccess();
+					addAdjustments.clear();
+				}
+			}else
+				addAdjustments.showWrongInput();
+		}
+	}
+
+	//client list combo box listener in add adjustments view
+	class clientListAddAdjustmentListener implements ActionListener{
+		public void actionPerformed(ActionEvent e){
+			addAdjustments.updatePersonnelList();
+		}
+	}
+	
+	//listeners in remove adjustments view
+	//remove adjustments in remove adjustments view
+	class removeAdjustmentButtonListener implements ActionListener{
+		public void actionPerformed(ActionEvent e){
+			if(removeAdjustments.getNumAdjustments()>0){
+				String type = removeAdjustments.getTypeAdjustment();
+				float adjustment = removeAdjustments.getAdjustment();
+				String tin = removeAdjustments.getTIN();
+				if(removeAdjustments.askConfirmation()){
+					model.removeAdjustment(type, adjustment, tin, periodStartDate);
+					removeAdjustments.updateAdjustmentsList();
+					removeAdjustments.showSuccess();
+				}
+			}else
+				removeAdjustments.showNoAdjustments();
+		}
+	}
+
+	//client list combo box in remove adjustments view
+	class clientListRemoveAdjustmentListener implements ActionListener{
+		public void actionPerformed(ActionEvent e){
+			removeAdjustments.updatePersonnelList();
+		}
+	}
+
+	//personnel list combo box in remove adjustments view
+	class personnelListRemoveAdjustmentListener implements ActionListener{
+		public void actionPerformed(ActionEvent e){
+			removeAdjustments.updateAdjustmentsList();
+		}
+	}
+	
 /*
 	//Add adjustment button in main menu
 	class addAdjustmentListener implements ActionListener{
@@ -179,90 +247,9 @@ public class PayrollSystemController{
 		}
 	}
 
-	//Generate payslips button in main menu
-	class generatePayslipsListener implements ActionListener{
-		public void actionPerformed(ActionEvent e){
-		//	generatePayslips.updateClientList();
-		//	generatePayslips.setVisible(true);
-		}
-	}
 
-	//Listeners in Adjustments view
-	//Add adjustments button in add adjustments view
-	class addAdjustmentButtonListener implements ActionListener{
-		public void actionPerformed(ActionEvent e){
-			String type = addAdjustments.getTypeAdjustment();
-			float adjustment = addAdjustments.getAdjustment();
-			String tin = addAdjustments.getTIN();
-			if(type.length()!=0 && adjustment !=0 && tin.length() != 0){
-				if(addAdjustments.askConfirmation()){
-					model.addAdjustment(type, adjustment, tin, periodStartDate);
-					addAdjustments.showSuccess();
-					addAdjustments.clear();
-				}
-			}else
-				addAdjustments.showWrongInput();
-		}
-	}
 
-	//Cancel add adjustments in add adjustments view
-	class cancelAddAdjustmentButtonListener implements ActionListener{
-		public void actionPerformed(ActionEvent e){
-			addAdjustments.clear();
-			addAdjustments.setVisible(false);
-		}
-	}
-
-	//client list combo box listener in add adjustments view
-	class clientListAddAdjustmentListener implements ActionListener{
-		public void actionPerformed(ActionEvent e){
-			addAdjustments.updatePersonnelList();
-		}
-	}
-
-	//listeners in remove adjustments view
-	//remove adjustments in remove adjustments view
-	class removeAdjustmentButtonListener implements ActionListener{
-		public void actionPerformed(ActionEvent e){
-			if(removeAdjustments.getNumAdjustments()>0){
-				String type = removeAdjustments.getTypeAdjustment();
-				float adjustment = removeAdjustments.getAdjustment();
-				String tin = removeAdjustments.getTIN();
-				if(removeAdjustments.askConfirmation()){
-					model.removeAdjustment(type, adjustment, tin, periodStartDate);
-					removeAdjustments.updateAdjustmentsList();
-					removeAdjustments.showSuccess();
-				}
-			}else
-				removeAdjustments.showNoAdjustments();
-		}
-	}
-
-	//cancel remove adjustments in remove adjustments view
-	class cancelRemoveAdjustmentButtonListener implements ActionListener{
-		public void actionPerformed(ActionEvent e){
-			removeAdjustments.setVisible(false);
-		}
-	}
 	
-	class cancelViewSummaryReportListener implements ActionListener{
-		public void actionPerformed(ActionEvent e){
-			viewSummaryReport.setVisible(false);
-		}
-	}
-	//client list combo box in remove adjustments view
-	class clientListRemoveAdjustmentListener implements ActionListener{
-		public void actionPerformed(ActionEvent e){
-			removeAdjustments.updatePersonnelList();
-		}
-	}
-
-	//personnel list combo box in remove adjustments view
-	class personnelListRemoveAdjustmentListener implements ActionListener{
-		public void actionPerformed(ActionEvent e){
-			removeAdjustments.updateAdjustmentsList();
-		}
-	}
 
 	class addPeriodStartDateListener implements ActionListener{ //This is going to be updated
 		public void actionPerformed(ActionEvent e){

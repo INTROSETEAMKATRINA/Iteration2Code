@@ -78,13 +78,13 @@ public class PayrollSystemView extends JPanel {
 	private JPanel homepane1,homepane2,homepane3,homepane4;
 	
 	private JPanel menuPanel;
-	private JPanel addAdjPanel;
+	private AddAdjustmentsView addAdjPanel;
 	private JPanel addDTRPanel;
 	private JPanel addPersPanel;
 	private GeneratePayslipsView genPayslipsPanel;
 	private JPanel genSummaryPanel;
 	private JPanel modifyTaxPanel;
-	private JPanel removeAdjPanel;
+	private RemoveAdjustmentsView removeAdjPanel;
 	private JPanel removePersPanel;
 	private JPanel viewPersPanel;
 	private JPanel viewSummPanel;
@@ -159,7 +159,7 @@ public class PayrollSystemView extends JPanel {
 		total_img = loadImage("images/total_records.jpg");
 		date_img = loadImage("images/current_time.jpg");
 		
-		addAdjPanel = new AddAdjustmentsView(); 
+		addAdjPanel = new AddAdjustmentsView(model); 
 		genPayslipsPanel = new GeneratePayslipsView(model);
 		genSummaryPanel = new GenerateSummaryReportView();
 		modifyTaxPanel = new ModifyTaxTableView(); 
@@ -850,7 +850,7 @@ public class PayrollSystemView extends JPanel {
 				is_home = false;
 				showHome(false);
 				repaint();
-				
+				addAdjPanel.updateClientList();
 				addDTRPanel.setVisible(false);
 				addPersPanel.setVisible(false);
 				addAdjPanel.setVisible(true);
@@ -870,7 +870,7 @@ public class PayrollSystemView extends JPanel {
 				is_home = false;
 				showHome(false);
 				repaint();
-				
+				removeAdjPanel.updateClientList();
 				addDTRPanel.setVisible(false);
 				addPersPanel.setVisible(false);
 				addAdjPanel.setVisible(false);
@@ -1133,4 +1133,11 @@ public class PayrollSystemView extends JPanel {
 		return genPayslipsPanel;
 	}
 	
+	public AddAdjustmentsView getAdjPanel(){
+		return addAdjPanel;
+	}
+	
+	public RemoveAdjustmentsView getRemAdjPanel(){
+		return removeAdjPanel;
+	}
 }
