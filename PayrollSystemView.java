@@ -992,10 +992,10 @@ public class PayrollSystemView extends JPanel {
 		((DTRView) addDTRPanel).setFileLocationListener(list);
 	}
 	public String getDTRFileLocation(){
-		return ((PersonnelView) addPersPanel).getFileLocation();
+		return ((DTRView) addDTRPanel).getFileLocation();
 	}
 	public void setDTRFileLocation(String location){
-		((PersonnelView) addPersPanel).setFileLocation(location);
+		((DTRView) addDTRPanel).setFileLocation(location);
 	}
 	public void setAddPersonnelListener(ActionListener list){
 		((PersonnelView) addPersPanel).setAddPersonnelListener(list);

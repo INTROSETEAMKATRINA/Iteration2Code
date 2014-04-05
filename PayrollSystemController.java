@@ -75,7 +75,7 @@ public class PayrollSystemController{
 	class addPersonnelListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			File f = new File(view.getPersonnelFileLocation());
-			if(f!=null){
+			if(f.isFile()){
 				int add = model.addPersonnel(f, periodStartDate);
 				if(add == 0){
 					view.showSuccess();
@@ -102,7 +102,7 @@ public class PayrollSystemController{
 	class addDTRListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			File f = new File(view.getDTRFileLocation());
-			if(f!=null){
+			if(f.isFile()){
 				int add = model.addDTR(f, periodStartDate);
 				if(add == 0){
 					view.showSuccess();
