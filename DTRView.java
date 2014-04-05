@@ -31,7 +31,7 @@ public class DTRView extends JPanel {
 		
 		saveLbl = new JLabel("Save Location: ");
 		locationLbl = new JLabel();
-		statusLbl = new JLabel("Status: ");
+		statusLbl = new JLabel();
 		
 		modifyUI();
 	}

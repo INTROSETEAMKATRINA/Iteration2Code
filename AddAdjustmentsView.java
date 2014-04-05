@@ -64,7 +64,7 @@ public class AddAdjustmentsView extends JPanel {
 		selectPersLbl = new JLabel("Select Personnel: ");
 		amountLbl = new JLabel("Amount: ");
 		reasonLbl = new JLabel("Reason: ");
-		statusLbl = new JLabel("Status: Adjustment \"N?A\" successfully added!");
+		statusLbl = new JLabel();
 		
 		amountTextFld = new CustomTextField("Amount", "images/effects/in.png", "images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
 		reasonTextFld = new CustomTextField("Reason", "images/effects/in.png", "images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);

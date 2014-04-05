@@ -474,6 +474,25 @@ public class PayrollSystemModel {
 				float shOTVar = .30f*.30f;
 				float shNSDVar = .30f*.10f;
 				float shRDVar = 1.5f;
+				try{
+					float[] vars= getVariables(client);
+					rotVar = vars[0];
+					rnsdVar = vars[1];
+					lhRate = vars[2];
+					lhVar = vars[3];
+					lhOTVar = vars[4];
+					lhNSDVar = vars[5];
+					lhRDVar = vars[6];
+					shRate = vars[7];
+					shVar = vars[8];
+					shOTVar = vars[9];
+					shNSDVar = vars[10];
+					shRDVar = vars[11];
+					System.out.println("modified vars");
+				}catch(Exception ex){
+					System.out.println("default vars");
+				}
+				
 				
 				while(rs.next()){
 					String tin = rs.getString("TIN");
@@ -1303,10 +1322,13 @@ public class PayrollSystemModel {
 				ResultSet rs = st.executeQuery(sql);
 				if(rs.next()){
 					for(int i = 1;i < 13; i++){
+						if(rs.getString(i) == null || rs.getString(i) == "null"){
+							throw new Exception("No variable\\s");
+						}
+					}
+					for(int i = 1;i < 13; i++){
 						variables[i-1] = rs.getFloat(i);
 					}
-				}else{
-					throw new Exception();
 				}
             } catch (Exception ex) {
 				throw ex;

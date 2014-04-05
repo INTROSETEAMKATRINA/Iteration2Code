@@ -51,7 +51,7 @@ public class RemoveAdjustmentsView extends JPanel {
 		selectAdjLbl = new JLabel("Select Adjustment");
 		selectClientLbl = new JLabel("Select Client: ");
 		selectPersLbl = new JLabel("Select Personnel: ");
-		statusLbl = new JLabel("Status: Adjustment \"N?A\" successfully removed!");
+		statusLbl = new JLabel();
 		
 		personnelCBox = new JComboBox();
 		clientCBox = new JComboBox();

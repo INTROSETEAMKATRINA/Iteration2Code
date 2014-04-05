@@ -56,7 +56,7 @@ public class GeneratePayslipsView extends JPanel {
 		selectClientLbl = new JLabel("Select Client: ");
 		saveLbl = new JLabel("Save Location: ");
 		locationLbl = new JLabel();
-		statusLbl = new JLabel("Status: Adjustment \"N?A\" successfully added!");
+		statusLbl = new JLabel();
 		
 		clientCBox = new JComboBox();
 		

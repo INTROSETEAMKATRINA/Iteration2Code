@@ -127,7 +127,7 @@ public class PayrollSystemController{
 					view.setStatusPersonnel(ex.getMessage());
 				}
 			}else{
-				System.out.println("No file chosen");
+				view.setStatusPersonnel("No file chosen");
 			}
 		}
 	}
@@ -147,7 +147,7 @@ public class PayrollSystemController{
 		public void actionPerformed(ActionEvent e) {
 			view.setStatusDTR("Importing...");
 			File f = new File(view.getDTRFileLocation());
-			if(f!=null){
+			if(f.isFile()){
 				try{
 					model.addDTR(f, periodStartDate);
 					view.setStatusDTR("Excel successfully added!");
@@ -155,7 +155,7 @@ public class PayrollSystemController{
 					view.setStatusDTR(ex.getMessage());
 				}
 			}else{
-				System.out.println("No file chosen");
+				view.setStatusDTR("No file chosen");
 			}
 		}
 	}
@@ -374,13 +374,6 @@ public class PayrollSystemController{
 		}
 	}
 
-	//cancel generate payslips in generate payslips view
-	class cancelGeneratePayslipsButtonListener implements ActionListener{
-		public void actionPerformed(ActionEvent e){
-			generatePayslips.setFileDirectory(null);
-			generatePayslips.setVisible(false);
-		}
-	}
 
 	//choose where to save listener in generate payslips view
 	class fileSaverGeneratePayslipsButtonListener implements ActionListener{
