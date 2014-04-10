@@ -627,6 +627,7 @@ public class PayrollSystemModel {
 						}
 					}
 					wTax = wholeTable[bracket][0] + (wholeTable[bracket][1] * (netPay - wholeTable[bracket][taxStatusIndex+2])) / 100;
+					netPay -= wTax;
 					payslips.add(new Payslip(tin, assignment,  name, periodStartDate,
 					position, regularDaysWork, dailyRate,
 					grossPay, late, regularPay,
