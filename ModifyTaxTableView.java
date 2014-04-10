@@ -24,6 +24,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import java.math.BigDecimal;
+
 import java.util.ArrayList;
 public class ModifyTaxTableView extends JPanel {
 
@@ -312,29 +314,29 @@ public class ModifyTaxTableView extends JPanel {
 		return Integer.parseInt((String)bracketCBox.getSelectedItem()); 
 	}
 	
-	public float[] getTable() throws Exception{
-		float[] table = new float[8];
-		table[0] = Float.parseFloat(taxTxtFld.getText());
-		table[1] = Float.parseFloat(taxOverTxtFld.getText());
-		table[2] = Float.parseFloat(zTxtFld.getText());
-		table[3] = Float.parseFloat(sMeTxtFld.getText());
-		table[4] = Float.parseFloat(me1TxtFld.getText());
-		table[5] = Float.parseFloat(me2TxtFld.getText());
-		table[6] = Float.parseFloat(me3TxtFld.getText());
-		table[7] = Float.parseFloat(me4TxtFld.getText());
+	public BigDecimal[] getTable() throws Exception{
+		BigDecimal[] table = new BigDecimal[8];
+		table[0] = new BigDecimal(taxTxtFld.getText());
+		table[1] = new BigDecimal(taxOverTxtFld.getText());
+		table[2] = new BigDecimal(zTxtFld.getText());
+		table[3] = new BigDecimal(sMeTxtFld.getText());
+		table[4] = new BigDecimal(me1TxtFld.getText());
+		table[5] = new BigDecimal(me2TxtFld.getText());
+		table[6] = new BigDecimal(me3TxtFld.getText());
+		table[7] = new BigDecimal(me4TxtFld.getText());
 		return table;
 	}
 	
 	public void setTable(){
-		float table[] = model.getTaxTable(getBracket());
-		taxTxtFld.setHint(Float.toString(table[0]));
-		taxOverTxtFld.setHint(Float.toString(table[1]));
-		zTxtFld.setHint(Float.toString(table[2]));
-		sMeTxtFld.setHint(Float.toString(table[3]));
-		me1TxtFld.setHint(Float.toString(table[4]));
-		me2TxtFld.setHint(Float.toString(table[5]));
-		me3TxtFld.setHint(Float.toString(table[6]));
-		me4TxtFld.setHint(Float.toString(table[7]));
+		BigDecimal table[] = model.getTaxTable(getBracket());
+		taxTxtFld.setHint(table[0].toString());
+		taxOverTxtFld.setHint(table[1].toString());
+		zTxtFld.setHint(table[2].toString());
+		sMeTxtFld.setHint(table[3].toString());
+		me1TxtFld.setHint(table[4].toString());
+		me2TxtFld.setHint(table[5].toString());
+		me3TxtFld.setHint(table[6].toString());
+		me4TxtFld.setHint(table[7].toString());
 	}
 	
 	public void setBracketListener(ActionListener list){

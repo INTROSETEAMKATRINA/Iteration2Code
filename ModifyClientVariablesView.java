@@ -27,6 +27,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
+import java.math.BigDecimal;
+
 public class ModifyClientVariablesView extends JPanel {
 	
 	private JLabel selectClientLbl;
@@ -64,18 +66,18 @@ public class ModifyClientVariablesView extends JPanel {
 
 	private JButton applyBtn;
 	
-	private float rotVar = 1.25f;
-	private float rnsdVar = .10f;
-	private float lhRate = 30f;
-	private float lhVar = 1.00f;
-	private float lhOTVar = 1.30f;
-	private float lhNSDVar = 1.00f*.10f;
-	private float lhRDVar = 2.60f;
-	private float shRate = 0f;
-	private float shVar = .30f;
-	private float shOTVar = .30f*.30f;
-	private float shNSDVar = .30f*.10f;
-	private float shRDVar = 1.5f;
+	private BigDecimal rotVar = new BigDecimal("1.25");
+	private BigDecimal rnsdVar = new BigDecimal(".10");
+	private BigDecimal lhRate = new BigDecimal("30");
+	private BigDecimal lhVar = new BigDecimal("1.00");
+	private BigDecimal lhOTVar = new BigDecimal("1.30");
+	private BigDecimal lhNSDVar = new BigDecimal(".10");
+	private BigDecimal lhRDVar = new BigDecimal("2.60");
+	private BigDecimal shRate = new BigDecimal("0");
+	private BigDecimal shVar = new BigDecimal(".30");
+	private BigDecimal shOTVar = new BigDecimal(".09");
+	private BigDecimal shNSDVar = new BigDecimal(".03");
+	private BigDecimal shRDVar = new BigDecimal("1.5");
 	
 	//FIXED
 	private final static int FOOTER_HEIGHT = 70;
@@ -105,18 +107,18 @@ public class ModifyClientVariablesView extends JPanel {
 		var12Lbl = new JLabel("Special Holiday RD: ");
 		statusLbl = new JLabel();
 		
-		var1TxtFld = new CustomTextField(Float.toString(rotVar), "/images/effects/in.png", "/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
-		var2TxtFld = new CustomTextField(Float.toString(rnsdVar), "/images/effects/in.png", "/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
-		var3TxtFld = new CustomTextField(Float.toString(lhRate), "/images/effects/in.png", "/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
-		var4TxtFld = new CustomTextField(Float.toString(lhVar), "/images/effects/in.png", "/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
-		var5TxtFld = new CustomTextField(Float.toString(lhOTVar), "/images/effects/in.png", "/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
-		var6TxtFld = new CustomTextField(Float.toString(lhNSDVar), "/images/effects/in.png", "/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
-		var7TxtFld = new CustomTextField(Float.toString(lhRDVar), "/images/effects/in.png", "/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
-		var8TxtFld = new CustomTextField(Float.toString(shRate), "/images/effects/in.png", "/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
-		var9TxtFld = new CustomTextField(Float.toString(shVar), "/images/effects/in.png", "/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
-		var10TxtFld = new CustomTextField(Float.toString(shOTVar), "/images/effects/in.png", "/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
-		var11TxtFld = new CustomTextField(Float.toString(shNSDVar), "/images/effects/in.png", "/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
-		var12TxtFld = new CustomTextField(Float.toString(shRDVar), "/images/effects/in.png", "/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
+		var1TxtFld = new CustomTextField(rotVar.toString(), "/images/effects/in.png", "/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
+		var2TxtFld = new CustomTextField(rnsdVar.toString(), "/images/effects/in.png", "/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
+		var3TxtFld = new CustomTextField(lhRate.toString(), "/images/effects/in.png", "/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
+		var4TxtFld = new CustomTextField(lhVar.toString(), "/images/effects/in.png", "/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
+		var5TxtFld = new CustomTextField(lhOTVar.toString(), "/images/effects/in.png", "/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
+		var6TxtFld = new CustomTextField(lhNSDVar.toString(), "/images/effects/in.png", "/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
+		var7TxtFld = new CustomTextField(lhRDVar.toString(), "/images/effects/in.png", "/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
+		var8TxtFld = new CustomTextField(shRate.toString(), "/images/effects/in.png", "/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
+		var9TxtFld = new CustomTextField(shVar.toString(), "/images/effects/in.png", "/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
+		var10TxtFld = new CustomTextField(shOTVar.toString(), "/images/effects/in.png", "/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
+		var11TxtFld = new CustomTextField(shNSDVar.toString(), "/images/effects/in.png", "/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
+		var12TxtFld = new CustomTextField(shRDVar.toString(), "/images/effects/in.png", "/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
 		panel = new JPanel();
 		scrollPane = new JScrollPane(panel);
 		
@@ -312,50 +314,50 @@ public class ModifyClientVariablesView extends JPanel {
 	
 	public void setVariables(){
 		try{
-			float vars[] = model.getVariables(getClient());
-			var1TxtFld.setHint(Float.toString(vars[0]));
-			var2TxtFld.setHint(Float.toString(vars[1]));
-			var3TxtFld.setHint(Float.toString(vars[2]));
-			var4TxtFld.setHint(Float.toString(vars[3]));
-			var5TxtFld.setHint(Float.toString(vars[4]));
-			var6TxtFld.setHint(Float.toString(vars[5]));
-			var7TxtFld.setHint(Float.toString(vars[6]));
-			var8TxtFld.setHint(Float.toString(vars[7]));
-			var9TxtFld.setHint(Float.toString(vars[8]));
-			var10TxtFld.setHint(Float.toString(vars[9]));
-			var11TxtFld.setHint(Float.toString(vars[10]));
-			var12TxtFld.setHint(Float.toString(vars[11]));
+			BigDecimal vars[] = model.getVariables(getClient());
+			var1TxtFld.setHint(vars[0].toString());
+			var2TxtFld.setHint(vars[1].toString());
+			var3TxtFld.setHint(vars[2].toString());
+			var4TxtFld.setHint(vars[3].toString());
+			var5TxtFld.setHint(vars[4].toString());
+			var6TxtFld.setHint(vars[5].toString());
+			var7TxtFld.setHint(vars[6].toString());
+			var8TxtFld.setHint(vars[7].toString());
+			var9TxtFld.setHint(vars[8].toString());
+			var10TxtFld.setHint(vars[9].toString());
+			var11TxtFld.setHint(vars[10].toString());
+			var12TxtFld.setHint(vars[11].toString());
 		}catch(Exception ex){
-			var1TxtFld.setHint(Float.toString(rotVar));
-			var2TxtFld.setHint(Float.toString(rnsdVar));
-			var3TxtFld.setHint(Float.toString(lhRate));
-			var4TxtFld.setHint(Float.toString(lhVar));
-			var5TxtFld.setHint(Float.toString(lhOTVar));
-			var6TxtFld.setHint(Float.toString(lhNSDVar));
-			var7TxtFld.setHint(Float.toString(lhRDVar));
-			var8TxtFld.setHint(Float.toString(shRate));
-			var9TxtFld.setHint(Float.toString(shVar));
-			var10TxtFld.setHint(Float.toString(shOTVar));
-			var11TxtFld.setHint(Float.toString(shNSDVar));
-			var12TxtFld.setHint(Float.toString(shRDVar));
+			var1TxtFld.setHint(rotVar.toString());
+			var2TxtFld.setHint(rnsdVar.toString());
+			var3TxtFld.setHint(lhRate.toString());
+			var4TxtFld.setHint(lhVar.toString());
+			var5TxtFld.setHint(lhOTVar.toString());
+			var6TxtFld.setHint(lhNSDVar.toString());
+			var7TxtFld.setHint(lhRDVar.toString());
+			var8TxtFld.setHint(shRate.toString());
+			var9TxtFld.setHint(shVar.toString());
+			var10TxtFld.setHint(shOTVar.toString());
+			var11TxtFld.setHint(shNSDVar.toString());
+			var12TxtFld.setHint(shRDVar.toString());
 		}
 		repaint();
 	}
 	
-	public float[] getVariables() throws Exception{
-		float variables[] = new float[12];
-		variables[0] = Float.parseFloat(var1TxtFld.getText());
-		variables[1] = Float.parseFloat(var2TxtFld.getText());
-		variables[2] = Float.parseFloat(var3TxtFld.getText());
-		variables[3] = Float.parseFloat(var4TxtFld.getText());
-		variables[4] = Float.parseFloat(var5TxtFld.getText());
-		variables[5] = Float.parseFloat(var6TxtFld.getText());
-		variables[6] = Float.parseFloat(var7TxtFld.getText());
-		variables[7] = Float.parseFloat(var8TxtFld.getText());
-		variables[8] = Float.parseFloat(var9TxtFld.getText());
-		variables[9] = Float.parseFloat(var10TxtFld.getText());
-		variables[10] = Float.parseFloat(var11TxtFld.getText());
-		variables[11] = Float.parseFloat(var12TxtFld.getText());
+	public BigDecimal[] getVariables() throws Exception{
+		BigDecimal variables[] = new BigDecimal[12];
+		variables[0] = new BigDecimal(var1TxtFld.getText());
+		variables[1] = new BigDecimal(var2TxtFld.getText());
+		variables[2] = new BigDecimal(var3TxtFld.getText());
+		variables[3] = new BigDecimal(var4TxtFld.getText());
+		variables[4] = new BigDecimal(var5TxtFld.getText());
+		variables[5] = new BigDecimal(var6TxtFld.getText());
+		variables[6] = new BigDecimal(var7TxtFld.getText());
+		variables[7] = new BigDecimal(var8TxtFld.getText());
+		variables[8] = new BigDecimal(var9TxtFld.getText());
+		variables[9] = new BigDecimal(var10TxtFld.getText());
+		variables[10] = new BigDecimal(var11TxtFld.getText());
+		variables[11] = new BigDecimal(var12TxtFld.getText());
 		return variables;
 	}
 	

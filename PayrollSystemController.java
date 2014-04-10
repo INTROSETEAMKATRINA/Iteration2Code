@@ -24,6 +24,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
 
+import java.math.BigDecimal;
+
 public class PayrollSystemController{
 
 	private Connection con;
@@ -389,7 +391,7 @@ public class PayrollSystemController{
 	class modifyVariables implements ActionListener{
 		public void actionPerformed(ActionEvent e){
 			try{
-				float[] variables = modifyClientsVar.getVariables();
+				BigDecimal[] variables = modifyClientsVar.getVariables();
 				String client = modifyClientsVar.getClient();
 				model.modifyVariables(variables, client);
 				modifyClientsVar.showSuccess();
@@ -411,7 +413,7 @@ public class PayrollSystemController{
 	class modifyTax implements ActionListener{
 		public void actionPerformed(ActionEvent e){
 			try{
-				float[] table = modifyTaxPanel.getTable();
+				BigDecimal[] table = modifyTaxPanel.getTable();
 				int bracket = modifyTaxPanel.getBracket();
 				model.updateTaxTable(bracket, table);
 				modifyTaxPanel.showSuccess();

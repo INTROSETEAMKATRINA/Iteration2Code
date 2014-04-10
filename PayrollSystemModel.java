@@ -34,6 +34,8 @@ import jxl.DateCell;
 import jxl.Sheet;
 import jxl.Workbook;
 
+import java.math.BigDecimal;
+
 public class PayrollSystemModel {
 
 	private SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
@@ -503,20 +505,20 @@ public class PayrollSystemModel {
 							" and dtr.tin = personnel.tin and dtr.periodstartdate = '"+psd+"' order by personnel.name";
 				Statement st = con.createStatement();
 				ResultSet rs = st.executeQuery(sql);
-				float rotVar = 1.25f;
-				float rnsdVar = .10f;
-				float lhRate = 30f;
-				float lhVar = 1.00f;
-				float lhOTVar = 1.30f;
-				float lhNSDVar = 1.00f*.10f;
-				float lhRDVar = 2.60f;
-				float shRate = 30f;
-				float shVar = .30f;
-				float shOTVar = .30f*.30f;
-				float shNSDVar = .30f*.10f;
-				float shRDVar = 1.5f;
+				BigDecimal rotVar = new BigDecimal("1.25");
+				BigDecimal rnsdVar = new BigDecimal(".10");
+				BigDecimal lhRate = new BigDecimal("30");
+				BigDecimal lhVar = new BigDecimal("1.00");
+				BigDecimal lhOTVar = new BigDecimal("1.30");
+				BigDecimal lhNSDVar = new BigDecimal(".10");
+				BigDecimal lhRDVar = new BigDecimal("2.60");
+				BigDecimal shRate = new BigDecimal("30");
+				BigDecimal shVar = new BigDecimal(".30");
+				BigDecimal shOTVar = new BigDecimal(".09");
+				BigDecimal shNSDVar = new BigDecimal(".03");
+				BigDecimal shRDVar = new BigDecimal("1.5");
 				try{
-					float[] vars= getVariables(client);
+					BigDecimal[] vars= getVariables(client);
 					rotVar = vars[0];
 					rnsdVar = vars[1];
 					lhRate = vars[2];
@@ -534,7 +536,7 @@ public class PayrollSystemModel {
 					System.out.println("default vars");
 				}
 				
-				float[][] wholeTable = getWholeTaxTable();
+				BigDecimal[][] wholeTable = getWholeTaxTable();
 				while(rs.next()){
 					String tin = rs.getString("TIN");
 					
@@ -547,30 +549,30 @@ public class PayrollSystemModel {
 					String name = rs.getString("personnel.name");
 					Date periodStartDate = rs.getDate("PeriodStartDate");
 					String position = rs.getString("Position");
-					float regularDaysWork = rs.getFloat("RDW");
-					float dailyRate = rs.getFloat("DailyRate");
-					float late = rs.getFloat("late");
-					float regularOvertime = rs.getFloat("ROT");
-					float regularNightShiftDifferential = rs.getFloat("RNSD");
-					float legalHoliday = rs.getFloat("LH");
-					float legalHolidayOvertime = rs.getFloat("LHOT");
-					float legalHolidayNightShiftDifferential = rs.getFloat("LHNSD");
-					float legalHolidayOnRestDay = rs.getFloat("LHRD");
-					float specialHoliday = rs.getFloat("SH");
-					float specialHolidayOvertime = rs.getFloat("SHOT");
-					float specialHolidayNightShiftDifferential = rs.getFloat("SHNSD");
-					float specialHolidayOnRestDay = rs.getFloat("SHRD");
-					float colaRate = rs.getFloat("ColaRate");
-					float sss = 0;
-					float phic = 0;
-					float hdmf = 0;
-					float sssLoan = 0;
-					float hdmfLoan = 0;
-					float payrollAdvance = 0;
-					float houseRental = 0;
-					float uniformAndOthers = 0;	
-					float adjustments = 0;
-					float transpoAllow = 0;
+					BigDecimal regularDaysWork = new BigDecimal(rs.getString("RDW"));
+					BigDecimal dailyRate = new BigDecimal(rs.getString("DailyRate"));
+					BigDecimal late = new BigDecimal(rs.getString("late"));
+					BigDecimal regularOvertime = new BigDecimal(rs.getString("ROT"));
+					BigDecimal regularNightShiftDifferential = new BigDecimal(rs.getString("RNSD"));
+					BigDecimal legalHoliday = new BigDecimal(rs.getString("LH"));
+					BigDecimal legalHolidayOvertime = new BigDecimal(rs.getString("LHOT"));
+					BigDecimal legalHolidayNightShiftDifferential = new BigDecimal(rs.getString("LHNSD"));
+					BigDecimal legalHolidayOnRestDay = new BigDecimal(rs.getString("LHRD"));
+					BigDecimal specialHoliday = new BigDecimal(rs.getString("SH"));
+					BigDecimal specialHolidayOvertime = new BigDecimal(rs.getString("SHOT"));
+					BigDecimal specialHolidayNightShiftDifferential = new BigDecimal(rs.getString("SHNSD"));
+					BigDecimal specialHolidayOnRestDay = new BigDecimal(rs.getString("SHRD"));
+					BigDecimal colaRate = new BigDecimal(rs.getString("ColaRate"));
+					BigDecimal sss = BigDecimal.ZERO;
+					BigDecimal phic = BigDecimal.ZERO;
+					BigDecimal hdmf = BigDecimal.ZERO;
+					BigDecimal sssLoan = BigDecimal.ZERO;
+					BigDecimal hdmfLoan = BigDecimal.ZERO;
+					BigDecimal payrollAdvance = BigDecimal.ZERO;
+					BigDecimal houseRental = BigDecimal.ZERO;
+					BigDecimal uniformAndOthers = BigDecimal.ZERO;	
+					BigDecimal adjustments = BigDecimal.ZERO;
+					BigDecimal transpoAllow = BigDecimal.ZERO;
 					String type;
 					String taxStatus = rs.getString("taxstatus");
 					taxStatus =  taxStatus == null || taxStatus.equals("") ? "s" : taxStatus;
@@ -578,77 +580,71 @@ public class PayrollSystemModel {
 						type = rs2.getString("type");
 						switch(type){
 							case "SSS":
-								sss = rs2.getFloat("amount");
+								sss = new BigDecimal(rs2.getString("amount"));
 							break;
 							
 							case "PHIC":
-								phic = rs2.getFloat("amount");
+								phic = new BigDecimal(rs2.getString("amount"));
 							break;
 							
 							case "SSS Loan":
-								sssLoan = rs2.getFloat("amount");
+								sssLoan = new BigDecimal(rs2.getString("amount"));
 							break;
 							
 							case "HDMF":
-								hdmf = rs2.getFloat("amount");
+								hdmf = new BigDecimal(rs2.getString("amount"));
 							break;
 							
 							case "HDMF Loan":
-								hdmfLoan = rs2.getFloat("amount");
+								hdmfLoan = new BigDecimal(rs2.getString("amount"));
 							break;
 							
 							case "Payroll Advance":
-								payrollAdvance = rs2.getFloat("amount");
+								payrollAdvance = new BigDecimal(rs2.getString("amount"));
 							break;
 							
 							case "House Rental":
-								houseRental = rs2.getFloat("amount");
+								houseRental = new BigDecimal(rs2.getString("amount"));
 							break;
 							
 							case "Uniform and Others":
-								uniformAndOthers = rs2.getFloat("amount");
+								uniformAndOthers = new BigDecimal(rs2.getString("amount"));
 							break;
 							
 							default:
-								adjustments += rs2.getFloat("amount");
+								adjustments = adjustments.add(new BigDecimal(rs2.getString("amount")));
 							break;
 						}
 					}
 					
-					float totalDeductions = sss + phic + sssLoan + hdmf + 
-											hdmfLoan + payrollAdvance +
-											houseRental + uniformAndOthers;
-					
-					float hourlyRate = dailyRate/8;
-					float shHourlyRate = (dailyRate + shRate)/8;
-					float lhHourlyRate = (dailyRate + lhRate)/8;
-					float basicPay = regularDaysWork * dailyRate;
-					float deductionFromTardiness = dailyRate/8/60 * late;
-					float colaAllowance = colaRate/30 * regularDaysWork;
-					
-					float regularPay = basicPay + colaAllowance - deductionFromTardiness;
-					float regularOvertimePay = regularOvertime * rotVar * hourlyRate;
-					float regularNightShiftDifferentialPay = regularNightShiftDifferential * rnsdVar * hourlyRate;
-					float legalHolidayPay = legalHoliday * lhVar * lhHourlyRate;
-					float legalHolidayOvertimePay = legalHolidayOvertime * lhOTVar * lhHourlyRate;
-					float legalHolidayNightShiftDifferentialPay = legalHolidayNightShiftDifferential * lhNSDVar * lhHourlyRate;
-					float legalHolidayOnRestDayPay = legalHolidayOnRestDay * lhRDVar * lhHourlyRate;
-					float specialHolidayPay = specialHoliday * shVar * shHourlyRate;
-					float specialHolidayOvertimePay = specialHolidayOvertime * shOTVar * shHourlyRate;
-					float specialHolidayNightShiftDifferentialPay = specialHolidayNightShiftDifferential * shNSDVar * shHourlyRate;
-					float specialHolidayOnRestDayPay = specialHolidayOnRestDay * shHourlyRate * shRDVar;
-					float wTax = 0;
-					float otPay = regularOvertimePay + 
-								legalHolidayOvertimePay + 
-								specialHolidayOvertimePay;
-					float nsdPay = regularNightShiftDifferentialPay +
-									legalHolidayNightShiftDifferentialPay +
-									specialHolidayNightShiftDifferentialPay;
-					float grossPay = regularPay + legalHolidayPay + specialHolidayPay + 
-									otPay + nsdPay +
-									adjustments + legalHolidayOnRestDayPay + specialHolidayOnRestDayPay;
-					float netPay = grossPay - totalDeductions;
-					int taxStatusIndex = 0;;
+					BigDecimal totalDeductions = sss.add(phic).add(sssLoan).add(hdmf);
+							totalDeductions = totalDeductions.add(hdmfLoan).add(payrollAdvance);
+							totalDeductions = totalDeductions.add(houseRental).add(uniformAndOthers);
+					BigDecimal eight = new BigDecimal("8");
+					BigDecimal hourlyRate = dailyRate.divide(eight);
+					BigDecimal shHourlyRate = dailyRate.add(shRate).divide(eight);
+					BigDecimal lhHourlyRate = dailyRate.add(lhRate).divide(eight);
+					BigDecimal basicPay = regularDaysWork.multiply(dailyRate);
+					BigDecimal deductionFromTardiness = dailyRate.divide(eight).divide(new BigDecimal("60")).multiply(late);
+					BigDecimal colaAllowance = colaRate.multiply(regularDaysWork);
+					BigDecimal regularPay = basicPay.add(colaAllowance).subtract(deductionFromTardiness);
+					BigDecimal regularOvertimePay = regularOvertime.multiply(rotVar).multiply(hourlyRate);
+					BigDecimal regularNightShiftDifferentialPay = regularNightShiftDifferential.multiply(rnsdVar).multiply(hourlyRate);
+					BigDecimal legalHolidayPay = legalHoliday.multiply(lhVar).multiply(lhHourlyRate);
+					BigDecimal legalHolidayOvertimePay = legalHolidayOvertime.multiply(lhOTVar).multiply(lhHourlyRate);
+					BigDecimal legalHolidayNightShiftDifferentialPay = legalHolidayNightShiftDifferential.multiply(lhNSDVar).multiply(lhHourlyRate);
+					BigDecimal legalHolidayOnRestDayPay = legalHolidayOnRestDay.multiply(lhRDVar).multiply(lhHourlyRate);
+					BigDecimal specialHolidayPay = specialHoliday.multiply(shVar).multiply(shHourlyRate);
+					BigDecimal specialHolidayOvertimePay = specialHolidayOvertime.multiply(shOTVar).multiply(shHourlyRate);
+					BigDecimal specialHolidayNightShiftDifferentialPay = specialHolidayNightShiftDifferential.multiply(shNSDVar).multiply(shHourlyRate);
+					BigDecimal specialHolidayOnRestDayPay = specialHolidayOnRestDay.multiply(shHourlyRate).multiply(shRDVar);
+					BigDecimal wTax = BigDecimal.ZERO;
+					BigDecimal otPay = regularOvertimePay.add(legalHolidayOvertimePay).add(specialHolidayOvertimePay);
+					BigDecimal nsdPay = regularNightShiftDifferentialPay.add(legalHolidayNightShiftDifferentialPay).add(specialHolidayNightShiftDifferentialPay);
+					BigDecimal grossPay = regularPay.add(legalHolidayPay).add(specialHolidayPay).add(otPay).add(nsdPay);
+								grossPay = grossPay.add(adjustments).add(legalHolidayOnRestDayPay).add(specialHolidayOnRestDayPay);
+					BigDecimal netPay = grossPay.subtract(totalDeductions);
+					int taxStatusIndex = 0;
 					for(int i = 0 ; i < this.taxStatus.length; i++){
 						if(this.taxStatus[i].toLowerCase().contains(taxStatus)){
 							taxStatusIndex = i;
@@ -657,15 +653,15 @@ public class PayrollSystemModel {
 					}
 					int bracket = 0;
 					for(int i = 0 ; i < wholeTable.length; i++){
-						if(wholeTable[i][taxStatusIndex+2] > netPay){
+						if(wholeTable[i][taxStatusIndex+2].compareTo(netPay)>=1){
 							bracket = i - 1;
 							break;
 						}else if(i == wholeTable.length - 1){
 							bracket = i;
 						}
 					}
-					wTax = wholeTable[bracket][0] + (wholeTable[bracket][1] * (netPay - wholeTable[bracket][taxStatusIndex+2])) / 100;
-					netPay -= wTax;
+					wTax = wholeTable[bracket][0].add(wholeTable[bracket][1].multiply(netPay.subtract(wholeTable[bracket][taxStatusIndex+2])).divide(new BigDecimal("100")));
+					netPay = netPay.subtract(wTax);
 					payslips.add(new Payslip(tin, assignment,  name, periodStartDate,
 					position, regularDaysWork, dailyRate,
 					grossPay, late, regularPay,
@@ -823,114 +819,114 @@ public class PayrollSystemModel {
 			writer.println();
 			ArrayList<String> toBePrinted = new ArrayList<String>();
 			toBePrinted.add("Days Worked");
-			toBePrinted.add(p.getRegularDaysWork()+""+"");
+			toBePrinted.add(p.getRegularDaysWork().toString());
 			toBePrinted.add("L/H NSD Hrs");
-			toBePrinted.add(p.getLegalHolidayNightShiftDifferential()+"");
+			toBePrinted.add(p.getLegalHolidayNightShiftDifferential().toString());
 			toBePrinted.add("W/Tax");
-			toBePrinted.add(df.format(p.getWTax()));
+			toBePrinted.add(p.getWTax().toString());
 			toBePrinted.add("Gross Pay");
-			toBePrinted.add(df.format(p.getGrossPay()));
+			toBePrinted.add(p.getGrossPay().toString());
 			toBePrinted.add("W/Tax");
-			toBePrinted.add(df.format(p.getWTax()));
+			toBePrinted.add(p.getWTax().toString());
 
 			toBePrinted.add("Daily Rate");
-			toBePrinted.add(p.getDailyRate()+"");
+			toBePrinted.add(p.getDailyRate().toString());
 			toBePrinted.add("L/H NSD Pay");
-			toBePrinted.add(df.format(p.getLegalHolidayNightShiftDifferentialPay()));
+			toBePrinted.add(p.getLegalHolidayNightShiftDifferentialPay().toString());
 			toBePrinted.add("SSS");
-			toBePrinted.add(p.getSSS()+"");
+			toBePrinted.add(p.getSSS().toString());
 			toBePrinted.add("Tardiness");
-			toBePrinted.add(df.format(p.getLate() * p.getDailyRate()/8/60));
+			toBePrinted.add(p.getLate().multiply(p.getDailyRate().divide(new BigDecimal("8")).divide(new BigDecimal("60"))).setScale(2, BigDecimal.ROUND_HALF_UP).toString());
 			toBePrinted.add("SSS");
-			toBePrinted.add(p.getSSS()+"");
+			toBePrinted.add(p.getSSS().toString());
 
 			toBePrinted.add("Gross Pay");
-			toBePrinted.add(df.format(p.getGrossPay()));
+			toBePrinted.add(p.getGrossPay().toString());
 			toBePrinted.add("SH/RD Worked");
-			toBePrinted.add(p.getSpecialHoliday()+"");
+			toBePrinted.add(p.getSpecialHoliday().toString());
 			toBePrinted.add("PHIC");
-			toBePrinted.add(p.getPHIC()+"");
+			toBePrinted.add(p.getPHIC().toString());
 			toBePrinted.add("Regular OT");
-			toBePrinted.add(p.getRegularOvertime()+"");
+			toBePrinted.add(p.getRegularOvertime().toString());
 			toBePrinted.add("PHIC");
-			toBePrinted.add(p.getPHIC()+"");
+			toBePrinted.add(p.getPHIC().toString());
 
 			toBePrinted.add("Late");
-			toBePrinted.add(p.getLate()+"");
+			toBePrinted.add(p.getLate().toString());
 			toBePrinted.add("SH/RD Pay");
-			toBePrinted.add(df.format(p.getSpecialHolidayPay()));
+			toBePrinted.add(p.getSpecialHolidayPay().toString());
 			toBePrinted.add("HDMF");
-			toBePrinted.add(p.getHDMF()+"");
+			toBePrinted.add(p.getHDMF().toString());
 			toBePrinted.add("NSD Pay");
-			toBePrinted.add(df.format(p.getRegularNightShiftDifferentialPay()));
+			toBePrinted.add(p.getRegularNightShiftDifferentialPay().toString());
 			toBePrinted.add("HDMF");
-			toBePrinted.add(p.getHDMF()+"");
+			toBePrinted.add(p.getHDMF().toString());
 
 			toBePrinted.add("Tardiness");
-			toBePrinted.add(df.format(p.getLate() * p.getDailyRate()/8/60));
+			toBePrinted.add(p.getLate().multiply(p.getDailyRate().divide(new BigDecimal("8")).divide(new BigDecimal("60"))).setScale(2, BigDecimal.ROUND_HALF_UP).toString());
 			toBePrinted.add("SH on RD Hrs");
-			toBePrinted.add(p.getSpecialHolidayOnRestDay()+"");
+			toBePrinted.add(p.getSpecialHolidayOnRestDay().toString());
 			toBePrinted.add("SSS Loan");
-			toBePrinted.add(p.getSSSLoan()+"");
+			toBePrinted.add(p.getSSSLoan().toString());
 			toBePrinted.add("Legal Holiday Pay");
-			toBePrinted.add(df.format(p.getLegalHolidayPay()));
+			toBePrinted.add(p.getLegalHolidayPay().toString());
 			toBePrinted.add("SSS Loan");
-			toBePrinted.add(p.getSSSLoan()+"");
+			toBePrinted.add(p.getSSSLoan().toString());
 
 			toBePrinted.add("Regular Pay");
-			toBePrinted.add(df.format(p.getRegularPay()));
+			toBePrinted.add(p.getRegularPay().toString());
 			toBePrinted.add("SH on RD Pay");
-			toBePrinted.add(df.format(p.getSpecialHolidayOnRestDayPay()));
+			toBePrinted.add(p.getSpecialHolidayOnRestDayPay().toString());
 			toBePrinted.add("HDMF Loan");
-			toBePrinted.add(p.getHDMFLoan()+"");
+			toBePrinted.add(p.getHDMFLoan().toString());
 			toBePrinted.add("L/H on RD Pay");
-			toBePrinted.add(df.format(p.getLegalHolidayOnRestDayPay()));
+			toBePrinted.add(p.getLegalHolidayOnRestDayPay().toString());
 			toBePrinted.add("HDMF Loan");
-			toBePrinted.add(p.getHDMFLoan()+"");
+			toBePrinted.add(p.getHDMFLoan().toString());
 
 			toBePrinted.add("OT Hour");
-			toBePrinted.add(p.getRegularOvertime()+"");
+			toBePrinted.add(p.getRegularOvertime().toString());
 			toBePrinted.add("SH/RD OT Hrs");
-			toBePrinted.add(p.getSpecialHolidayOvertime()+"");
+			toBePrinted.add(p.getSpecialHolidayOvertime().toString());
 			toBePrinted.add("Payroll Advance");
-			toBePrinted.add(p.getPayrollAdvance()+"");
+			toBePrinted.add(p.getPayrollAdvance().toString());
 			toBePrinted.add("L/H OT Pay");
-			toBePrinted.add(df.format(p.getLegalHolidayOvertimePay()));
+			toBePrinted.add(p.getLegalHolidayOvertimePay().toString());
 			toBePrinted.add("Payroll Advance");
-			toBePrinted.add(p.getPayrollAdvance()+"");
+			toBePrinted.add(p.getPayrollAdvance().toString());
 
 			toBePrinted.add("OT Pay");
-			toBePrinted.add(df.format(p.getRegularOvertimePay()));
+			toBePrinted.add(p.getRegularOvertimePay().toString());
 			toBePrinted.add("SH/RD OT Pay");
-			toBePrinted.add(df.format(p.getSpecialHolidayOvertimePay()));
+			toBePrinted.add(p.getSpecialHolidayOvertimePay().toString());
 			toBePrinted.add("House Rental");
-			toBePrinted.add(p.getHouseRental()+"");
+			toBePrinted.add(p.getHouseRental().toString());
 			toBePrinted.add("L/H NSD Pay");
-			toBePrinted.add(df.format(p.getLegalHolidayNightShiftDifferentialPay()));
+			toBePrinted.add(p.getLegalHolidayNightShiftDifferentialPay().toString());
 			toBePrinted.add("House Rental");
-			toBePrinted.add(p.getHouseRental()+"");
+			toBePrinted.add(p.getHouseRental().toString());
 
 			toBePrinted.add("NSD Hour");
-			toBePrinted.add(p.getRegularNightShiftDifferential()+"");
+			toBePrinted.add(p.getRegularNightShiftDifferential().toString());
 			toBePrinted.add("SH/RD NSD Hrs");
-			toBePrinted.add(p.getSpecialHolidayNightShiftDifferential()+"");
+			toBePrinted.add(p.getSpecialHolidayNightShiftDifferential().toString());
 			toBePrinted.add("Uniform & Others");
-			toBePrinted.add(p.getUniformAndOthers()+"");
+			toBePrinted.add(p.getUniformAndOthers().toString());
 			toBePrinted.add("SH RD Pay");
-			toBePrinted.add(df.format(p.getSpecialHolidayOnRestDayPay()));
+			toBePrinted.add(p.getSpecialHolidayOnRestDayPay().toString());
 			toBePrinted.add("Uniform & Others");
-			toBePrinted.add(p.getUniformAndOthers()+"");
+			toBePrinted.add(p.getUniformAndOthers().toString());
 
 			toBePrinted.add("NSD Pay");
-			toBePrinted.add(df.format(p.getRegularNightShiftDifferentialPay()));
+			toBePrinted.add(p.getRegularNightShiftDifferentialPay().toString());
 			toBePrinted.add("SH/RD NSD Pay");
-			toBePrinted.add(p.getSpecialHolidayNightShiftDifferentialPay()+"");
+			toBePrinted.add(p.getSpecialHolidayNightShiftDifferentialPay().toString());
 			toBePrinted.add("Total Deductions");
-			toBePrinted.add(df.format(p.getTotalDeductions()));
+			toBePrinted.add(p.getTotalDeductions().toString());
 			toBePrinted.add("SH on RD Pay");
-			toBePrinted.add(df.format(p.getRegularNightShiftDifferentialPay()));
+			toBePrinted.add(p.getRegularNightShiftDifferentialPay().toString());
 			toBePrinted.add("Total Deductions");
-			toBePrinted.add(df.format(p.getTotalDeductions()));
+			toBePrinted.add(p.getTotalDeductions().toString());
 			
 			for(int i = 0 ; i < toBePrinted.size(); i+=10){
 				writer.print("\""+toBePrinted.get(i)+"\",,\"" + toBePrinted.get(i+1) + "\"");
@@ -939,28 +935,28 @@ public class PayrollSystemModel {
 				writer.print(",,");
 				writer.print(",\""+toBePrinted.get(i+6)+"\",,\""+toBePrinted.get(i+7)+"\"" );
 				writer.println(",\""+ toBePrinted.get(i+8) +"\",,\""+toBePrinted.get(i+9)+"\"" );
-			}//sssss
-			writer.print("\"L/H Hrs Worked\",," + p.getLegalHoliday());
-			writer.println(",,,,,,,,,\"SH/RD OT Pay\",,"+"\""+df.format( p.getSpecialHolidayOvertimePay())+"\"");
+			}
+			writer.print("\"L/H Hrs Worked\",," + p.getLegalHoliday().toString());
+			writer.println(",,,,,,,,,\"SH/RD OT Pay\",,"+"\""+ p.getSpecialHolidayOvertimePay().toString()+"\"");
 			
-			writer.print("\"L/H Pay\",," + "\""+df.format(p.getLegalHolidayPay())+"\"");
-			writer.println(",,,,,,,,,\"SH/RD NSD Pay\",,"+"\""+df.format(p.getSpecialHolidayNightShiftDifferentialPay())+"\"" );
+			writer.print("\"L/H Pay\",," + "\""+p.getLegalHolidayPay().toString()+"\"");
+			writer.println(",,,,,,,,,\"SH/RD NSD Pay\",,"+"\""+p.getSpecialHolidayNightShiftDifferentialPay().toString()+"\"" );
 			
-			writer.print("\"L/H on RD Hrs Worked\",," +p.getRegularNightShiftDifferential());
-			writer.print(",\"Adjustments\",," + "\""+df.format(p.getAdjustments())+"\"");
+			writer.print("\"L/H on RD Hrs Worked\",," +p.getRegularNightShiftDifferential().toString());
+			writer.print(",\"Adjustments\",," + "\""+p.getAdjustments().toString()+"\"");
 			writer.print(",,,,,");
-			writer.println(",\"Adjustments\",,"+"\""+df.format(p.getAdjustments())+"\"" );
+			writer.println(",\"Adjustments\",,"+"\""+p.getAdjustments().toString()+"\"" );
 			
-			writer.println("\"L/H on RD Pay\",," + "\""+df.format(p.getRegularNightShiftDifferentialPay())+"\"");
+			writer.println("\"L/H on RD Pay\",," + "\""+p.getRegularNightShiftDifferentialPay().toString()+"\"");
 			
-			writer.print("\"L/H OT Hrs\",," + p.getLegalHolidayOvertime());
-			writer.print(",\"Gross Pay\",," +"\""+df.format(p.getGrossPay())+"\"");
-			writer.print(",\"Net Pay\",,"+"\""+df.format(p.getNetPay())+"\"");
+			writer.print("\"L/H OT Hrs\",," + p.getLegalHolidayOvertime().toString());
+			writer.print(",\"Gross Pay\",," +"\""+p.getGrossPay().toString()+"\"");
+			writer.print(",\"Net Pay\",,"+"\""+p.getNetPay().toString()+"\"");
 			writer.print(",,");
-			writer.print(",\"Gross Pay\",,"+"\""+df.format(p.getGrossPay())+"\"");
-			writer.println(",\"Net Pay\",,"+"\""+df.format(p.getNetPay())+"\"");
+			writer.print(",\"Gross Pay\",,"+"\""+p.getGrossPay().toString()+"\"");
+			writer.println(",\"Net Pay\",,"+"\""+p.getNetPay().toString()+"\"");
 			
-			writer.println("\"L/H on OT Pay\",," + "\""+df.format(p.getLegalHolidayOvertimePay())+"\"");
+			writer.println("\"L/H on OT Pay\",," + "\""+p.getLegalHolidayOvertimePay().toString()+"\"");
 			
 			writer.println();
 			
@@ -977,7 +973,7 @@ public class PayrollSystemModel {
 		writer.close();
 		return 0;
 	}
-
+	
 	public void generateSummaryReport(File directory, String client){
 	}
 
@@ -1434,9 +1430,9 @@ public class PayrollSystemModel {
 		return 0;
 	}
 	
-	public float[] getVariables(String client) throws Exception{
+	public BigDecimal[] getVariables(String client) throws Exception{
 		Statement stmt = null;
-		float variables[] = new float[12];
+		BigDecimal variables[] = new BigDecimal[12];
             try{
 				String sql="Select rotVar, rnsdVar, lhRate, lhVar, lhOTVar," +
 					"lhNSDVar, lhRDVar, shRate, shVar, shOTVar, shNSDVar," +
@@ -1450,7 +1446,7 @@ public class PayrollSystemModel {
 						}
 					}
 					for(int i = 1;i < 13; i++){
-						variables[i-1] = rs.getFloat(i);
+						variables[i-1] = new BigDecimal(rs.getString(i));
 					}
 				}
             } catch (Exception ex) {
@@ -1459,23 +1455,23 @@ public class PayrollSystemModel {
 		return variables;
 	}
 	
-	public void modifyVariables(float variables[], String client) throws SQLException{
+	public void modifyVariables(BigDecimal variables[], String client) throws SQLException{
 		String sql = "UPDATE client set " +
-		"rotVar = "+variables[0]+", rnsdVar = " + variables[1] +
-		", lhRate = " + variables[2] +
-		", lhVar = "+variables[3] +", lhOTVar = " + variables[4] +
-		", lhNSDVar =  " + variables[5] +", lhRDVar = " + variables[6] +
-		", shRate = " + variables[7] +", shVar = " + variables[8] +
-		", shOTVar = " + variables[9] +", shNSDVar = " + variables[10] +
-		", shRDVar = " + variables[11] +" where name = '"+client+"';";
+		"rotVar = "+variables[0].toString()+", rnsdVar = " + variables[1].toString() +
+		", lhRate = " + variables[2].toString() +
+		", lhVar = "+variables[3].toString() +", lhOTVar = " + variables[4].toString() +
+		", lhNSDVar =  " + variables[5].toString() +", lhRDVar = " + variables[6].toString() +
+		", shRate = " + variables[7].toString() +", shVar = " + variables[8].toString() +
+		", shOTVar = " + variables[9].toString() +", shNSDVar = " + variables[10].toString() +
+		", shRDVar = " + variables[11].toString() +" where name = '"+client+"';";
 		Statement stmt = con.prepareStatement(sql);
 		stmt.execute(sql);
 		System.out.println("MODIFIED CLIENT VARIABLES!");
 	}
 	
-	public float[] getTaxTable(int bracket){
+	public BigDecimal[] getTaxTable(int bracket){
 		Statement stmt = null;
-		float table[] = new float[8];
+		BigDecimal table[] = new BigDecimal[8];
             try{
 				String sql="Select tax, taxpercentover, z, sme, s1me1, s2me2, s3me3," + 
 				"s4me4 from taxtable where bracket = "+bracket+";";
@@ -1483,7 +1479,7 @@ public class PayrollSystemModel {
 				ResultSet rs = st.executeQuery(sql);
 				if(rs.next()){
 					for(int i = 1;i < 9; i++){
-						table[i-1] = rs.getFloat(i);
+						table[i-1] = new BigDecimal(rs.getString(i));
 					}
 				}
             } catch (Exception ex) {
@@ -1492,16 +1488,16 @@ public class PayrollSystemModel {
 		return table;
 	}
 	
-	public float[][] getWholeTaxTable(){
+	public BigDecimal[][] getWholeTaxTable(){
 		int[] brackets = getBracketListInArray();
-		float[][] taxTable = new float[brackets.length][8];
+		BigDecimal[][] taxTable = new BigDecimal[brackets.length][8];
 		for(int i = 0; i < brackets.length; i++){
 			taxTable[i] = getTaxTable(brackets[i]);
 		}
 		return taxTable;
 	}
 	
-	public void updateTaxTable(int bracket, float[] table) throws SQLException{
+	public void updateTaxTable(int bracket, BigDecimal[] table) throws SQLException{
 		String sql = "UPDATE taxtable set " +
 		"tax = "+table[0]+", taxpercentover = " + table[1] +
 		", z = " + table[2] +
