@@ -119,6 +119,12 @@ public class PayrollSystemController{
 		modifyTaxPanel.setApplyListener(new modifyTax());
 		modifyTaxPanel.setBracketListener(new updateTax());
 		
+		viewSummaryReport = view.getViewSummPanel(); /////////
+		viewSummaryReport.setPeriodStartDateListener(new addPeriodStartDateListener());
+		viewSummaryReport.setViewListener(new viewReportListener());
+		
+		generateSummaryReport = view.getGenerateSummaryPanel();
+		
         backUpData = view.getbackUpPanel();
 		backUpData.setSelectFileListener(new fileSaverBackUpDataButtonListener());
 		backUpData.setGenerateListener(new backUpDataButtonListener());
@@ -465,5 +471,27 @@ public class PayrollSystemController{
 			}
         }
     }
+    class addPeriodStartDateListener implements ActionListener{ //This is going to be updated
+		public void actionPerformed(ActionEvent e){
+			viewSummaryReport.updateDateList();
+		}
+	}
+	
+	class viewReportListener implements ActionListener{ //This is going to be updated
+		public void actionPerformed(ActionEvent e){
+			if(viewSummaryReport.getClient() == null || viewSummaryReport.getPeriodStartDate() == null){
+				viewSummaryReport.showError(0);
+			}else{
+				String client = viewSummaryReport.getClient();
+				String psd = viewSummaryReport.getPeriodStartDate();
+				if(model.checkPeriodForPayslips(client, psd)){
+					viewSummaryReport.updateTableColumn();
+					viewSummaryReport.updateTable();
+				}else{
+					viewSummaryReport.showError(1);
+				}
+			}
+		}
+	}
 	
 }
