@@ -4,19 +4,17 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
-import java.io.File;
 import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class PersonnelView extends JPanel {
 
@@ -30,12 +28,13 @@ public class PersonnelView extends JPanel {
 	
 	public PersonnelView() {
 		
-		addBtn = new JButton(new ImageIcon(getClass().getResource("images/buttons/add.png")));
-		selSaveBtn = new JButton(new ImageIcon(getClass().getResource("images/buttons/select.png")));
+		addBtn = new JButton(new ImageIcon(getClass().getResource("/images/buttons/add.png")));
+		selSaveBtn = new JButton(new ImageIcon(getClass().getResource("/images/buttons/select.png")));
 		
 		saveLbl = new JLabel("Save Location: ");
 		locationLbl = new JLabel();
 		statusLbl = new JLabel("Status:");
+		statusLbl.setIcon(loadScaledImage("/images/notifs/right.png",.08f));
 		
 		modifyUI();
 		initFont();
@@ -55,8 +54,8 @@ public class PersonnelView extends JPanel {
 		addBtn.setOpaque(false);
 		addBtn.setForeground(null);
 		addBtn.setFocusPainted(false);
-		addBtn.setRolloverIcon(new ImageIcon(getClass().getResource("images/buttons/add-r.png")));
-		addBtn.setPressedIcon(new ImageIcon(getClass().getResource("images/buttons/add-p.png")));
+		addBtn.setRolloverIcon(new ImageIcon(getClass().getResource("/images/buttons/add-r.png")));
+		addBtn.setPressedIcon(new ImageIcon(getClass().getResource("/images/buttons/add-p.png")));
 		addBtn.setSize(new Dimension(addBtn.getIcon().getIconWidth(), addBtn.getIcon().getIconHeight()));
 		
 		selSaveBtn.setContentAreaFilled(false);
@@ -64,8 +63,8 @@ public class PersonnelView extends JPanel {
 		selSaveBtn.setOpaque(false);
 		selSaveBtn.setForeground(null);
 		selSaveBtn.setFocusPainted(false);
-		selSaveBtn.setRolloverIcon(new ImageIcon(getClass().getResource("images/buttons/select-r.png")));
-		selSaveBtn.setPressedIcon(new ImageIcon(getClass().getResource("images/buttons/select-p.png")));
+		selSaveBtn.setRolloverIcon(new ImageIcon(getClass().getResource("/images/buttons/select-r.png")));
+		selSaveBtn.setPressedIcon(new ImageIcon(getClass().getResource("/images/buttons/select-p.png")));
 		selSaveBtn.setPreferredSize(new Dimension(selSaveBtn.getIcon().getIconWidth(), selSaveBtn.getIcon().getIconHeight()));
 		
 		addComponentsToPane();
@@ -158,5 +157,15 @@ public class PersonnelView extends JPanel {
 	}
 	public void setStatus(String e){
 		statusLbl.setText(e);
+	}
+	
+	private ImageIcon loadScaledImage(String img_url, float percent)
+	{	
+		ImageIcon img_icon = new ImageIcon(this.getClass().getResource(img_url));
+		int new_width = (int) (img_icon.getIconWidth()*percent);
+		int new_height = (int) (img_icon.getIconHeight()*percent);
+		Image img = img_icon.getImage().getScaledInstance(new_width,new_height,java.awt.Image.SCALE_SMOOTH);  
+		img_icon = new ImageIcon(img);
+		return img_icon;
 	}
 }

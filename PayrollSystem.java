@@ -27,7 +27,6 @@ public class PayrollSystem{
 			String pass = "p@ssword";
 			con = DriverManager.getConnection (url, uname, pass);
 			System.out.println("Connected!");
-			String inputPass = null;
 			boolean loggedIn = false;
 			JPasswordField pwd = new JPasswordField(10);
 			int action = JOptionPane.OK_OPTION;

@@ -14,7 +14,6 @@
 	 *  Visibility: public
 	 *******************************************************/
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -22,6 +21,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.Rectangle;
@@ -33,6 +33,7 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -43,11 +44,14 @@ import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import net.java.balloontip.BalloonTip;
 import net.java.balloontip.BalloonTip.AttachLocation;
@@ -55,42 +59,38 @@ import net.java.balloontip.BalloonTip.Orientation;
 import net.java.balloontip.styles.RoundedBalloonStyle;
 import net.java.balloontip.utils.FadingUtils;
 
-import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import java.io.File;
-import javax.swing.JOptionPane;
+import com.mysql.jdbc.Connection;
 
 public class PayrollSystemView extends JPanel {
 	private PayrollSystemModel model;
 	private BufferedImage top_img, side_img, title_img; 
 	private BufferedImage import_img, view_img, generate_img, misc_img;
-	private BufferedImage total_img, date_img;
 	
 	private JFrame payrollSystemFrame;
 	
 	private JLabel status1,status2,status3,status4,status5,status6;
-	private JLabel credits, versionLbl;
 	
 	private JLabel clientCnt, employeeCnt, employeeLbl, clientLbl;
 	private JLabel dateLbl, currentDate;
 	
 	private JLayeredPane mainPanel;
-	private JPanel homepane1,homepane2,homepane3,homepane4;
+	private JPanel homepane1,homepane3,homepane4;
 	
 	private JPanel menuPanel;
 	private AddAdjustmentsView addAdjPanel;
 	private DTRView addDTRPanel;
 	private PersonnelView addPersPanel;
 	private GeneratePayslipsView genPayslipsPanel;
-	private JPanel genSummaryPanel;
-	private JPanel modifyTaxPanel;
+	private GenerateSummaryReportView genSummaryPanel;
+	private ModifyTaxTableView modifyTaxPanel;
 	private RemoveAdjustmentsView removeAdjPanel;
-	private JPanel removePersPanel;
-	private JPanel viewPersPanel;
-	private JPanel viewSummPanel;
+	private RemovePersonnelView removePersPanel;
+	private ViewPersonnelView viewPersPanel;
+	private ViewSummaryReportView viewSummPanel;
+	private BackUpView backUpPanel;
 
 	private LogInView loginPanel;
-	private JPanel settingsPanel;
+	private SettingsView settingsPanel;
 	private static JPanel blackPane;
 	
 	private JToggleButton homeBtn;
@@ -112,9 +112,7 @@ public class PayrollSystemView extends JPanel {
 	private ArrayList<BalloonTip> balloonTips;
 	
 	private static Font homestat = new Font("Helvetica", Font.PLAIN, 12);
-	private static Font bebas_small = new Font("Bebas Neue", Font.PLAIN, 24);
-	private static Font count_big = new Font("Bebas Neue", Font.PLAIN, 100);
-	private static Font bebas_big = new Font("Bebas Neue", Font.PLAIN, 72);
+	private static Font count_big = new Font("Bebas Neue", Font.PLAIN, 72);
 	private static Font tooltipfont = new Font("Helvetica", Font.PLAIN, 12);
 	
 	private boolean resize;
@@ -124,40 +122,31 @@ public class PayrollSystemView extends JPanel {
 	{	
 		this.model = model; 
 		homepane1 = new JPanel();
-		homepane2 = new JPanel();
 		homepane3 = new JPanel();
 		homepane4 = new JPanel();
 		menuPanel = new JPanel();
 
+		status1 = new JLabel("Last Checked: 03-16-14", loadScaledImage("/images/icons/clock.png",.55f),JLabel.RIGHT);
+		status2 = new JLabel("Last Updated Data: 01-01-14 ( FedEx )", loadScaledImage("/images/icons/paper.png",.55f),JLabel.RIGHT);
+		status3 = new JLabel("Last Generated Report: 01-01-14 ( LBC )", loadScaledImage("/images/icons/paper.png",.55f),JLabel.RIGHT);
+		status4 = new JLabel("Last Client Modified: 01-01-14 ( LBC )", loadScaledImage("/images/icons/paper.png",.55f),JLabel.RIGHT);
+		status5 = new JLabel("Last Generated Payslips: 01-01-14 ( LBC )", loadScaledImage("/images/icons/files.png",.55f),JLabel.RIGHT);
+		status6 = new JLabel("Last Back-Up: 01-01-14", loadScaledImage("/images/icons/disk.png",.55f),JLabel.RIGHT);
 
-		status1 = new JLabel("Last Checked: 03-16-14", loadScaledImage("images/icons/clock.png",.55f),JLabel.RIGHT);
-		status2 = new JLabel("Last Updated Data: 01-01-14 ( FedEx )", loadScaledImage("images/icons/paper.png",.55f),JLabel.RIGHT);
-		status3 = new JLabel("Last Generated Report: 01-01-14 ( LBC )", loadScaledImage("images/icons/paper.png",.55f),JLabel.RIGHT);
-		status4 = new JLabel("Last Client Modified: 01-01-14 ( LBC )", loadScaledImage("images/icons/paper.png",.55f),JLabel.RIGHT);
-		status5 = new JLabel("Last Generated Payslips: 01-01-14 ( LBC )", loadScaledImage("images/icons/files.png",.55f),JLabel.RIGHT);
-		status6 = new JLabel("Last Back-Up: 01-01-14", loadScaledImage("images/icons/disk.png",.55f),JLabel.RIGHT);
+		clientCnt = new JLabel("",JLabel.CENTER);
+		clientLbl = new JLabel("CLIENT",JLabel.CENTER);
+		employeeCnt = new JLabel("",JLabel.CENTER);
+		employeeLbl = new JLabel("PERSONNEL",JLabel.CENTER);
+		currentDate = new JLabel("",JLabel.CENTER);
+		dateLbl = new JLabel("Year / Month / Day",JLabel.CENTER);
 		
-		credits = new JLabel("MADE BY: TEAM KATRINA");
-
-		versionLbl = new JLabel("VERSION 2.0", loadScaledImage("images/icons/sun.png",.55f),JLabel.RIGHT);
-
-		clientCnt = new JLabel("2");
-		clientLbl = new JLabel("CLIENT");
-		employeeCnt = new JLabel("72");
-		employeeLbl = new JLabel("PERSONNEL");
-		setCount();
-		currentDate = new JLabel();
-		dateLbl = new JLabel("         MONTH            /            DAY            /            YEAR",JLabel.CENTER);
-		
-		title_img = loadImage("images/appTitle.png");
-		top_img = loadImage("images/top_white.png");
-		side_img = loadImage("images/side_white.png");
-		import_img = loadImage("images/import.jpg");
-		generate_img = loadImage("images/generate.jpg");
-		view_img = loadImage("images/view.jpg");
-		misc_img = loadImage("images/misc.jpg");
-		total_img = loadImage("images/total_records.jpg");
-		date_img = loadImage("images/current_time.jpg");
+		title_img = loadImage("/images/appTitle.png");
+		top_img = loadImage("/images/top_white.png");
+		side_img = loadImage("/images/side_white.png");
+		import_img = loadImage("/images/import.jpg");
+		generate_img = loadImage("/images/generate.jpg");
+		view_img = loadImage("/images/view.jpg");
+		misc_img = loadImage("/images/misc.jpg");
 		
 		addAdjPanel = new AddAdjustmentsView(model); 
 		genPayslipsPanel = new GeneratePayslipsView(model);
@@ -168,6 +157,7 @@ public class PayrollSystemView extends JPanel {
 		viewPersPanel = new ViewPersonnelView(model); 
 		viewSummPanel = new ViewSummaryReportView(model);
 		settingsPanel = sView;
+		backUpPanel = new BackUpView();
 		loginPanel = new LogInView();
 		addDTRPanel = new DTRView();
 		addPersPanel = new PersonnelView();
@@ -188,32 +178,22 @@ public class PayrollSystemView extends JPanel {
 		homeBtn = new CustomToggleButton("Home                                ");
 		addAdjBtn = new CustomToggleButton("Add Adjustments           ");
 		remAdjBtn = new CustomToggleButton("Remove Adjustments   ");
-		settingsBtn = new JButton(loadScaledImage("images/buttons/settings.png", .50f));
-		nextBtn = new JButton(loadScaledImage("images/buttons/next.png", .50f));
+		settingsBtn = new JButton(loadScaledImage("/images/buttons/settings.png", .8f));
+		nextBtn = new JButton(loadScaledImage("/images/buttons/next.png", .50f));
 		backUpBtn = new CustomToggleButton("Back Up Data                  ");
-		addPersonnelBtn = new CustomToggleButton("  Personnel                           ");
-		addDTRBtn = new CustomToggleButton("   DTR (Daily Time Record)");
-		genSummaryBtn = new CustomToggleButton(" Summary Report            ");
+		addPersonnelBtn = new CustomToggleButton("Personnel                         ");
+		addDTRBtn = new CustomToggleButton("  DTR (Daily Time Record)");
+		genSummaryBtn = new CustomToggleButton("Summary Report           ");
 		genPayslipsBtn = new CustomToggleButton("Payslips                           ");
 		modifyTaxBtn = new CustomToggleButton("Tax Table                          ");
-		viewPersBtn = new CustomToggleButton("  Personnel                           ");
-		viewSummBtn = new CustomToggleButton(" Summary Report            ");
+		viewPersBtn = new CustomToggleButton("Personnel                          ");
+		viewSummBtn = new CustomToggleButton("Summary Report            ");
 		
 		modifyUI();
 		
-		/*Initialize Application Frame*/
-		payrollSystemFrame = new JFrame();
-		payrollSystemFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		payrollSystemFrame.setSize(1064, 750);
-		payrollSystemFrame.setContentPane(mainPanel);
-		payrollSystemFrame.setTitle("A Payroll System");
-		payrollSystemFrame.setResizable(true);
-		payrollSystemFrame.setMinimumSize(new Dimension(970, 720));
-		payrollSystemFrame.setLocationRelativeTo(null);
-		payrollSystemFrame.setVisible(true);
-		
 		resize = false;
 		is_home = true;
+		setCount();
 		
 		mainPanel.addComponentListener(new ComponentAdapter() {
             @Override
@@ -223,7 +203,7 @@ public class PayrollSystemView extends JPanel {
             }
         });
 		
-		blackPane.addMouseListener(new MouseAdapter(){
+		blackPane.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent event) {  
 				if(settingsPanel.isVisible())
 				{
@@ -234,13 +214,22 @@ public class PayrollSystemView extends JPanel {
 		});
 		
 		//Prevents specified panels to disappear when clicked.
-		loginPanel.addMouseListener(new MouseAdapter(){});
 		settingsPanel.addMouseListener(new MouseAdapter(){});
+		
+		/*Initialize Application Frame*/
+		payrollSystemFrame = new JFrame();
+		payrollSystemFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		payrollSystemFrame.setSize(1064, 750);
+		payrollSystemFrame.setContentPane(mainPanel);
+		payrollSystemFrame.setTitle("APS: A Payroll System");
+		payrollSystemFrame.setResizable(true);
+		payrollSystemFrame.setMinimumSize(new Dimension(970, 720));
+		payrollSystemFrame.setLocationRelativeTo(null);
+		payrollSystemFrame.setVisible(true);
 	}
 	
 	private void showHome(boolean option) {
 		homepane1.setVisible(option);
-		homepane2.setVisible(option);
 		homepane3.setVisible(option);
 		homepane4.setVisible(option);
 		nextBtn.setVisible(option);
@@ -248,15 +237,13 @@ public class PayrollSystemView extends JPanel {
 	
 	private void showHome2(boolean option) {
 		homepane1.setVisible(true);
-		homepane2.setVisible(true);
 		homepane3.setVisible(option);
 		homepane4.setVisible(option);
 		nextBtn.setVisible(option);
 	}
 	
 	
-	public static void showBlackPane(boolean option)
-	{
+	public static void showBlackPane(boolean option) {
 		blackPane.setVisible(option);
 	}
 	
@@ -300,40 +287,38 @@ public class PayrollSystemView extends JPanel {
 		viewSummPanel.setSize(new Dimension(this.getWidth()-213,this.getHeight()-70));
 		viewSummPanel.setBounds(214, 50, viewSummPanel.getWidth(), viewSummPanel.getHeight());
 		
-		addDTRPanel.setSize(new Dimension(this.getWidth()-213,this.getHeight()-395));
-		addDTRPanel.setBounds(214, 376, addDTRPanel.getWidth(), addDTRPanel.getHeight());
+		addDTRPanel.setSize(new Dimension(this.getWidth()-213,this.getHeight()-70));
+		addDTRPanel.setBounds(214, 305, addDTRPanel.getWidth(), addDTRPanel.getHeight());
 		
 		addPersPanel.setSize(new Dimension(this.getWidth()-213,this.getHeight()-70));
-		addPersPanel.setBounds(214, 376, addPersPanel.getWidth(), addPersPanel.getHeight());
+		addPersPanel.setBounds(214, 305, addPersPanel.getWidth(), addPersPanel.getHeight());
+		
+		backUpPanel.setSize(new Dimension(this.getWidth()-213,this.getHeight()-70));
+		backUpPanel.setBounds(214, 50, backUpPanel.getWidth(), backUpPanel.getHeight());
 		
 		homepane1.setOpaque(false);
-		homepane1.setSize(new Dimension(300,200));
-		homepane1.setBounds(254, 165, homepane1.getWidth(), homepane1.getHeight());
-		homepane1.setLayout(new BoxLayout(homepane1, BoxLayout.PAGE_AXIS));
-		
-		homepane2.setOpaque(false);
-		homepane2.setSize(new Dimension(200,70));
-		homepane2.setBounds(this.getWidth()-270, 72, homepane2.getWidth(), homepane2.getHeight());
-		homepane2.setLayout(new BoxLayout(homepane2, BoxLayout.PAGE_AXIS));
+		homepane1.setSize(new Dimension(560,200));
+		homepane1.setBounds(245, 120, homepane1.getWidth(), homepane1.getHeight());
+		homepane1.setLayout(new GridBagLayout());
 		
 		homepane3.setOpaque(false);
 		homepane3.setSize(new Dimension(300,200));
-		homepane3.setBounds(254, 400, homepane3.getWidth(), homepane3.getHeight());
+		homepane3.setBounds(250, 320, homepane3.getWidth(), homepane3.getHeight());
 		homepane3.setLayout(new GridBagLayout());
 		
 		homepane4.setOpaque(false);
-		homepane4.setSize(new Dimension(380,200));
-		homepane4.setBounds(664, 400, homepane4.getWidth(), homepane4.getHeight());
-		homepane4.setLayout(new BoxLayout(homepane4, BoxLayout.PAGE_AXIS));
+		homepane4.setSize(new Dimension(380,120));
+		homepane4.setBounds(604, 380, homepane4.getWidth(), homepane4.getHeight());
+		homepane4.setLayout(new GridLayout(2,0));
 		
 		menuPanel.setOpaque(false);
 		menuPanel.setSize(new Dimension(214,this.getHeight()));
 		menuPanel.setBounds(0, 50, menuPanel.getWidth(), menuPanel.getHeight());
 		menuPanel.setLayout(new BoxLayout(menuPanel, BoxLayout.PAGE_AXIS));
 		
-		settingsBtn.setBounds(this.getWidth()-150, 0, settingsBtn.getWidth(), settingsBtn.getHeight());
+		settingsBtn.setBounds(this.getWidth()-50, 5, settingsBtn.getWidth(), settingsBtn.getHeight());
 
-		nextBtn.setBounds(this.getWidth()-53, 390, nextBtn.getWidth()/2, nextBtn.getHeight()/2);
+		nextBtn.setBounds(this.getWidth()-80, 342, nextBtn.getWidth()/2, nextBtn.getHeight()/2);
 		
 		initLabels();
 		initButtons();
@@ -342,26 +327,7 @@ public class PayrollSystemView extends JPanel {
 		addComponentsToPane();
 	}
 	
-	private void addComponentsToPane()
-	{
-		homepane1.add(Box.createRigidArea(new Dimension(0,12)));
-		homepane1.add(status1);
-		homepane1.add(Box.createRigidArea(new Dimension(0,12)));
-		homepane1.add(status2);
-		homepane1.add(Box.createRigidArea(new Dimension(0,12)));
-		homepane1.add(status3);
-		homepane1.add(Box.createRigidArea(new Dimension(0,12)));
-		homepane1.add(status4);
-		homepane1.add(Box.createRigidArea(new Dimension(0,12)));
-		homepane1.add(status5);
-		homepane1.add(Box.createRigidArea(new Dimension(0,12)));
-		homepane1.add(status6);
-		
-		homepane2.add(Box.createRigidArea(new Dimension(0,10)));
-		homepane2.add(credits);
-		homepane2.add(Box.createRigidArea(new Dimension(0,10)));
-		homepane2.add(versionLbl);
-		
+	private void addComponentsToPane() {
 		sideGroup.add(homeBtn);
 		sideGroup.add(addDTRBtn);
 		sideGroup.add(addPersonnelBtn);
@@ -399,6 +365,50 @@ public class PayrollSystemView extends JPanel {
 		
 		/** Place buttons into frame using Grid Bag Constraints. */
 		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.anchor = GridBagConstraints.WEST;
+		gbc.ipadx = 0;
+		gbc.ipady = 20;
+		
+		gbc.gridwidth = 1;
+		gbc.insets = new Insets(0,0,0,0);
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		homepane1.add(status1,gbc);
+		
+		gbc.gridwidth = 1;
+		gbc.insets = new Insets(0,0,0,0);
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		homepane1.add(status3,gbc);
+
+		gbc.gridwidth = 1;
+		gbc.insets = new Insets(0,0,0,0);
+		gbc.gridx = 0;
+		gbc.gridy = 2;
+		homepane1.add(status5,gbc);
+		
+		gbc.ipadx = 70;
+		gbc.gridwidth = 1;
+		gbc.insets = new Insets(0,0,0,0);
+		gbc.gridx = 1;
+		gbc.gridy = 1;
+		homepane1.add(status4,gbc);
+		
+		gbc.gridwidth = 1;
+		gbc.insets = new Insets(0,0,0,0);
+		gbc.gridx = 1;
+		gbc.gridy = 0;
+		homepane1.add(status2,gbc);
+		
+		gbc.gridwidth = 1;
+		gbc.insets = new Insets(0,0,0,0);
+		gbc.gridx = 1;
+		gbc.gridy = 2;
+		homepane1.add(status6,gbc);
+		
+		gbc.anchor = GridBagConstraints.CENTER;
+		gbc.ipadx = 0;
+		gbc.ipady = 0;
 		
 		gbc.gridwidth = 1;
 		gbc.insets = new Insets(0,0,0,0);
@@ -424,13 +434,10 @@ public class PayrollSystemView extends JPanel {
 		gbc.gridy = 1;
 		homepane3.add(employeeLbl,gbc);
 		
-		homepane4.add(Box.createRigidArea(new Dimension(0,31)));
 		homepane4.add(currentDate);
-		homepane4.add(Box.createRigidArea(new Dimension(0,0)));
 		homepane4.add(dateLbl);
 		
 		add(homepane1);
-		add(homepane2);
 		add(homepane3);
 		add(homepane4);
 		add(menuPanel);
@@ -447,6 +454,7 @@ public class PayrollSystemView extends JPanel {
 		add(viewSummPanel);
 		add(addDTRPanel);
 		add(addPersPanel);
+		add(backUpPanel);
 		
 		addAdjPanel.setVisible(false);
 		genPayslipsPanel.setVisible(false);
@@ -458,6 +466,7 @@ public class PayrollSystemView extends JPanel {
 		viewPersPanel.setVisible(false);
 		addDTRPanel.setVisible(false);
 		addPersPanel.setVisible(false);
+		backUpPanel.setVisible(false);
 	
 		mainPanel.add(this, new Integer(0), 0);
 		mainPanel.add(blackPane, new Integer(1), 0);
@@ -473,7 +482,6 @@ public class PayrollSystemView extends JPanel {
 		ArrayList<JComponent> holder = new ArrayList<JComponent>();
 		ArrayList<String> tips = new ArrayList<String>();
 		
-		
 		RoundedBalloonStyle rbs = new RoundedBalloonStyle(6,6,Utils.toolTipBGColor,Utils.toolTipFGColor);
 		
 		//
@@ -482,6 +490,14 @@ public class PayrollSystemView extends JPanel {
 		holder.add(addDTRBtn);
 		holder.add(nextBtn);
 		holder.add(settingsBtn);
+		holder.add(backUpBtn);
+		holder.add(genSummaryBtn);
+		holder.add(genPayslipsBtn);
+		holder.add(modifyTaxBtn);
+		holder.add(viewPersBtn);
+		holder.add(viewSummBtn);
+		holder.add(addAdjBtn);
+		holder.add(remAdjBtn);
 		// ------
 		// ------
 		
@@ -490,11 +506,17 @@ public class PayrollSystemView extends JPanel {
 		tips.add("<html>Imports DTR of a client.<br></html>");
 		tips.add("<html><b>Next Time Period</b><br><br>This button is used to move to<br>the next time period.</html>");
 		tips.add("<html>Settings allows you to change password,<br>client variables, and manage back-ups.</html>");
-		
+		tips.add("<html>Allows you to back up your system.<br></html>");
+		tips.add("<html>Generate summary reports of selected<br>client per time period</html>");
+		tips.add("<html>Generate payslips of selected<br>client.</html>");
+		tips.add("<html>Allows you to modify the system's<br>current tax table.</html>");
+		tips.add("<html>Shows a table of personnel<br>per client</html>");
+		tips.add("<html>Shows a summary report of a client<br>depending on your choice.</html>");
+		tips.add("<html>Allows you to add adjustment<br>to a client.</html>");
+		tips.add("<html>Allows you to remove adjustment<br>to a client.</html>");
 		// Initializes the balloon tips for fade in and fade out of tool tips. Order of things MATTERS!
 		
-		for(String x: tips)
-		{
+		for(String x: tips) {
 			JLabel label = new JLabel(x);
 			label.setFont(tooltipfont);
 			
@@ -514,22 +536,17 @@ public class PayrollSystemView extends JPanel {
 		        	  , 200, 16);
 		          } 
 		    });
-
 			balloonTips.get(index).setVisible(false);
 		}
-		
 	}
 	
-	private void initLabels()
-	{
+	private void initLabels() {
 		status1.setFont(homestat);
 		status2.setFont(homestat);
 		status3.setFont(homestat);
 		status4.setFont(homestat);
 		status5.setFont(homestat);
 		status6.setFont(homestat);
-		credits.setFont(homestat);
-		versionLbl.setFont(homestat);
 		
 		employeeLbl.setFont(homestat);
 		clientLbl.setFont(homestat);
@@ -545,14 +562,14 @@ public class PayrollSystemView extends JPanel {
 		dateLbl.setSize(new Dimension(380,200));
 	}
 	
-	private void initButtons(){
+	private void initButtons() {
 		nextBtn.setContentAreaFilled(false);
 		nextBtn.setBorder(null);
 		nextBtn.setOpaque(false);
 		nextBtn.setForeground(null);
 		nextBtn.setFocusPainted(false);
-		nextBtn.setRolloverIcon(loadScaledImage("images/buttons/next-r.png", .5f));
-		nextBtn.setPressedIcon(loadScaledImage("images/buttons/next-p.png", .5f));
+		nextBtn.setRolloverIcon(loadScaledImage("/images/buttons/next-r.png", .5f));
+		nextBtn.setPressedIcon(loadScaledImage("/images/buttons/next-p.png", .5f));
 		nextBtn.setPreferredSize(new Dimension(nextBtn.getIcon().getIconWidth(), nextBtn.getIcon().getIconHeight()));
 		nextBtn.setSize(new Dimension(nextBtn.getIcon().getIconWidth(), nextBtn.getIcon().getIconHeight()));
 		
@@ -561,22 +578,18 @@ public class PayrollSystemView extends JPanel {
 		settingsBtn.setOpaque(false);
 		settingsBtn.setForeground(null);
 		settingsBtn.setFocusPainted(false);
-		settingsBtn.setRolloverIcon(loadScaledImage("images/buttons/settings-r.png", .5f));
-		settingsBtn.setPressedIcon(loadScaledImage("images/buttons/settings-p.png", .5f));
+		settingsBtn.setRolloverIcon(loadScaledImage("/images/buttons/settings-r.png", .8f));
+		settingsBtn.setPressedIcon(loadScaledImage("/images/buttons/settings-p.png", .8f));
 		settingsBtn.setPreferredSize(new Dimension(settingsBtn.getIcon().getIconWidth(), settingsBtn.getIcon().getIconHeight()));
 		settingsBtn.setSize(new Dimension(settingsBtn.getIcon().getIconWidth(), settingsBtn.getIcon().getIconHeight()));
-		
-		ImageIcon normal = loadScaledImage("images/effects/normal.png", .5f);
-		ImageIcon hover = loadScaledImage("images/effects/hover.png", .5f);
-		ImageIcon pressed = loadScaledImage("images/effects/pressed.png", .5f);
 		
 		homeBtn.setContentAreaFilled(false);
 		homeBtn.setBorder(null);
 		homeBtn.setHorizontalTextPosition(JButton.CENTER);
 		homeBtn.setVerticalTextPosition(JButton.CENTER);
-		homeBtn.setIcon(normal);
-		homeBtn.setSelectedIcon(pressed);
-		homeBtn.setRolloverIcon(hover);
+		homeBtn.setIcon(loadScaledImage("/images/effects/home.png", .5f));
+		homeBtn.setSelectedIcon(loadScaledImage("/images/effects/home-p.png", .5f));
+		homeBtn.setRolloverIcon(loadScaledImage("/images/effects/home-r.png", .5f));
 		homeBtn.setForeground(null);
 		homeBtn.setFocusPainted(false);
 		homeBtn.setFont(Utils.menuFont);
@@ -587,9 +600,9 @@ public class PayrollSystemView extends JPanel {
 		addDTRBtn.setBorder(null);
 		addDTRBtn.setHorizontalTextPosition(JButton.CENTER);
 		addDTRBtn.setVerticalTextPosition(JButton.CENTER);
-		addDTRBtn.setIcon(normal);
-		addDTRBtn.setSelectedIcon(pressed);
-		addDTRBtn.setRolloverIcon(hover);
+		addDTRBtn.setIcon(loadScaledImage("/images/effects/dtr.png", .5f));
+		addDTRBtn.setSelectedIcon(loadScaledImage("/images/effects/dtr-p.png", .5f));
+		addDTRBtn.setRolloverIcon(loadScaledImage("/images/effects/dtr-r.png", .5f));
 		addDTRBtn.setForeground(null);
 		addDTRBtn.setFocusPainted(false);
 		addDTRBtn.setFont(Utils.menuFont);
@@ -599,9 +612,9 @@ public class PayrollSystemView extends JPanel {
 		addPersonnelBtn.setBorder(null);
 		addPersonnelBtn.setHorizontalTextPosition(JButton.CENTER);
 		addPersonnelBtn.setVerticalTextPosition(JButton.CENTER);
-		addPersonnelBtn.setIcon(normal);
-		addPersonnelBtn.setSelectedIcon(pressed);
-		addPersonnelBtn.setRolloverIcon(hover);
+		addPersonnelBtn.setIcon(loadScaledImage("/images/effects/personnel.png", .5f));
+		addPersonnelBtn.setSelectedIcon(loadScaledImage("/images/effects/personnel-p.png", .5f));
+		addPersonnelBtn.setRolloverIcon(loadScaledImage("/images/effects/personnel-r.png", .5f));
 		addPersonnelBtn.setForeground(null);
 		addPersonnelBtn.setFocusPainted(false);
 		addPersonnelBtn.setFont(Utils.menuFont);
@@ -611,9 +624,9 @@ public class PayrollSystemView extends JPanel {
 		viewSummBtn.setBorder(null);
 		viewSummBtn.setHorizontalTextPosition(JButton.CENTER);
 		viewSummBtn.setVerticalTextPosition(JButton.CENTER);
-		viewSummBtn.setIcon(normal);
-		viewSummBtn.setSelectedIcon(pressed);
-		viewSummBtn.setRolloverIcon(hover);
+		viewSummBtn.setIcon(loadScaledImage("/images/effects/summaryreport.png", .5f));
+		viewSummBtn.setSelectedIcon(loadScaledImage("/images/effects/summaryreport-p.png", .5f));
+		viewSummBtn.setRolloverIcon(loadScaledImage("/images/effects/summaryreport-r.png", .5f));
 		viewSummBtn.setForeground(null);
 		viewSummBtn.setFocusPainted(false);
 		viewSummBtn.setFont(Utils.menuFont);
@@ -623,9 +636,9 @@ public class PayrollSystemView extends JPanel {
 		viewPersBtn.setBorder(null);
 		viewPersBtn.setHorizontalTextPosition(JButton.CENTER);
 		viewPersBtn.setVerticalTextPosition(JButton.CENTER);
-		viewPersBtn.setIcon(normal);
-		viewPersBtn.setSelectedIcon(pressed);
-		viewPersBtn.setRolloverIcon(hover);
+		viewPersBtn.setIcon(loadScaledImage("/images/effects/personnel.png", .5f));
+		viewPersBtn.setSelectedIcon(loadScaledImage("/images/effects/personnel-p.png", .5f));
+		viewPersBtn.setRolloverIcon(loadScaledImage("/images/effects/personnel-r.png", .5f));
 		viewPersBtn.setForeground(null);
 		viewPersBtn.setFocusPainted(false);
 		viewPersBtn.setFont(Utils.menuFont);
@@ -635,9 +648,9 @@ public class PayrollSystemView extends JPanel {
 		genPayslipsBtn.setBorder(null);
 		genPayslipsBtn.setHorizontalTextPosition(JButton.CENTER);
 		genPayslipsBtn.setVerticalTextPosition(JButton.CENTER);
-		genPayslipsBtn.setIcon(normal);
-		genPayslipsBtn.setSelectedIcon(pressed);
-		genPayslipsBtn.setRolloverIcon(hover);
+		genPayslipsBtn.setIcon(loadScaledImage("/images/effects/summaryreport2.png", .5f));
+		genPayslipsBtn.setSelectedIcon(loadScaledImage("/images/effects/summaryreport2-p.png", .5f));
+		genPayslipsBtn.setRolloverIcon(loadScaledImage("/images/effects/summaryreport2-r.png", .5f));
 		genPayslipsBtn.setForeground(null);
 		genPayslipsBtn.setFocusPainted(false);
 		genPayslipsBtn.setFont(Utils.menuFont);
@@ -647,9 +660,9 @@ public class PayrollSystemView extends JPanel {
 		genSummaryBtn.setBorder(null);
 		genSummaryBtn.setHorizontalTextPosition(JButton.CENTER);
 		genSummaryBtn.setVerticalTextPosition(JButton.CENTER);
-		genSummaryBtn.setIcon(normal);
-		genSummaryBtn.setSelectedIcon(pressed);
-		genSummaryBtn.setRolloverIcon(hover);
+		genSummaryBtn.setIcon(loadScaledImage("/images/effects/summaryreport.png", .5f));
+		genSummaryBtn.setSelectedIcon(loadScaledImage("/images/effects/summaryreport-p.png", .5f));
+		genSummaryBtn.setRolloverIcon(loadScaledImage("/images/effects/summaryreport-r.png", .5f));
 		genSummaryBtn.setForeground(null);
 		genSummaryBtn.setFocusPainted(false);
 		genSummaryBtn.setFont(Utils.menuFont);
@@ -659,9 +672,9 @@ public class PayrollSystemView extends JPanel {
 		backUpBtn.setBorder(null);
 		backUpBtn.setHorizontalTextPosition(JButton.CENTER);
 		backUpBtn.setVerticalTextPosition(JButton.CENTER);
-		backUpBtn.setIcon(normal);
-		backUpBtn.setSelectedIcon(pressed);
-		backUpBtn.setRolloverIcon(hover);
+		backUpBtn.setIcon(loadScaledImage("/images/effects/backup.png", .5f));
+		backUpBtn.setSelectedIcon(loadScaledImage("/images/effects/backup-p.png", .5f));
+		backUpBtn.setRolloverIcon(loadScaledImage("/images/effects/backup-r.png", .5f));
 		backUpBtn.setForeground(null);
 		backUpBtn.setFocusPainted(false);
 		backUpBtn.setFont(Utils.menuFont);
@@ -671,9 +684,9 @@ public class PayrollSystemView extends JPanel {
 		addAdjBtn.setBorder(null);
 		addAdjBtn.setHorizontalTextPosition(JButton.CENTER);
 		addAdjBtn.setVerticalTextPosition(JButton.CENTER);
-		addAdjBtn.setIcon(normal);
-		addAdjBtn.setSelectedIcon(pressed);
-		addAdjBtn.setRolloverIcon(hover);
+		addAdjBtn.setIcon(loadScaledImage("/images/effects/addAdj.png", .5f));
+		addAdjBtn.setSelectedIcon(loadScaledImage("/images/effects/addAdj-p.png", .5f));
+		addAdjBtn.setRolloverIcon(loadScaledImage("/images/effects/addAdj-r.png", .5f));
 		addAdjBtn.setForeground(null);
 		addAdjBtn.setFocusPainted(false);
 		addAdjBtn.setFont(Utils.menuFont);
@@ -683,9 +696,9 @@ public class PayrollSystemView extends JPanel {
 		remAdjBtn.setBorder(null);
 		remAdjBtn.setHorizontalTextPosition(JButton.CENTER);
 		remAdjBtn.setVerticalTextPosition(JButton.CENTER);
-		remAdjBtn.setIcon(normal);
-		remAdjBtn.setSelectedIcon(pressed);
-		remAdjBtn.setRolloverIcon(hover);
+		remAdjBtn.setIcon(loadScaledImage("/images/effects/remAdj.png", .5f));
+		remAdjBtn.setSelectedIcon(loadScaledImage("/images/effects/remAdj-p.png", .5f));
+		remAdjBtn.setRolloverIcon(loadScaledImage("/images/effects/remAdj-r.png", .5f));
 		remAdjBtn.setForeground(null);
 		remAdjBtn.setFocusPainted(false);
 		remAdjBtn.setFont(Utils.menuFont);
@@ -695,9 +708,9 @@ public class PayrollSystemView extends JPanel {
 		modifyTaxBtn.setBorder(null);
 		modifyTaxBtn.setHorizontalTextPosition(JButton.CENTER);
 		modifyTaxBtn.setVerticalTextPosition(JButton.CENTER);
-		modifyTaxBtn.setIcon(normal);
-		modifyTaxBtn.setSelectedIcon(pressed);
-		modifyTaxBtn.setRolloverIcon(hover);
+		modifyTaxBtn.setIcon(loadScaledImage("/images/effects/tax.png", .5f));
+		modifyTaxBtn.setSelectedIcon(loadScaledImage("/images/effects/tax-p.png", .5f));
+		modifyTaxBtn.setRolloverIcon(loadScaledImage("/images/effects/tax-r.png", .5f));
 		modifyTaxBtn.setForeground(null);
 		modifyTaxBtn.setFocusPainted(false);
 		modifyTaxBtn.setFont(Utils.menuFont);
@@ -720,6 +733,7 @@ public class PayrollSystemView extends JPanel {
 				removePersPanel.setVisible(false);
 				viewSummPanel.setVisible(false);
 				viewPersPanel.setVisible(false);
+				backUpPanel.setVisible(false);
 			}
 		});
 		
@@ -740,6 +754,7 @@ public class PayrollSystemView extends JPanel {
 				removePersPanel.setVisible(false);
 				viewSummPanel.setVisible(false);
 				viewPersPanel.setVisible(false);
+				backUpPanel.setVisible(false);
 			}
 		});
 		
@@ -760,6 +775,7 @@ public class PayrollSystemView extends JPanel {
 				removePersPanel.setVisible(false);
 				viewSummPanel.setVisible(false);
 				viewPersPanel.setVisible(false);
+				backUpPanel.setVisible(false);
 			}
 		});
 		
@@ -780,6 +796,7 @@ public class PayrollSystemView extends JPanel {
 				removePersPanel.setVisible(false);
 				viewSummPanel.setVisible(false);
 				viewPersPanel.setVisible(false);
+				backUpPanel.setVisible(false);
 				genPayslipsPanel.updateClientList();
 			}
 		});
@@ -801,6 +818,7 @@ public class PayrollSystemView extends JPanel {
 				removePersPanel.setVisible(false);
 				viewSummPanel.setVisible(false);
 				viewPersPanel.setVisible(false);
+				backUpPanel.setVisible(false);
 			}
 		});
 		
@@ -821,6 +839,7 @@ public class PayrollSystemView extends JPanel {
 				removePersPanel.setVisible(false);
 				viewSummPanel.setVisible(false);
 				viewPersPanel.setVisible(true);
+				backUpPanel.setVisible(false);
 			}
 		});
 		
@@ -841,6 +860,7 @@ public class PayrollSystemView extends JPanel {
 				removePersPanel.setVisible(false);
 				viewSummPanel.setVisible(true);
 				viewPersPanel.setVisible(false);
+				backUpPanel.setVisible(false);
 			}
 		});
 		
@@ -861,6 +881,7 @@ public class PayrollSystemView extends JPanel {
 				removePersPanel.setVisible(false);
 				viewSummPanel.setVisible(false);
 				viewPersPanel.setVisible(false);
+				backUpPanel.setVisible(false);
 			}
 		});
 		
@@ -881,6 +902,49 @@ public class PayrollSystemView extends JPanel {
 				removePersPanel.setVisible(false);
 				viewSummPanel.setVisible(false);
 				viewPersPanel.setVisible(false);
+				backUpPanel.setVisible(false);
+			}
+		});
+		
+		modifyTaxBtn.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				is_home = false;
+				showHome(false);
+				repaint();
+				
+				addDTRPanel.setVisible(false);
+				addPersPanel.setVisible(false);
+				addAdjPanel.setVisible(false);
+				genPayslipsPanel.setVisible(false);
+				genSummaryPanel.setVisible(false);
+				modifyTaxPanel.setVisible(true);
+				removeAdjPanel.setVisible(false);
+				removePersPanel.setVisible(false);
+				viewSummPanel.setVisible(false);
+				viewPersPanel.setVisible(false);
+				backUpPanel.setVisible(false);
+			}
+		});
+		
+		backUpBtn.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				is_home = false;
+				showHome(false);
+				repaint();
+				
+				addDTRPanel.setVisible(false);
+				addPersPanel.setVisible(false);
+				addAdjPanel.setVisible(false);
+				genPayslipsPanel.setVisible(false);
+				genSummaryPanel.setVisible(false);
+				modifyTaxPanel.setVisible(false);
+				removeAdjPanel.setVisible(false);
+				removePersPanel.setVisible(false);
+				viewSummPanel.setVisible(false);
+				viewPersPanel.setVisible(false);
+				backUpPanel.setVisible(true);
 			}
 		});
 		
@@ -900,19 +964,21 @@ public class PayrollSystemView extends JPanel {
 			{	
 				this.setSize(mainPanel.getSize());
 
-				addDTRPanel.setSize(new Dimension(this.getWidth()-213,this.getHeight()-375));
-				addPersPanel.setSize(new Dimension(this.getWidth()-213,this.getHeight()-375));
+				addDTRPanel.setSize(new Dimension(this.getWidth()-213,this.getHeight()-305));
+				addPersPanel.setSize(new Dimension(this.getWidth()-213,this.getHeight()-305));
 				viewSummPanel.setSize(new Dimension(this.getWidth()-213,this.getHeight()-50));
 				viewPersPanel.setSize(new Dimension(this.getWidth()-213,this.getHeight()-50));
 				genSummaryPanel.setSize(new Dimension(this.getWidth()-213,this.getHeight()-50));
 				genPayslipsPanel.setSize(new Dimension(this.getWidth()-213,this.getHeight()-50));
 				addAdjPanel.setSize(new Dimension(this.getWidth()-213,this.getHeight()-50));
 				removeAdjPanel.setSize(new Dimension(this.getWidth()-213,this.getHeight()-50));
+				backUpPanel.setSize(new Dimension(this.getWidth()-213,this.getHeight()-50));
+				modifyTaxPanel.setSize(new Dimension(this.getWidth()-213,this.getHeight()-50));
 				settingsPanel.setBounds(new Rectangle(this.getWidth()/2 - settingsPanel.getWidth()/2,
 						  							  this.getHeight()/2 - settingsPanel.getHeight()/2,
 						  							  settingsPanel.getWidth(),settingsPanel.getHeight()));
 
-				settingsBtn.setBounds(this.getWidth()-150, 0, settingsBtn.getWidth(), settingsBtn.getHeight());
+				settingsBtn.setBounds(this.getWidth()-45, 5, settingsBtn.getWidth(), settingsBtn.getHeight());
 				resize = false;
 			}
 			super.paintComponent(g);
@@ -934,34 +1000,33 @@ public class PayrollSystemView extends JPanel {
 	        g2d.setColor(Color.LIGHT_GRAY);
 	        g2d.drawLine(0, 675, 213, 675); 
 	        
-	        g2d.drawLine(213, 50, 213, this.getHeight());
+	        g2d.drawLine(214, 50, 213, this.getHeight());
 	        
 	        /************/
 	        
 	        if(is_home){
-		        g2d.setFont(bebas_small);
-		        g2d.setColor(Utils.darkgray);
-		        g2d.drawString("888 Gallant Manpower Agency Inc.", 250, 93);
+	        	g2d.setColor(Utils.menuHColor);
+				g2d.fillRect(214, 50, this.getWidth(), 90);
+					
+		        g2d.setFont(Utils.menuHeader2Font);
+		        g2d.setColor(Color.WHITE);
+		        g2d.drawString("888 Gallant Manpower Agency Inc.", 250, 80);
 		    	
-		    	g2d.setFont(bebas_big);
+		    	g2d.setFont(Utils.menuHeaderFont);
 		        g2d.setColor(Utils.menuFGColor);
-		        g2d.drawString("S", 250, 150);
-		        g2d.setColor(Utils.darkgray);
-		        g2d.drawString("YSTEM", 280, 150);
-		        g2d.setColor(Utils.menuFGColor);
-		        g2d.drawString(" S", 435, 150);
-		        g2d.setColor(Utils.darkgray);
-		        g2d.drawString("UMMARY", 475, 150);
+		        g2d.setColor(Color.WHITE);
+		        g2d.drawString("SYSTEM SUMMARY", 250, 120);
 		     
 		        g2d.setColor(Color.LIGHT_GRAY);
-		        g2d.drawLine(214, 380, this.getWidth(), 380);
+		        g2d.drawLine(214, 300, this.getWidth(), 310);
 		        
-		        g2d.setColor(Color.GRAY);
-		        g2d.setStroke(new BasicStroke(2));
-		        g2d.drawLine(214, 375, this.getWidth(), 375);
-		        
-		        g2d.drawImage(date_img, 590, 400, date_img.getWidth()/2, date_img.getHeight()/2, null);
-			    g2d.drawImage(total_img, 214, 400, total_img.getWidth()/2, total_img.getHeight()/2, null);
+		        g2d.setColor(Color.darkGray);
+				g2d.fillRect(214, 300, this.getWidth(), 30);
+				
+				g2d.setFont(Utils.menuHeader2Font);
+		        g2d.setColor(Color.WHITE);
+		        g2d.drawString("Total Records", 350, 320);
+		        g2d.drawString("Current Time Period", 720, 320);
 	        }
 	}
 	
@@ -986,64 +1051,49 @@ public class PayrollSystemView extends JPanel {
 		img_icon = new ImageIcon(img);
 		return img_icon;
 	}
+	
 	public void setAddDTRListener(ActionListener list){
 		((DTRView) addDTRPanel).setAddDTRListener(list);
 	}
+	
 	public void setDTRFileLocationListener(ActionListener list){
 		((DTRView) addDTRPanel).setFileLocationListener(list);
 	}
+	
 	public String getDTRFileLocation(){
 		return ((DTRView) addDTRPanel).getFileLocation();
 	}
+	
 	public void setDTRFileLocation(String location){
 		((DTRView) addDTRPanel).setFileLocation(location);
 	}
+	
 	public void setAddPersonnelListener(ActionListener list){
 		((PersonnelView) addPersPanel).setAddPersonnelListener(list);
 	}
+	
 	public void setPersonnelFileLocationListener(ActionListener list){
 		((PersonnelView) addPersPanel).setFileLocationListener(list);
 	}
+	
 	public String getPersonnelFileLocation(){
 		return ((PersonnelView) addPersPanel).getFileLocation();
 	}
+	
 	public void setPersonnelFileLocation(String location){
 		((PersonnelView) addPersPanel).setFileLocation(location);
 	}
+	
 	public void setNextTimeListener(ActionListener list){
 		nextBtn.addActionListener(list);
 	}
-	/*public void setRemovePListener(ActionListener list){}
-	public void setViewPListener(ActionListener list){}
-	public void setAddDTRListener(ActionListener list){
-		addDTRBtn.addActionListener(list);
-	}
-	public void setAddAdjustmentListener(ActionListener list){
-		addAdjustmentBtn.addActionListener(list);
-	}
-	public void setRemoveAdjustmentListener(ActionListener list){
-		removeAdjustmentBtn.addActionListener(list);
-	}
-	public void setViewSummaryReportListener(ActionListener list){
-		viewSummaryReportBtn.addActionListener(list);
-	}
-
-	public void setGenerateSummaryReportListener(ActionListener list){}
-	public void setModifyTaxTableListener(ActionListener list){}
-	public void setModifyClientVarListener(ActionListener list){}
-	public void setGeneratePayslipsListener(ActionListener list){
-		generatePayslipsBtn.addActionListener(list);
-	}
-	public void setChangePasswordListener(ActionListener list){
-		changePasswordBtn.addActionListener(list);
-	}
-	public void setBackupDataListener(ActionListener list){}
-	*/
+	
 	public File fileChooser(){
 		JFileChooser fc = null;
 		fc = new JFileChooser();
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("Excel files", "xls");
 		fc.setFileFilter(filter);
+		
 		//In response to a button click:
 		int returnVal = fc.showOpenDialog(this);
 		if(returnVal == JFileChooser.APPROVE_OPTION){

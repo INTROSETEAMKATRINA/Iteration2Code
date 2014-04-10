@@ -17,6 +17,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
 
@@ -30,6 +31,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+
 import java.io.File;
 import java.util.ArrayList;
 
@@ -43,22 +45,23 @@ public class GeneratePayslipsView extends JPanel {
 	private JButton generateBtn;
 	private JButton selSaveBtn;
 
-	private JComboBox clientCBox;
+	private JComboBox<Object> clientCBox;
 	
 	private PayrollSystemModel model;
 	
 	private File file;
 	public GeneratePayslipsView(PayrollSystemModel model){
 		this.model = model;
-		generateBtn = new JButton(new ImageIcon(getClass().getResource("images/buttons/generate.png")));
-		selSaveBtn = new JButton(new ImageIcon(getClass().getResource("images/buttons/select.png")));
+		generateBtn = new JButton(new ImageIcon(getClass().getResource("/images/buttons/generate.png")));
+		selSaveBtn = new JButton(new ImageIcon(getClass().getResource("/images/buttons/select.png")));
 		
 		selectClientLbl = new JLabel("Select Client: ");
 		saveLbl = new JLabel("Save Location: ");
 		locationLbl = new JLabel();
-		statusLbl = new JLabel();
+		statusLbl = new JLabel("Warning: No Data Found!");
+		statusLbl.setIcon(loadScaledImage("/images/notifs/warning.png",.08f));
 		
-		clientCBox = new JComboBox();
+		clientCBox = new JComboBox<Object>();
 		
 		modifyUI();
 	}
@@ -69,20 +72,20 @@ public class GeneratePayslipsView extends JPanel {
 		
 		statusLbl.setForeground(Utils.statusFGColor);
 		
-		clientCBox.setPreferredSize(new Dimension(300,30));
+		clientCBox.setPreferredSize(new Dimension(350,25));
 		clientCBox.setBackground(Utils.comboBoxBGColor);
 		clientCBox.setForeground(Utils.comboBoxFGColor);
 		
 		locationLbl.setBorder(new CompoundBorder(new LineBorder(Color.LIGHT_GRAY), new EmptyBorder(5,5,5,5)));
-		locationLbl.setPreferredSize(new Dimension(300,33));
+		locationLbl.setPreferredSize(new Dimension(350,25));
 		
 		generateBtn.setContentAreaFilled(false);
 		generateBtn.setBorder(null);
 		generateBtn.setOpaque(false);
 		generateBtn.setForeground(null);
 		generateBtn.setFocusPainted(false);
-		generateBtn.setRolloverIcon(new ImageIcon(getClass().getResource("images/buttons/generate-r.png")));
-		generateBtn.setPressedIcon(new ImageIcon(getClass().getResource("images/buttons/generate-p.png")));
+		generateBtn.setRolloverIcon(new ImageIcon(getClass().getResource("/images/buttons/generate-r.png")));
+		generateBtn.setPressedIcon(new ImageIcon(getClass().getResource("/images/buttons/generate-p.png")));
 		generateBtn.setSize(new Dimension(generateBtn.getIcon().getIconWidth(), generateBtn.getIcon().getIconHeight()));
 		
 		selSaveBtn.setContentAreaFilled(false);
@@ -90,8 +93,8 @@ public class GeneratePayslipsView extends JPanel {
 		selSaveBtn.setOpaque(false);
 		selSaveBtn.setForeground(null);
 		selSaveBtn.setFocusPainted(false);
-		selSaveBtn.setRolloverIcon(new ImageIcon(getClass().getResource("images/buttons/select-r.png")));
-		selSaveBtn.setPressedIcon(new ImageIcon(getClass().getResource("images/buttons/select-p.png")));
+		selSaveBtn.setRolloverIcon(new ImageIcon(getClass().getResource("/images/buttons/select-r.png")));
+		selSaveBtn.setPressedIcon(new ImageIcon(getClass().getResource("/images/buttons/select-p.png")));
 		selSaveBtn.setPreferredSize(new Dimension(selSaveBtn.getIcon().getIconWidth(), selSaveBtn.getIcon().getIconHeight()));
 		
 		initFont();
@@ -136,14 +139,14 @@ public class GeneratePayslipsView extends JPanel {
 		add(locationLbl,gbc);
 
 		gbc.fill = GridBagConstraints.NONE;
-		gbc.insets = new Insets(50,0,0,0);
+		gbc.insets = new Insets(50,10,0,0);
 		gbc.gridwidth = 1;
 		gbc.gridx = 2;
 		gbc.gridy = 1;
 		add(selSaveBtn,gbc);
 		
 		gbc.fill = GridBagConstraints.WEST;
-		gbc.insets = new Insets(80,0,0,0);
+		gbc.insets = new Insets(50,10,0,0);
 		gbc.gridwidth = 1;
 		gbc.gridx = 2;
 		gbc.gridy = 2;
@@ -261,5 +264,13 @@ public class GeneratePayslipsView extends JPanel {
 		return false;
 	}
 	
-
+	private ImageIcon loadScaledImage(String img_url, float percent)
+	{	
+		ImageIcon img_icon = new ImageIcon(this.getClass().getResource(img_url));
+		int new_width = (int) (img_icon.getIconWidth()*percent);
+		int new_height = (int) (img_icon.getIconHeight()*percent);
+		Image img = img_icon.getImage().getScaledInstance(new_width,new_height,java.awt.Image.SCALE_SMOOTH);  
+		img_icon = new ImageIcon(img);
+		return img_icon;
+	}
 }

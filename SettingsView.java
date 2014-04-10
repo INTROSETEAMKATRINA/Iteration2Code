@@ -17,7 +17,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
-import javax.swing.border.LineBorder;
 
 
 public class SettingsView extends JPanel  {
@@ -36,7 +35,9 @@ public class SettingsView extends JPanel  {
 	private JPanel accessPanel;
 	private ModifyClientVariablesView modifyVarPanel;
 	
+	@SuppressWarnings("unused")
 	private PayrollSystemModel model;
+	
 	public SettingsView(PayrollSystemModel model){
 		this.model = model;
 		
@@ -51,8 +52,8 @@ public class SettingsView extends JPanel  {
 		accessPanel = new JPanel();
 		modifyVarPanel = new ModifyClientVariablesView(model);
 		try {
-			settings_img = ImageIO.read(getClass().getResource("images/settings.png"));
-			side_img = ImageIO.read(getClass().getResource("images/side_white.png"));
+			settings_img = ImageIO.read(getClass().getResource("/images/settings.png"));
+			side_img = ImageIO.read(getClass().getResource("/images/side_white.png"));
 		} catch (IOException e) {}
 		
 		modifyUI();
@@ -61,7 +62,6 @@ public class SettingsView extends JPanel  {
 	private void modifyUI() {
 		setSize(new Dimension(700,500));
 		setBackground(Utils.BODY_COLOR);
-		setBorder(new LineBorder(Color.LIGHT_GRAY));
 		setLayout(null);
 
 		sidePane.setOpaque(false);
@@ -113,17 +113,13 @@ public class SettingsView extends JPanel  {
 
 	private void initButtons()
 	{
-		ImageIcon normal = loadScaledImage("images/effects/normal.png", .5f);
-		ImageIcon hover = loadScaledImage("images/effects/hover.png", .5f);
-		ImageIcon pressed = loadScaledImage("images/effects/pressed.png", .5f);
-		
 		changePassBtn.setContentAreaFilled(false);
 		changePassBtn.setBorder(null);
 		changePassBtn.setHorizontalTextPosition(JButton.CENTER);
 		changePassBtn.setVerticalTextPosition(JButton.CENTER);
-		changePassBtn.setIcon(normal);
-		changePassBtn.setSelectedIcon(pressed);
-		changePassBtn.setRolloverIcon(hover);
+		changePassBtn.setIcon(loadScaledImage("/images/effects/password.png", .5f));
+		changePassBtn.setSelectedIcon(loadScaledImage("/images/effects/password-p.png", .5f));
+		changePassBtn.setRolloverIcon(loadScaledImage("/images/effects/password-r.png", .5f));
 		changePassBtn.setForeground(null);
 		changePassBtn.setFocusPainted(false);
 		changePassBtn.setFont(Utils.menuFont);
@@ -134,9 +130,9 @@ public class SettingsView extends JPanel  {
 		accessBtn.setBorder(null);
 		accessBtn.setHorizontalTextPosition(JButton.CENTER);
 		accessBtn.setVerticalTextPosition(JButton.CENTER);
-		accessBtn.setIcon(normal);
-		accessBtn.setSelectedIcon(pressed);
-		accessBtn.setRolloverIcon(hover);
+		accessBtn.setIcon(loadScaledImage("/images/effects/key.png", .5f));
+		accessBtn.setSelectedIcon(loadScaledImage("/images/effects/key-p.png", .5f));
+		accessBtn.setRolloverIcon(loadScaledImage("/images/effects/key-r.png", .5f));
 		accessBtn.setForeground(null);
 		accessBtn.setFocusPainted(false);
 		accessBtn.setFont(Utils.menuFont);
@@ -146,9 +142,9 @@ public class SettingsView extends JPanel  {
 		appearanceBtn.setBorder(null);
 		appearanceBtn.setHorizontalTextPosition(JButton.CENTER);
 		appearanceBtn.setVerticalTextPosition(JButton.CENTER);
-		appearanceBtn.setIcon(normal);
-		appearanceBtn.setSelectedIcon(pressed);
-		appearanceBtn.setRolloverIcon(hover);
+		appearanceBtn.setIcon(loadScaledImage("/images/effects/tile.png", .5f));
+		appearanceBtn.setSelectedIcon(loadScaledImage("/images/effects/tile-p.png", .5f));
+		appearanceBtn.setRolloverIcon(loadScaledImage("/images/effects/tile-r.png", .5f));
 		appearanceBtn.setForeground(null);
 		appearanceBtn.setFocusPainted(false);
 		appearanceBtn.setFont(Utils.menuFont);
@@ -158,9 +154,9 @@ public class SettingsView extends JPanel  {
 		modifyVarBtn.setBorder(null);
 		modifyVarBtn.setHorizontalTextPosition(JButton.CENTER);
 		modifyVarBtn.setVerticalTextPosition(JButton.CENTER);
-		modifyVarBtn.setIcon(normal);
-		modifyVarBtn.setSelectedIcon(pressed);
-		modifyVarBtn.setRolloverIcon(hover);
+		modifyVarBtn.setIcon(loadScaledImage("/images/effects/var.png", .5f));
+		modifyVarBtn.setSelectedIcon(loadScaledImage("/images/effects/var-p.png", .5f));
+		modifyVarBtn.setRolloverIcon(loadScaledImage("/images/effects/var-r.png", .5f));
 		modifyVarBtn.setForeground(null);
 		modifyVarBtn.setFocusPainted(false);
 		modifyVarBtn.setFont(Utils.menuFont);
@@ -226,7 +222,7 @@ public class SettingsView extends JPanel  {
         g2d.drawImage(side_img, 0, 50, 213, this.getHeight(), null);
         
         g2d.setColor(Color.LIGHT_GRAY);
-        g2d.drawLine(213, 0, 213, this.getHeight());
+        g2d.drawLine(214, 0, 214, this.getHeight());
         
         g2d.setFont(Utils.labelFont);
         g2d.setColor(Utils.settingsHColor);

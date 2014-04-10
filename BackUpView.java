@@ -6,7 +6,6 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
-import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -16,30 +15,30 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
-public class DTRView extends JPanel {
+public class BackUpView extends JPanel {
 
 	private JLabel saveLbl;
 	private JLabel locationLbl;
 	private JLabel statusLbl;
 
-	private JButton addBtn;
+	private JButton saveBtn;
 	private JButton selSaveBtn;
 	
-	public DTRView() {
+	public BackUpView() {
 		
-		addBtn = new JButton(new ImageIcon(getClass().getResource("/images/buttons/add.png")));
+		saveBtn = new JButton(new ImageIcon(getClass().getResource("/images/buttons/backup.png")));
 		selSaveBtn = new JButton(new ImageIcon(getClass().getResource("/images/buttons/select.png")));
 		
 		saveLbl = new JLabel("Save Location: ");
 		locationLbl = new JLabel();
-		statusLbl = new JLabel("Status: ");
-		statusLbl.setIcon(loadScaledImage("/images/notifs/right.png",.08f));
+		statusLbl = new JLabel("Status: Back up Success!");
+		statusLbl.setIcon(loadScaledImage("/images/notifs/right.png",Utils.statusIconSize));
 		
 		modifyUI();
 	}
 	
 	private void modifyUI(){
-		setSize(new Dimension(851,395));
+		setSize(new Dimension(851,650));
 		setBackground(Utils.BODY_COLOR);
 		
 		statusLbl.setForeground(Utils.statusFGColor);
@@ -47,14 +46,14 @@ public class DTRView extends JPanel {
 		locationLbl.setBorder(new CompoundBorder(new LineBorder(Color.LIGHT_GRAY), new EmptyBorder(5,5,5,5)));
 		locationLbl.setPreferredSize(new Dimension(300,33));
 		
-		addBtn.setContentAreaFilled(false);
-		addBtn.setBorder(null);
-		addBtn.setOpaque(false);
-		addBtn.setForeground(null);
-		addBtn.setFocusPainted(false);
-		addBtn.setRolloverIcon(new ImageIcon(getClass().getResource("/images/buttons/add-r.png")));
-		addBtn.setPressedIcon(new ImageIcon(getClass().getResource("/images/buttons/add-p.png")));
-		addBtn.setSize(new Dimension(addBtn.getIcon().getIconWidth(), addBtn.getIcon().getIconHeight()));
+		saveBtn.setContentAreaFilled(false);
+		saveBtn.setBorder(null);
+		saveBtn.setOpaque(false);
+		saveBtn.setForeground(null);
+		saveBtn.setFocusPainted(false);
+		saveBtn.setRolloverIcon(new ImageIcon(getClass().getResource("/images/buttons/backup-r.png")));
+		saveBtn.setPressedIcon(new ImageIcon(getClass().getResource("/images/buttons/backup-p.png")));
+		saveBtn.setSize(new Dimension(saveBtn.getIcon().getIconWidth(), saveBtn.getIcon().getIconHeight()));
 		
 		selSaveBtn.setContentAreaFilled(false);
 		selSaveBtn.setBorder(null);
@@ -104,7 +103,7 @@ public class DTRView extends JPanel {
 		gbc.gridwidth = 1;
 		gbc.gridx = 3;
 		gbc.gridy = 0;
-		add(addBtn,gbc);
+		add(saveBtn,gbc);
 
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.anchor = GridBagConstraints.PAGE_END;
@@ -129,33 +128,18 @@ public class DTRView extends JPanel {
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 		
-		g2d.setColor(Utils.imptDTRHColor);
+		g2d.setColor(Utils.backUpHColor);
 		g2d.fillRect(0, 0, this.getWidth(), 70);
 		g2d.setColor(Color.WHITE);
 		g2d.setFont(Utils.headerFont);
-        g2d.drawString("Import DTR", 20, 35);
+        g2d.drawString("Back Up", 20, 35);
 		g2d.setFont(Utils.descFont);
-        g2d.drawString("Select excel file directory of DTR.", 20, 55);
+        g2d.drawString("This section allows you to back up the current system.", 20, 55);
 		
 		g2d.setColor(Utils.statusBGColor);
 		g2d.fillRect(0, this.getHeight()-Utils.HEIGHT, this.getWidth(), Utils.HEIGHT);
 		g2d.setColor(Color.LIGHT_GRAY);
 		g2d.drawLine(0, this.getHeight()-Utils.HEIGHT, this.getWidth(), this.getHeight()-Utils.HEIGHT);
-	}
-	public void setFileLocationListener(ActionListener list){
-		selSaveBtn.addActionListener(list);
-	}
-	public void setAddDTRListener(ActionListener list){
-		addBtn.addActionListener(list);
-	}
-	public void setFileLocation(String location){
-		locationLbl.setText(location);
-	}
-	public String getFileLocation(){
-		return locationLbl.getText();
-	}
-	public void setStatus(String e){
-		statusLbl.setText(e);
 	}
 	
 	private ImageIcon loadScaledImage(String img_url, float percent)

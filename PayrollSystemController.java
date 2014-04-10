@@ -9,24 +9,16 @@
 	 *  Visibility: public
 	 *******************************************************/
 
-import javax.swing.*;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
-
-import java.sql.Connection;
-import java.sql.Statement;
-import java.sql.ResultSet;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.ItemEvent;
-
-import java.io.PrintWriter;
-import java.io.File;
-
-import java.text.SimpleDateFormat;
 
 public class PayrollSystemController{
 
@@ -35,7 +27,6 @@ public class PayrollSystemController{
 	private Date periodStartDate;
 	private PayrollSystemModel model;
 	private PayrollSystemView view;
-	private SettingsView sView;
 	private String directory = "periodStartDate.txt";
 	private LogInView loginPanel;
 	private GeneratePayslipsView generatePayslips;
@@ -48,7 +39,6 @@ public class PayrollSystemController{
 		this.model = model;
 		this.view = view;
 		this.con = con;
-		this.sView = sView;
 		try{
 			Scanner in = new Scanner(this.getClass().getResourceAsStream(directory));
 			String s = in.next();
@@ -89,13 +79,12 @@ public class PayrollSystemController{
 		view.setAddDTRListener(new addDTRListener());
 		view.setDTRFileLocationListener(new dtrFileLocationListener());
 		view.setNextTimeListener(new nextTimePeriod());
-		/*	
 		
+		/*
 		view.setAddAdjustmentListener(new addAdjustmentListener());
 		view.setRemoveAdjustmentListener(new removeAdjustmentListener());
 		view.setGeneratePayslipsListener(new generatePayslipsListener());
 		view.setChangePasswordListener(new changePasswordListener());
-		
 		*/
 	}
 
@@ -103,7 +92,7 @@ public class PayrollSystemController{
 	class loginListener implements ActionListener{
 		public void actionPerformed(ActionEvent arg0) {
 			if(!model.checkPassword(loginPanel.getPassword())){
-				loginPanel.fadeInBallon();
+				loginPanel.fadeInBalloon();
 			}
 			else{
 				loginPanel.setVisible(false);
@@ -259,89 +248,6 @@ public class PayrollSystemController{
 			}
 		}
 	}
-/*
-	//Add adjustment button in main menu
-	class addAdjustmentListener implements ActionListener{
-		public void actionPerformed(ActionEvent e){
-		//	addAdjustments.updateClientList();
-		//	addAdjustments.setVisible(true);
-		}
-	}
-
-	//Remove adjustment button in main menu
-	class removeAdjustmentListener implements ActionListener{
-		public void actionPerformed(ActionEvent e){
-		//	removeAdjustments.updateClientList();
-		//	removeAdjustments.setVisible(true);
-		}
-	}
-
-	//Change password button in main menu
-	class changePasswordListener implements ActionListener{
-		public void actionPerformed(ActionEvent e){
-		//	changePassword.setVisible(true);
-		}
-	}
-
-	//View summary report button in main menu
-	class viewSummaryReportListener implements ActionListener{
-		public void actionPerformed(ActionEvent e){
-		//	viewSummaryReport.updateClientList();
-		//	viewSummaryReport.updateViewList();
-		//	viewSummaryReport.setVisible(true);
-		}
-	}
-
-
-
-	
-
-	class addPeriodStartDateListener implements ActionListener{ //This is going to be updated
-		public void actionPerformed(ActionEvent e){
-			viewSummaryReport.updateDateList();
-		}
-	}
-	class viewReportListener implements ActionListener{ //This is going to be updated
-		public void actionPerformed(ActionEvent e){
-			if(viewSummaryReport.getClient() == null || viewSummaryReport.getPeriodStartDate() == null){
-				viewSummaryReport.showError(0);
-			}else{
-				String client = viewSummaryReport.getClient();
-				String psd = viewSummaryReport.getPeriodStartDate();
-				if(model.checkPeriodForPayslips(client, psd)){
-					viewSummaryReport.updateTableColumn();
-					viewSummaryReport.updateTable();
-				}else{
-					viewSummaryReport.showError(1);
-				}
-			}
-		}
-	}
-	
-	
-	
-
-	//cancel change password button in change password view
-	class cancelChangePasswordButtonListener implements ActionListener{
-		public void actionPerformed(ActionEvent e){
-			changePassword.clear();
-			changePassword.setVisible(false);
-		}
-	}
-	
-	//show password checkbox in change password view
-	class showPasswordListener implements ItemListener{
-		public void itemStateChanged(ItemEvent e) {
-			if (e.getStateChange() != ItemEvent.SELECTED) {
-				changePassword.showPassword(true);
-			}else{
-				 changePassword.showPassword(false);
-			}
-		}
-	}
-	
-	*/
-	
 	
 	//listeners in generate payslips view
 	//generate payslips in generate payslips view
@@ -373,7 +279,6 @@ public class PayrollSystemController{
 			}
 		}
 	}
-
 
 	//choose where to save listener in generate payslips view
 	class fileSaverGeneratePayslipsButtonListener implements ActionListener{

@@ -47,7 +47,7 @@ public class CustomPTextField extends JPasswordField implements FocusListener, D
 	    
 	    setText(this.hint);
 		setSize(new Dimension(width, height));
-		setFont(Utils.textFieldFont);
+		setFont(Utils.textPFieldFont);
 		setOpaque(false);
 		setBorder(BorderFactory.createEmptyBorder(0, 15, -5, 10));
 		setForeground(Color.LIGHT_GRAY);

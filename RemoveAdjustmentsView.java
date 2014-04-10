@@ -11,23 +11,24 @@
 	 *  Visibility: public
 	 *******************************************************/
 
-import java.awt.Color;import java.awt.Color;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
-import java.util.ArrayList;
 public class RemoveAdjustmentsView extends JPanel {
 	
 	private JLabel selectClientLbl;
@@ -37,24 +38,25 @@ public class RemoveAdjustmentsView extends JPanel {
 
 	private JButton removeBtn;
 
-	private JComboBox personnelCBox;
-	private JComboBox clientCBox;
-	private JComboBox adjCBox;
+	private JComboBox<Object> personnelCBox;
+	private JComboBox<Object> clientCBox;
+	private JComboBox<Object> adjCBox;
 	
 	private PayrollSystemModel model;
 	public RemoveAdjustmentsView(PayrollSystemModel model) {
 		this.model = model;
-		removeBtn = new JButton(new ImageIcon(getClass().getResource("images/buttons/remove.png")));
+		removeBtn = new JButton(new ImageIcon(getClass().getResource("/images/buttons/remove.png")));
 		
-		adjCBox = new JComboBox();
+		adjCBox = new JComboBox<Object>();
 		
 		selectAdjLbl = new JLabel("Select Adjustment");
 		selectClientLbl = new JLabel("Select Client: ");
 		selectPersLbl = new JLabel("Select Personnel: ");
-		statusLbl = new JLabel();
+		statusLbl = new JLabel("Status: Adjustments can be removed!");
+		statusLbl.setIcon(loadScaledImage("/images/notifs/right.png",.08f));
 		
-		personnelCBox = new JComboBox();
-		clientCBox = new JComboBox();
+		personnelCBox = new JComboBox<Object>();
+		clientCBox = new JComboBox<Object>();
 		
 		modifyUI();
 		initFont();
@@ -66,9 +68,9 @@ public class RemoveAdjustmentsView extends JPanel {
 		
 		statusLbl.setForeground(Utils.statusFGColor);
 		
-		personnelCBox.setPreferredSize(new Dimension(300,25));
-		clientCBox.setPreferredSize(new Dimension(300,25));
-		adjCBox.setPreferredSize(new Dimension(300,25));
+		personnelCBox.setPreferredSize(new Dimension(350,25));
+		clientCBox.setPreferredSize(new Dimension(350,25));
+		adjCBox.setPreferredSize(new Dimension(350,25));
 		personnelCBox.setBackground(Utils.comboBoxBGColor);
 		clientCBox.setBackground(Utils.comboBoxBGColor);
 		adjCBox.setBackground(Utils.comboBoxBGColor);
@@ -81,8 +83,8 @@ public class RemoveAdjustmentsView extends JPanel {
 		removeBtn.setOpaque(false);
 		removeBtn.setForeground(null);
 		removeBtn.setFocusPainted(false);
-		removeBtn.setRolloverIcon(new ImageIcon(getClass().getResource("images/buttons/remove-r.png")));
-		removeBtn.setPressedIcon(new ImageIcon(getClass().getResource("images/buttons/remove-p.png")));
+		removeBtn.setRolloverIcon(new ImageIcon(getClass().getResource("/images/buttons/remove-r.png")));
+		removeBtn.setPressedIcon(new ImageIcon(getClass().getResource("/images/buttons/remove-p.png")));
 		removeBtn.setSize(new Dimension(removeBtn.getIcon().getIconWidth(), removeBtn.getIcon().getIconHeight()));
 		
 		addComponentsToPane();
@@ -187,7 +189,7 @@ public class RemoveAdjustmentsView extends JPanel {
 		g2d.setFont(Utils.headerFont);
         g2d.drawString("Remove Adjustments", 20, 35);
 		g2d.setFont(Utils.descFont);
-        g2d.drawString("This section allows you to remove adjustments of a personnel per client.", 20, 55);
+        g2d.drawString("This section allows you to remove adjustments of a personnel.", 20, 55);
 		
 		g2d.setColor(Utils.statusBGColor);
 		g2d.fillRect(0, this.getHeight()-Utils.HEIGHT, this.getWidth(), Utils.HEIGHT);
@@ -297,4 +299,13 @@ public class RemoveAdjustmentsView extends JPanel {
 		return adjCBox.getItemCount();
 	}
 
+	private ImageIcon loadScaledImage(String img_url, float percent)
+	{	
+		ImageIcon img_icon = new ImageIcon(this.getClass().getResource(img_url));
+		int new_width = (int) (img_icon.getIconWidth()*percent);
+		int new_height = (int) (img_icon.getIconHeight()*percent);
+		Image img = img_icon.getImage().getScaledInstance(new_width,new_height,java.awt.Image.SCALE_SMOOTH);  
+		img_icon = new ImageIcon(img);
+		return img_icon;
+	}
 }

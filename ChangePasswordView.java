@@ -14,8 +14,8 @@
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
-
 import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
@@ -42,16 +42,17 @@ public class ChangePasswordView extends JPanel {
 	private final static int TEXTBOX_HEIGHT = 41;
 	
 	public ChangePasswordView() {
-		applyBtn = new JButton(new ImageIcon(getClass().getResource("images/buttons/apply.png")));
+		applyBtn = new JButton(new ImageIcon(getClass().getResource("/images/buttons/apply.png")));
 		
 		oldPassLbl = new JLabel("Old Password: ");
 		newPassLbl = new JLabel("New Password: ");
 		conPassLbl = new JLabel("Confirm Password: ");
-		statusLbl = new JLabel("Status: Adjustment \"N?A\" successfully added!");
+		statusLbl = new JLabel("Status: Password Successfully Changed");
+		statusLbl.setIcon(loadScaledImage("/images/notifs/right.png",.08f));
 		
-		oldPassTxtFld = new CustomPTextField("*****", "images/effects/in.png", "images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
-		newPassTxtFld = new CustomPTextField("*****", "images/effects/in.png", "images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
-		conPassTxtFld = new CustomPTextField("*****", "images/effects/in.png", "images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
+		oldPassTxtFld = new CustomPTextField("*****", "/images/effects/in.png", "/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
+		newPassTxtFld = new CustomPTextField("*****", "/images/effects/in.png", "/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
+		conPassTxtFld = new CustomPTextField("*****", "/images/effects/in.png", "/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
 		
 		modifyUI();
 		initFont();
@@ -72,8 +73,8 @@ public class ChangePasswordView extends JPanel {
 		applyBtn.setOpaque(false);
 		applyBtn.setForeground(null);
 		applyBtn.setFocusPainted(false);
-		applyBtn.setRolloverIcon(new ImageIcon(getClass().getResource("images/buttons/apply-r.png")));
-		applyBtn.setPressedIcon(new ImageIcon(getClass().getResource("images/buttons/apply-p.png")));
+		applyBtn.setRolloverIcon(new ImageIcon(getClass().getResource("/images/buttons/apply-r.png")));
+		applyBtn.setPressedIcon(new ImageIcon(getClass().getResource("/images/buttons/apply-p.png")));
 		applyBtn.setSize(new Dimension(applyBtn.getIcon().getIconWidth(), applyBtn.getIcon().getIconHeight()));
 		
 		addComponentsToPane();
@@ -216,4 +217,13 @@ public class ChangePasswordView extends JPanel {
 		JOptionPane.showMessageDialog(null, "Change password is successful.", "Change password is successful.", JOptionPane.PLAIN_MESSAGE);
 	}
 
+	private ImageIcon loadScaledImage(String img_url, float percent)
+	{	
+		ImageIcon img_icon = new ImageIcon(this.getClass().getResource(img_url));
+		int new_width = (int) (img_icon.getIconWidth()*percent);
+		int new_height = (int) (img_icon.getIconHeight()*percent);
+		Image img = img_icon.getImage().getScaledInstance(new_width,new_height,java.awt.Image.SCALE_SMOOTH);  
+		img_icon = new ImageIcon(img);
+		return img_icon;
+	}
 }

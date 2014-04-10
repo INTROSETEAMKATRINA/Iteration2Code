@@ -8,68 +8,61 @@
 	 *******************************************************/
 	 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
+import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
-import javax.swing.*;
-import javax.swing.event.*;
-import java.util.*;
 public class ViewSummaryReportView extends JPanel {
 
-	@SuppressWarnings("unused")
 	private PayrollSystemModel model;
 	
 	private JLabel selectSummLbl;
 	private JLabel selectClientLbl;
+	private JLabel selectTimeLbl;
 	private JLabel statusLbl;
-	private JComboBox viewCBox;
-	private JComboBox clientCBox;
+	private JComboBox<Object> viewCBox;
+	private JComboBox<Object> timePeriodCBox;
+	private JComboBox<Object> clientCBox;
 	
 	private JTable summaryTable;
 	private JScrollPane summaryPane;
 	
-	private JPanel emptyPane;
-    private int rowPoint, colPoint;
     private JTableHeader header;
 	
 	public ViewSummaryReportView(PayrollSystemModel model) {
 		this.model = model;
 		
-		rowPoint = 0;
-		colPoint = 0;
-		
-		emptyPane = new JPanel();
-		
-		statusLbl = new JLabel("Status: Generating File Information");
+		statusLbl = new JLabel("Status: No Data Found!");
+		statusLbl.setIcon(loadScaledImage("/images/notifs/warning.png",.08f));
 		
 		selectSummLbl = new JLabel("Select Summary Report: ");
 		selectClientLbl = new JLabel("Select Client: ");
+		selectTimeLbl = new JLabel("Select Time Period: ");
 
-		String[] companyName = { "Gallant", "FedEx", "LBC", "Banco De Oro", "De La Salle University" };
-		clientCBox = new JComboBox(companyName);
-		viewCBox = new JComboBox(companyName);
+		clientCBox = new JComboBox<Object>();
+		viewCBox = new JComboBox<Object>();
+		timePeriodCBox = new JComboBox<Object>();
 		
 		summaryTable = new JTable(30,12);
-		summaryTable.setFont(Utils.tableFont);
 		summaryTable.setRowHeight(32);
 		summaryTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		summaryTable.setColumnSelectionAllowed(true);
@@ -77,44 +70,31 @@ public class ViewSummaryReportView extends JPanel {
 		
 		header = summaryTable.getTableHeader();
 		header.setBackground(new Color(0xFAFAFA));
-		header.setFont(Utils.tableFont);
-		header.setPreferredSize(new Dimension(header.getPreferredSize().width, 20));
+		header.setPreferredSize(new Dimension(header.getPreferredSize().width, 25));
 		header.setAlignmentX(JLabel.CENTER_ALIGNMENT);
 		header.setReorderingAllowed(false);
 		
 		for(int i = 0; i < summaryTable.getColumnCount(); i++)
 		{
-			summaryTable.getColumnModel().getColumn(i).setCellRenderer(new ColorfulCellRenderer(Color.WHITE,Color.BLACK));
-			
-			if(i == 2)
-			summaryTable.getColumnModel().getColumn(2).setCellRenderer(new ColorfulCellRenderer(new Color(0xbee1fe),Color.BLACK));
-		}
-		summaryTable.addMouseMotionListener(new TableMouseAdapter());
-		
-		summaryTable.addMouseListener(new MouseAdapter(){
-			public void mousePressed(MouseEvent e)
-			{
-				if(SwingUtilities.isRightMouseButton(e))
-				{
-					int rowNum = summaryTable.rowAtPoint(e.getPoint());
-					if(rowNum >=0 && rowNum < summaryTable.getRowCount()) {
-						summaryTable.setRowSelectionInterval(rowNum, rowNum);
-					} else {
-						summaryTable.clearSelection();
-					}
-					
-					int rowIndex = summaryTable.getSelectedRow();
-					
-					if(rowIndex > 0 && e.isPopupTrigger() && e.getComponent() instanceof JTable)
-					{
-						JMenuItem menuItem = new JMenuItem("View Formula");
-						JPopupMenu popup = new JPopupMenu();
-						popup.add(menuItem);
-						popup.show(e.getComponent(), e.getX(), e.getY());
-					}
-				}
+			if(i == 0) {
+				summaryTable.getColumnModel().getColumn(i).setCellRenderer(new ColorfulCellRenderer(new Color(0xFAFAFA),Color.BLACK,Utils.colorfulSRColumn));
+				summaryTable.getColumnModel().getColumn(i).setPreferredWidth(40);
 			}
-		});
+			else if(Utils.colorfulSRColumn.contains(i))
+			{
+				switch(i){
+				case 2:
+					summaryTable.getColumnModel().getColumn(i).setCellRenderer(new ColorfulCellRenderer(new Color(0xbee1fe),Color.BLACK,Utils.colorfulSRColumn));
+					break;
+				default:
+					summaryTable.getColumnModel().getColumn(i).setCellRenderer(new ColorfulCellRenderer(Color.ORANGE,Color.BLACK,Utils.colorfulSRColumn));
+					break;
+				};
+			} else
+				summaryTable.getColumnModel().getColumn(i).setCellRenderer(new ColorfulCellRenderer(Color.WHITE,Color.BLACK,Utils.colorfulSRColumn));
+		}
+		
+		summaryTable.addMouseListener(new TableMouseListener());
 		
 		summaryPane = new JScrollPane(summaryTable, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		
@@ -131,12 +111,16 @@ public class ViewSummaryReportView extends JPanel {
 		summaryTable.setFillsViewportHeight(true);
 		summaryPane.setBorder(null);
 		summaryPane.setPreferredSize(new Dimension(this.getWidth()-500,this.getHeight()-300));
-		
-		emptyPane.setPreferredSize(new Dimension(this.getWidth()-700,20));
-		emptyPane.setOpaque(false);
 	
-		viewCBox.setPreferredSize(new Dimension(300,20));
-		clientCBox.setPreferredSize(new Dimension(300,20));
+		viewCBox.setPreferredSize(new Dimension(350,25));
+		viewCBox.setBackground(Utils.comboBoxBGColor);
+		viewCBox.setForeground(Utils.comboBoxFGColor);
+		clientCBox.setPreferredSize(new Dimension(350,25));
+		clientCBox.setBackground(Utils.comboBoxBGColor);
+		clientCBox.setForeground(Utils.comboBoxFGColor);
+		timePeriodCBox.setPreferredSize(new Dimension(350,25));
+		timePeriodCBox.setBackground(Utils.comboBoxBGColor);
+		timePeriodCBox.setForeground(Utils.comboBoxFGColor);
 		
 		addComponentsToPane();
 	}
@@ -169,20 +153,27 @@ public class ViewSummaryReportView extends JPanel {
 		gbc.gridwidth = 1;
 		gbc.gridx = 0;
 		gbc.gridy = 1;
-		add(selectSummLbl,gbc);
-		
-		gbc.fill = GridBagConstraints.NONE;
-		gbc.insets = new Insets(0,10,5,0);
-		gbc.gridwidth = 1;
-		gbc.gridx = 2;
-		gbc.gridy = 0;
-		add(emptyPane,gbc);
+		add(selectTimeLbl,gbc);
 		
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.insets = new Insets(0,0,5,0);
 		gbc.gridwidth = 1;
 		gbc.gridx = 1;
 		gbc.gridy = 1;
+		add(timePeriodCBox,gbc);
+		
+		gbc.fill = GridBagConstraints.NONE;
+		gbc.insets = new Insets(0,15,5,20);
+		gbc.gridwidth = 1;
+		gbc.gridx = 0;
+		gbc.gridy = 2;
+		add(selectSummLbl,gbc);
+		
+		gbc.fill = GridBagConstraints.NONE;
+		gbc.insets = new Insets(0,0,5,0);
+		gbc.gridwidth = 1;
+		gbc.gridx = 1;
+		gbc.gridy = 2;
 		add(viewCBox,gbc);
 		
 		gbc.fill = GridBagConstraints.BOTH;
@@ -190,7 +181,7 @@ public class ViewSummaryReportView extends JPanel {
 		gbc.weighty = 1;
 		gbc.gridwidth = 3;
 		gbc.gridx = 0;
-		gbc.gridy = 2;
+		gbc.gridy = 3;
 		add(summaryPane,gbc);
 		
 		gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -200,75 +191,55 @@ public class ViewSummaryReportView extends JPanel {
 		gbc.weighty = 0;
 		gbc.gridwidth = 3;
 		gbc.gridx = 0;
-		gbc.gridy = 3;
+		gbc.gridy = 4;
 		add(statusLbl,gbc);
 	}
 
 	public void initFont()
 	{
+		summaryTable.setFont(Utils.tableFont);
+		header.setFont(Utils.tableFont);
 		clientCBox.setFont(Utils.comboBoxFont);
 		viewCBox.setFont(Utils.comboBoxFont);
 		selectClientLbl.setFont(Utils.labelFont);
 		selectSummLbl.setFont(Utils.labelFont);
+		selectTimeLbl.setFont(Utils.labelFont);
 		statusLbl.setFont(Utils.statusBarFont);
 	}
 	
-	public class ColorfulCellRenderer extends DefaultTableCellRenderer {
-
-	    private Color bgColor;
-	    private Color fgColor;
-	    
-	    public ColorfulCellRenderer(Color bg, Color fg) {
-	        bgColor = bg;
-	        fgColor = fg;
-	        this.setHorizontalAlignment(JLabel.CENTER);
-	    }
-	    
-	    public boolean isCellEditable(int row, int column) {
-	        return false;
-	    }
-
-	    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int col) {
-	        JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
-	        
-	        if(row == rowPoint && col == colPoint)
-	        {
-		    	if(bgColor != Color.WHITE)
-		    	{
-		    		label.setBackground(bgColor.darker());
-		    	}
-	        	label.setBackground(new Color(0,0,0,10));
-	        	label.setForeground(Color.WHITE);
-	        }
-	        else if((row == rowPoint && col == colPoint) && isSelected) 
-	        {
-	        	label.setBackground(Color.ORANGE);
-	        }
-	        else if((row == rowPoint && col == colPoint) || isSelected) {
-	        	
-	        	if(col == 2)
-	        		label.setBackground(new Color(206,238,255,100));
-	        	else
-	        		label.setBackground(new Color(154,217,255,100));
-	        	
-	        	label.setForeground(Color.WHITE);
-		    } else {
-		    	label.setBackground(bgColor);
-		    	label.setForeground(fgColor);
-		    }
-        	
-	        return label;
-	    }
+	public class TableMouseListener extends MouseAdapter {
+		public void mousePressed(MouseEvent e) {
+			JTable table = (JTable) e.getSource();
+			int rowNum = table.rowAtPoint(e.getPoint());
+			int colNum = table.columnAtPoint(e.getPoint());
+					
+			if(colNum == 0) {
+				table.setColumnSelectionInterval(0, table.getColumnCount()-1);
+			}
+					
+			if(SwingUtilities.isRightMouseButton(e))
+			{
+				table.clearSelection();
+				table.changeSelection(rowNum, colNum, false, false);
+			
+				int rowIndex = table.getSelectedRow();
+				int colIndex = table.getSelectedColumn();
+						
+				if(rowIndex == rowNum && Utils.colorfulSRColumn.contains(colIndex) && e.isPopupTrigger() && e.getComponent() instanceof JTable)
+				{
+					JMenuItem menuItem = new JMenuItem("View Formula");
+						menuItem.setFont(Utils.descFont);
+						menuItem.setBackground(Color.WHITE);
+						menuItem.setOpaque(false);
+					JPopupMenu popup = new JPopupMenu();
+						popup.setBackground(Color.WHITE);
+						
+					popup.add(menuItem);
+					popup.show(e.getComponent(), e.getX(), e.getY());
+				}
+			}
+		}
 	}
-	
-	public class TableMouseAdapter extends MouseMotionAdapter {
-        public void mouseMoved(MouseEvent e) {
-            JTable table =  (JTable)e.getSource();
-            rowPoint = table.rowAtPoint(e.getPoint());
-            colPoint = table.columnAtPoint(e.getPoint());
-            table.repaint();
-        }
-    }
 	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -355,4 +326,13 @@ public class ViewSummaryReportView extends JPanel {
 		JOptionPane.showMessageDialog(null, error, error, JOptionPane.ERROR_MESSAGE);
 	}
 	
+	private ImageIcon loadScaledImage(String img_url, float percent)
+	{	
+		ImageIcon img_icon = new ImageIcon(this.getClass().getResource(img_url));
+		int new_width = (int) (img_icon.getIconWidth()*percent);
+		int new_height = (int) (img_icon.getIconHeight()*percent);
+		Image img = img_icon.getImage().getScaledInstance(new_width,new_height,java.awt.Image.SCALE_SMOOTH);  
+		img_icon = new ImageIcon(img);
+		return img_icon;
+	}
 }

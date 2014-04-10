@@ -12,10 +12,7 @@ import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -30,10 +27,8 @@ import net.java.balloontip.utils.FadingUtils;
 
 public class LogInView extends JPanel  {
 
-	private JButton loginBtn, helpBtn;
+	private JButton loginBtn;
 	private JTextField passwordTxtFld;
-	
-	private BufferedImage help_img;
 
 	private final static Color HEADER_COLOR = new Color(0x0072bc);
 	
@@ -47,14 +42,9 @@ public class LogInView extends JPanel  {
 	private static Color transparent_red = new Color(242,109,125,200);
 	
 	public LogInView() {
-		loginBtn = new JButton(loadScaledImage("images/buttons/login.png",.5f));
-		helpBtn = new JButton(loadScaledImage("images/icons/help.png",.5f));
-		
-		try {
-			help_img = ImageIO.read(getClass().getResource("images/icons/help.png"));
-		} catch (IOException e1) {}
+		loginBtn = new JButton(loadScaledImage("/images/buttons/login.png",.5f));
 				
-		passwordTxtFld = new CustomPTextField("Enter password",  "images/effects/in.png", "images/effects/out.png", 250, 47);
+		passwordTxtFld = new CustomPTextField("Enter password",  "/images/effects/in.png", "/images/effects/out.png", 250, 47);
 		
 		modifyUI();
 		
@@ -123,30 +113,17 @@ public class LogInView extends JPanel  {
 		loginBtn.setOpaque(false);
 		loginBtn.setForeground(null);
 		loginBtn.setFocusPainted(false);
-		loginBtn.setRolloverIcon(loadScaledImage("images/buttons/login-r.png", .5f));
-		loginBtn.setPressedIcon(loadScaledImage("images/buttons/login-p.png", .5f));
+		loginBtn.setRolloverIcon(loadScaledImage("/images/buttons/login-r.png", .5f));
+		loginBtn.setPressedIcon(loadScaledImage("/images/buttons/login-p.png", .5f));
 		loginBtn.setPreferredSize(new Dimension(loginBtn.getIcon().getIconWidth(), loginBtn.getIcon().getIconHeight()));
 		loginBtn.setSize(new Dimension(loginBtn.getIcon().getIconWidth(), loginBtn.getIcon().getIconHeight()));
-		
-		helpBtn.setContentAreaFilled(false);
-		helpBtn.setBorder(null);
-		helpBtn.setOpaque(false);
-		helpBtn.setForeground(null);
-		helpBtn.setFocusPainted(false);
-		helpBtn.setRolloverIcon(loadScaledImage("images/icons/help.png", .5f));
-		helpBtn.setPressedIcon(loadScaledImage("images/icons/help.png", .5f));
-		helpBtn.setPreferredSize(new Dimension(helpBtn.getIcon().getIconWidth(), helpBtn.getIcon().getIconHeight()));
-		helpBtn.setSize(new Dimension(helpBtn.getIcon().getIconWidth(), helpBtn.getIcon().getIconHeight()));
-		helpBtn.setVisible(false);
 	}
 	
 	private void addComponentsToPane()
 	{
-		helpBtn.setBounds(this.getWidth()-40,15,helpBtn.getWidth(),helpBtn.getHeight());
 		passwordTxtFld.setBounds(8,65,passwordTxtFld.getWidth(),passwordTxtFld.getHeight());
 		loginBtn.setBounds(passwordTxtFld.getWidth()+10,70,loginBtn.getWidth(),loginBtn.getHeight());
 		
-		add(helpBtn);
 		add(passwordTxtFld);
 		add(loginBtn);
 	}
@@ -161,8 +138,6 @@ public class LogInView extends JPanel  {
         
         g2d.setColor(Color.WHITE);
 		g2d.fillRect(0, 0, this.getWidth(), this.getHeight());
-		
-		g2d.drawImage(help_img, this.getWidth()-40,15, help_img.getWidth()/2, help_img.getHeight()/2, null);
 		
 		g2d.setColor(Color.LIGHT_GRAY);
 		g2d.drawLine(0, 55, this.getWidth(), 55); 
@@ -186,7 +161,7 @@ public class LogInView extends JPanel  {
 		loginBtn.addActionListener(a);
 	}
 	
-	public void fadeInBallon(){
+	public void fadeInBalloon(){
 		FadingUtils.fadeInBalloon(btip1, new ActionListener(){
 			public void actionPerformed(ActionEvent e) { btip1.setVisible(true); }
 		}, 100, 16);

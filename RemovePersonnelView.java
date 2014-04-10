@@ -24,7 +24,6 @@ import javax.swing.JTable;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
-
 public class RemovePersonnelView extends JPanel {
 
 	@SuppressWarnings("unused")
@@ -43,7 +42,7 @@ public class RemovePersonnelView extends JPanel {
 	private JButton removeBtn;
 	private JButton applyBtn;
 
-	private JComboBox clientCBox;
+	private JComboBox<Object> clientCBox;
 	
 	public RemovePersonnelView(PayrollSystemModel model)
 	{
@@ -83,7 +82,7 @@ public class RemovePersonnelView extends JPanel {
 		selectClientLbl = new JLabel("Select Client: ");
 		personnelLbl = new JLabel("<Client>'s Personnel List ");
 		
-		clientCBox = new JComboBox();
+		clientCBox = new JComboBox<Object>();
 		
 		modifyUI();
 	}

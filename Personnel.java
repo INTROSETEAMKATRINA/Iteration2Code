@@ -19,7 +19,6 @@
 	 *  Visibility: public
 	 *******************************************************/
 
-import java.util.Date;
 
 public class Personnel {
 	private String name;
