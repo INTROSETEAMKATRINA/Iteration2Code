@@ -79,8 +79,7 @@ public class ModifyTaxTableView extends JPanel {
 		me2Lbl = new JLabel("ME2/S2: ");
 		me3Lbl = new JLabel("ME3/S3: ");
 		me4Lbl = new JLabel("ME4/S4: ");
-		statusLbl = new JLabel("Status: No Tax Table found!");
-		statusLbl.setIcon(loadScaledImage("/images/notifs/wrong.png",.08f));
+		statusLbl = new JLabel();
 		
 		modifyUI();
 	}

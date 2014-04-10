@@ -1336,23 +1336,18 @@ public class PayrollSystemModel {
 		return variables;
 	}
 	
-	public boolean modifyVariables(float variables[], String client){
-		
-		try {
-			String sql = "UPDATE client set " +
-			"rotVar = "+variables[0]+", rnsdVar = " + variables[1] +
-			", lhRate = " + variables[2] +
-			", lhVar = "+variables[3] +", lhOTVar = " + variables[4] +
-			", lhNSDVar =  " + variables[5] +", lhRDVar = " + variables[6] +
-			", shRate = " + variables[7] +", shVar = " + variables[8] +
-			", shOTVar = " + variables[9] +", shNSDVar = " + variables[10] +
-			", shRDVar = " + variables[11] +" where name = '"+client+"';";
-			Statement stmt = con.prepareStatement(sql);
-			stmt.execute(sql);
-        } catch (SQLException ex) {
-			System.out.println(ex);
-		}
-		return true;
+	public void modifyVariables(float variables[], String client) throws SQLException{
+		String sql = "UPDATE client set " +
+		"rotVar = "+variables[0]+", rnsdVar = " + variables[1] +
+		", lhRate = " + variables[2] +
+		", lhVar = "+variables[3] +", lhOTVar = " + variables[4] +
+		", lhNSDVar =  " + variables[5] +", lhRDVar = " + variables[6] +
+		", shRate = " + variables[7] +", shVar = " + variables[8] +
+		", shOTVar = " + variables[9] +", shNSDVar = " + variables[10] +
+		", shRDVar = " + variables[11] +" where name = '"+client+"';";
+		Statement stmt = con.prepareStatement(sql);
+		stmt.execute(sql);
+		System.out.println("MODIFIED CLIENT VARIABLES!");
 	}
 	
 	public float[] getTaxTable(int bracket){
@@ -1372,6 +1367,18 @@ public class PayrollSystemModel {
 				System.out.println(ex);
             }
 		return table;
+	}
+	
+	public void updateTaxTable(int bracket, float[] table) throws SQLException{
+		String sql = "UPDATE taxtable set " +
+		"tax = "+table[0]+", taxpercentover = " + table[1] +
+		", z = " + table[2] +
+		", sme = "+table[3] +", s1me1 = " + table[4] +
+		", s2me2 =  " + table[5] +", s3me3 = " + table[6] +
+		", s4me4 = " + table[7] + " where bracket = "+bracket+";";
+		Statement stmt = con.prepareStatement(sql);
+		stmt.execute(sql);
+		System.out.println("UPDATED TAX TABLE!");
 	}
 	
 	public ArrayList<String> getBracketList(){

@@ -47,8 +47,7 @@ public class ChangePasswordView extends JPanel {
 		oldPassLbl = new JLabel("Old Password: ");
 		newPassLbl = new JLabel("New Password: ");
 		conPassLbl = new JLabel("Confirm Password: ");
-		statusLbl = new JLabel("Status: Password Successfully Changed");
-		statusLbl.setIcon(loadScaledImage("/images/notifs/right.png",.08f));
+		statusLbl = new JLabel();
 		
 		oldPassTxtFld = new CustomPTextField("*****", "/images/effects/in.png", "/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
 		newPassTxtFld = new CustomPTextField("*****", "/images/effects/in.png", "/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
@@ -188,37 +187,17 @@ public class ChangePasswordView extends JPanel {
 		return false;
 	}
 	
-	public void showPassword(boolean b){
-		/*if(b){
-			oldPassTxtFld.setEchoChar(defaultEchoChar);
-			newPassTxtFld.setEchoChar(defaultEchoChar);
-			conPassTxtFld.setEchoChar(defaultEchoChar);
-		}else{
-			oldPassTxtFld.setEchoChar((char) 0);
-			newPassTxtFld.setEchoChar((char) 0);
-			conPassTxtFld.setEchoChar((char) 0);
-		}*/
+	public void showSuccess(){
+		statusLbl.setText("Change password is successful.");
+		statusLbl.setIcon(loadScaledImage("/images/notifs/right.png",.08f));
 	}
 	
-	public void showError(int i){
-		String error = "";
-		
-		if(i == 0){
-			error = "Change password failed!";
-		}else if(i == 1){
-			error = "New and confirm password not the same.";
-		}else if(i == 2){
-			error = "Wrong old password.";
-		}
-		JOptionPane.showMessageDialog(null, error, error, JOptionPane.ERROR_MESSAGE);
+	public void showError(String s){
+		statusLbl.setText(s);
+		statusLbl.setIcon(loadScaledImage("/images/notifs/wrong.png",.08f));
 	}
-
-	public void showSuccess(){
-		JOptionPane.showMessageDialog(null, "Change password is successful.", "Change password is successful.", JOptionPane.PLAIN_MESSAGE);
-	}
-
-	private ImageIcon loadScaledImage(String img_url, float percent)
-	{	
+	
+	private ImageIcon loadScaledImage(String img_url, float percent){	
 		ImageIcon img_icon = new ImageIcon(this.getClass().getResource(img_url));
 		int new_width = (int) (img_icon.getIconWidth()*percent);
 		int new_height = (int) (img_icon.getIconHeight()*percent);

@@ -240,13 +240,13 @@ public class PayrollSystemController{
 								changePassword.showSuccess();
 								changePassword.clear();
 							}else{
-								changePassword.showError(0);
+								changePassword.showError("Change password failed!");
 							}
 						}else{
-							changePassword.showError(1);
+							changePassword.showError("New and confirm password not the same.");
 						}
 					}else{
-						changePassword.showError(2);
+						changePassword.showError("Wrong old password.");
 					}
 				}
 			}catch(Exception ex){
@@ -342,9 +342,9 @@ public class PayrollSystemController{
 	class modifyTax implements ActionListener{
 		public void actionPerformed(ActionEvent e){
 			try{
-				//float[] table = modifyTaxPanel.getTable();
+				float[] table = modifyTaxPanel.getTable();
 				int bracket = modifyTaxPanel.getBracket();
-				//model.modifyTaxTable(bracket, table);
+				model.updateTaxTable(bracket, table);
 				modifyTaxPanel.showSuccess();
 			}catch(Exception ex){
 				modifyTaxPanel.showError("Input must be numbers.");

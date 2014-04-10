@@ -36,6 +36,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import javax.imageio.ImageIO;
 import javax.swing.Box;
@@ -118,8 +119,38 @@ public class PayrollSystemView extends JPanel {
 	private boolean resize;
 	private boolean is_home;
 	
-	public PayrollSystemView(SettingsView sView, PayrollSystemModel model)
-	{	
+	private String lastChecked = "lastChecked.txt";
+	private String lastUpdatedData = "lastUpdatedData.txt";
+	private String lastGeneratedReport = "lastGeneratedReport.txt";
+	private String lastClientModified = "lastCliendModified.txt";
+	private String lastGeneratedPayslips = "lastGeneratedPayslips.txt";
+	private String lastBackUp = "lastBackUp.txt";
+	
+	public void updateLastChecked(){
+		String s = "Last Checked: ";
+		try{
+			Scanner in = new Scanner(new File(lastChecked));
+			s = in.nextLine();
+			in.close();
+		}catch(Exception ex){
+			s += "NONE";
+		}
+		status1.setText(s);
+	}
+	
+	public void updateLastUpdatedData(){
+		String s = "Last Updated Data: ";
+		try{
+			Scanner in = new Scanner(new File(lastUpdatedData));
+			s = in.nextLine();
+			in.close();
+		}catch(Exception ex){
+			s += "NONE";
+		}
+		status2.setText(s);
+	}
+	
+	public PayrollSystemView(SettingsView sView, PayrollSystemModel model){	
 		this.model = model; 
 		homepane1 = new JPanel();
 		homepane3 = new JPanel();
@@ -133,6 +164,8 @@ public class PayrollSystemView extends JPanel {
 		status5 = new JLabel("Last Generated Payslips: 01-01-14 ( LBC )", loadScaledImage("/images/icons/files.png",.55f),JLabel.RIGHT);
 		status6 = new JLabel("Last Back-Up: 01-01-14", loadScaledImage("/images/icons/disk.png",.55f),JLabel.RIGHT);
 
+		updateLastChecked();
+		updateLastUpdatedData();
 		clientCnt = new JLabel("",JLabel.CENTER);
 		clientLbl = new JLabel("CLIENT",JLabel.CENTER);
 		employeeCnt = new JLabel("",JLabel.CENTER);
