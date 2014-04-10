@@ -58,8 +58,8 @@ public class GeneratePayslipsView extends JPanel {
 		selectClientLbl = new JLabel("Select Client: ");
 		saveLbl = new JLabel("Save Location: ");
 		locationLbl = new JLabel();
-		statusLbl = new JLabel("Warning: No Data Found!");
-		statusLbl.setIcon(loadScaledImage("/images/notifs/warning.png",.08f));
+		statusLbl = new JLabel("Do you wanna generate a payslip?");
+		statusLbl.setIcon(null);
 		
 		clientCBox = new JComboBox<Object>();
 		
@@ -240,10 +240,20 @@ public class GeneratePayslipsView extends JPanel {
 		return file;
 	}
 	
-	public void setStatus(String s){
-		statusLbl.setText(s);
+	public void setStatus(String e, boolean b){
+		statusLbl.setText(e);
+		
+		if(b){
+			statusLbl.setIcon(loadScaledImage("/images/notifs/right.png",.08f));
+		}else{
+			statusLbl.setIcon(loadScaledImage("/images/notifs/wrong.png",.08f));
+		}
 	}
 	
+	public void setStatus(String e){
+		statusLbl.setText(e);
+		statusLbl.setIcon(null);
+	}
 	
 	public void updateClientList(){
 		clientCBox.removeAllItems();

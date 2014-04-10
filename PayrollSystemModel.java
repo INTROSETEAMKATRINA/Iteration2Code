@@ -1339,14 +1339,14 @@ public class PayrollSystemModel {
 	public boolean modifyVariables(float variables[], String client){
 		
 		try {
-			String sql = "REPLACE INTO client " +
-			"(name, rotVar, rnsdVar, lhRate, lhVar, lhOTVar," + 
-			"lhNSDVar, lhRDVar, shRate, shVar, shOTVar, shNSDVar," + 
-			"shRDVar) VALUES ('"+client+"', " +
-			variables[0] +", " + variables[1] +", " + variables[2] +", " + 
-			variables[3] +", " + variables[4] +", " + variables[5] +", " + 
-			variables[6] +", " + variables[7] +", " + variables[8] +", " + 
-			variables[9] +", " + variables[10] +", " + variables[11] +");";
+			String sql = "UPDATE client set " +
+			"rotVar = "+variables[0]+", rnsdVar = " + variables[1] +
+			", lhRate = " + variables[2] +
+			", lhVar = "+variables[3] +", lhOTVar = " + variables[4] +
+			", lhNSDVar =  " + variables[5] +", lhRDVar = " + variables[6] +
+			", shRate = " + variables[7] +", shVar = " + variables[8] +
+			", shOTVar = " + variables[9] +", shNSDVar = " + variables[10] +
+			", shRDVar = " + variables[11] +" where name = '"+client+"';";
 			Statement stmt = con.prepareStatement(sql);
 			stmt.execute(sql);
         } catch (SQLException ex) {

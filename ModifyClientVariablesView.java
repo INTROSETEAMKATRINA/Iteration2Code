@@ -46,18 +46,18 @@ public class ModifyClientVariablesView extends JPanel {
 	private JLabel var12Lbl;
 	private JLabel statusLbl;
 	
-	private JTextField var1TxtFld;
-	private JTextField var2TxtFld;
-	private JTextField var3TxtFld;
-	private JTextField var4TxtFld;
-	private JTextField var5TxtFld;
-	private JTextField var6TxtFld;
-	private JTextField var7TxtFld;
-	private JTextField var8TxtFld;
-	private JTextField var9TxtFld;
-	private JTextField var10TxtFld;
-	private JTextField var11TxtFld;
-	private JTextField var12TxtFld;
+	private CustomTextField var1TxtFld;
+	private CustomTextField var2TxtFld;
+	private CustomTextField var3TxtFld;
+	private CustomTextField var4TxtFld;
+	private CustomTextField var5TxtFld;
+	private CustomTextField var6TxtFld;
+	private CustomTextField var7TxtFld;
+	private CustomTextField var8TxtFld;
+	private CustomTextField var9TxtFld;
+	private CustomTextField var10TxtFld;
+	private CustomTextField var11TxtFld;
+	private CustomTextField var12TxtFld;
 	
 	private JPanel panel;
 	private JScrollPane scrollPane;
@@ -103,8 +103,7 @@ public class ModifyClientVariablesView extends JPanel {
 		var10Lbl = new JLabel("Special Holiday Overtime: ");
 		var11Lbl = new JLabel("Special Holiday NSD: ");
 		var12Lbl = new JLabel("Special Holiday RD: ");
-		statusLbl = new JLabel("Status: Variables succesfully updated!");
-		statusLbl.setIcon(loadScaledImage("/images/notifs/right.png",.08f));
+		statusLbl = new JLabel();
 		
 		var1TxtFld = new CustomTextField(Float.toString(rotVar), "/images/effects/in.png", "/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
 		var2TxtFld = new CustomTextField(Float.toString(rnsdVar), "/images/effects/in.png", "/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
@@ -339,6 +338,19 @@ public class ModifyClientVariablesView extends JPanel {
 		var10TxtFld.setText(Float.toString(vars[9]));
 		var11TxtFld.setText(Float.toString(vars[10]));
 		var12TxtFld.setText(Float.toString(vars[11]));
+		var1TxtFld.setHint(Float.toString(vars[0]));
+		var2TxtFld.setHint(Float.toString(vars[1]));
+		var3TxtFld.setHint(Float.toString(vars[2]));
+		var4TxtFld.setHint(Float.toString(vars[3]));
+		var5TxtFld.setHint(Float.toString(vars[4]));
+		var6TxtFld.setHint(Float.toString(vars[5]));
+		var7TxtFld.setHint(Float.toString(vars[6]));
+		var8TxtFld.setHint(Float.toString(vars[7]));
+		var9TxtFld.setHint(Float.toString(vars[8]));
+		var10TxtFld.setHint(Float.toString(vars[9]));
+		var11TxtFld.setHint(Float.toString(vars[10]));
+		var12TxtFld.setHint(Float.toString(vars[11]));
+		repaint();
 	}
 	
 	public float[] getVariables(){
@@ -375,8 +387,7 @@ public class ModifyClientVariablesView extends JPanel {
 		applyBtn.addActionListener(list);
 	}
 	
-	private ImageIcon loadScaledImage(String img_url, float percent)
-	{	
+	private ImageIcon loadScaledImage(String img_url, float percent){	
 		ImageIcon img_icon = new ImageIcon(this.getClass().getResource(img_url));
 		int new_width = (int) (img_icon.getIconWidth()*percent);
 		int new_height = (int) (img_icon.getIconHeight()*percent);
@@ -384,4 +395,15 @@ public class ModifyClientVariablesView extends JPanel {
 		img_icon = new ImageIcon(img);
 		return img_icon;
 	}
+	
+	public void showSuccess(){
+		statusLbl.setText("Status: Variables succesfully updated!");
+		statusLbl.setIcon(loadScaledImage("/images/notifs/right.png",.08f));
+	}
+	
+	public void showError(String s){
+		statusLbl.setText(s);
+		statusLbl.setIcon(loadScaledImage("/images/notifs/wrong.png",.08f));
+	}
+	
 }

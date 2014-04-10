@@ -34,7 +34,7 @@ public class DTRView extends JPanel {
 		locationLbl = new JLabel();
 		statusLbl = new JLabel("Status: ");
 		statusLbl.setIcon(loadScaledImage("/images/notifs/right.png",.08f));
-		
+	
 		modifyUI();
 	}
 	
@@ -154,10 +154,20 @@ public class DTRView extends JPanel {
 	public String getFileLocation(){
 		return locationLbl.getText();
 	}
-	public void setStatus(String e){
+	public void setStatus(String e, boolean b){
 		statusLbl.setText(e);
+		
+		if(b){
+			statusLbl.setIcon(loadScaledImage("/images/notifs/right.png",.08f));
+		}else{
+			statusLbl.setIcon(loadScaledImage("/images/notifs/wrong.png",.08f));
+		}
 	}
 	
+	public void setStatus(String e){
+		statusLbl.setText(e);
+		statusLbl.setIcon(null);
+	}
 	private ImageIcon loadScaledImage(String img_url, float percent)
 	{	
 		ImageIcon img_icon = new ImageIcon(this.getClass().getResource(img_url));

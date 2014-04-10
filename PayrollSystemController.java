@@ -110,13 +110,13 @@ public class PayrollSystemController{
 			if(f.isFile()){
 				try{
 					model.addPersonnel(f, periodStartDate);
-					view.setStatusPersonnel("Excel successfully added!");
+					view.setStatusPersonnel("Excel successfully added!", true);
 					view.setCount();
 				}catch(Exception ex){
-					view.setStatusPersonnel(ex.getMessage());
+					view.setStatusPersonnel(ex.getMessage(), false);
 				}
 			}else{
-				view.setStatusPersonnel("No file chosen");
+				view.setStatusPersonnel("No file chosen", false);
 			}
 		}
 	}
@@ -139,12 +139,12 @@ public class PayrollSystemController{
 			if(f.isFile()){
 				try{
 					model.addDTR(f, periodStartDate);
-					view.setStatusDTR("Excel successfully added!");
+					view.setStatusDTR("Excel successfully added!", true);
 				}catch(Exception ex){
-					view.setStatusDTR(ex.getMessage());
+					view.setStatusDTR(ex.getMessage(),false);
 				}
 			}else{
-				view.setStatusDTR("No file chosen");
+				view.setStatusDTR("No file chosen", false);
 			}
 		}
 	}
@@ -265,17 +265,17 @@ public class PayrollSystemController{
 					}
 					if(go){
 						if(model.generatePayslips(f, client, psd)==0){
-							generatePayslips.setStatus("Success!");
+							generatePayslips.setStatus("Success!", true);
 							generatePayslips.setFileDirectory(null);
 						}else{
-							generatePayslips.setStatus("File is in use!");
+							generatePayslips.setStatus("File is in use!", false);
 						}
 					}
 				}else{
-					generatePayslips.setStatus("No file chosen!");
+					generatePayslips.setStatus("No file chosen!", false);
 				}
 			}else{
-				generatePayslips.setStatus("No personnel DTR in client!");
+				generatePayslips.setStatus("No personnel DTR in client!", false);
 			}
 		}
 	}
@@ -325,7 +325,9 @@ public class PayrollSystemController{
 				float[] variables = modifyClientsVar.getVariables();
 				String client = modifyClientsVar.getClient();
 				model.modifyVariables(variables, client);
+				modifyClientsVar.showSuccess();
 			}catch(Exception ex){
+				modifyClientsVar.showError("Input must be numbers.");
 				System.out.println(ex);
 			}
 		}

@@ -112,6 +112,19 @@ public class CustomTextField extends JTextField implements FocusListener, Docume
 	    return super.getText();
 	}
 
+	public void setHint(String hint) {
+	    this.hint = hint;
+		if(getText().isEmpty() || getText().equals(hint)) {
+	    	setText(hint);
+	    	setForeground(Color.LIGHT_GRAY);
+	    	show = true;
+	    }
+	    
+		timeline.addPropertyToInterpolate("opacity", 0.0f, 1.0f);
+		timeline.play();
+	    repaint();
+	}
+	
 	public void changedUpdate(DocumentEvent e) {
 	}
 		

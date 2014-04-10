@@ -1112,6 +1112,14 @@ public class PayrollSystemView extends JPanel {
 		JOptionPane.showMessageDialog(null, error, error, JOptionPane.ERROR_MESSAGE); 
 	}
 	
+	public void setStatusDTR(String e, boolean b){
+		addDTRPanel.setStatus(e, b);
+	}
+	
+	public void setStatusPersonnel(String e, boolean b){
+		addPersPanel.setStatus(e, b);
+	}
+	
 	public void setStatusDTR(String e){
 		addDTRPanel.setStatus(e);
 	}
@@ -1119,7 +1127,6 @@ public class PayrollSystemView extends JPanel {
 	public void setStatusPersonnel(String e){
 		addPersPanel.setStatus(e);
 	}
-	
 	public void updateTimePeriod(String psd){
 		currentDate.setText(psd);
 	}
