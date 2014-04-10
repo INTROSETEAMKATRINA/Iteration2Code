@@ -165,6 +165,8 @@ public class PayrollSystemController{
 					model.addPersonnel(f, periodStartDate);
 					view.setStatusPersonnel("Excel successfully added!", true);
 					view.setCount();
+					printOnFile(lastUpdatedData, getDateToday() + " (" + model.getClient() + ")");
+					view.updateLastUpdatedData(getLast(lastUpdatedData));
 				}catch(Exception ex){
 					view.setStatusPersonnel(ex.getMessage(), false);
 				}
@@ -193,6 +195,8 @@ public class PayrollSystemController{
 				try{
 					model.addDTR(f, periodStartDate);
 					view.setStatusDTR("Excel successfully added!", true);
+					printOnFile(lastUpdatedData, getDateToday());
+					view.updateLastUpdatedData(getLast(lastUpdatedData));
 				}catch(Exception ex){
 					view.setStatusDTR(ex.getMessage(),false);
 				}
@@ -319,7 +323,7 @@ public class PayrollSystemController{
 					if(go){
 						if(model.generatePayslips(f, client, psd)==0){
 							generatePayslips.setStatus("Success!", true);
-							printOnFile(lastGeneratedPayslips, getDateToday());
+							printOnFile(lastGeneratedPayslips, getDateToday() + " (" + client + ")");
 							view.updateLastGeneratedPayslips(getLast(lastGeneratedPayslips));
 							generatePayslips.setFileDirectory(null);
 						}else{
@@ -367,6 +371,8 @@ public class PayrollSystemController{
 				String client = modifyClientsVar.getClient();
 				model.modifyVariables(variables, client);
 				modifyClientsVar.showSuccess();
+				printOnFile(lastClientModified, getDateToday() + " (" + client + ")");
+				view.updateLastClientModified(getLast(lastClientModified));
 			}catch(Exception ex){
 				modifyClientsVar.showError("Input must be numbers.");
 				System.out.println(ex);

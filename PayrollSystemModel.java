@@ -39,6 +39,7 @@ public class PayrollSystemModel {
 	private SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
 	private Connection con;
 	private Date periodStartDate;
+	private String client;
 	private String[] summaryReports = {"Daily time record summary",
 									   "Billing summary",
 									   "Atm/cash payroll summary",
@@ -228,6 +229,7 @@ public class PayrollSystemModel {
 				System.out.println(ex);
             }
         }
+		this.client = assignment;
 		return true;
 	}
 
@@ -1396,5 +1398,9 @@ public class PayrollSystemModel {
 				System.out.println(ex);
             }
 		return brackets;
+	}
+	
+	public String getClient(){
+		return client;
 	}
 }

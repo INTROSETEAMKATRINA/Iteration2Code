@@ -137,7 +137,7 @@ public class PayrollSystemView extends JPanel {
 	}
 	
 	public void updateLastClientModified(String s){
-		status4.setText("Last Client Modified: " + s);
+		status4.setText("Last Client Vars Modified: " + s);
 	}
 	
 	public void updateLastGeneratedPayslips(String s){
