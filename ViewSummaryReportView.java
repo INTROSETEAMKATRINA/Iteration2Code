@@ -1,5 +1,6 @@
 /*******************************************************
 	 *  Class name: ViewSummaryReportView
+
  	 *  Inheritance: JFrame
 	 *  Attributes: model
 	 *  Methods:	ViewSummaryReportView, getClient, setPickerListener
@@ -8,6 +9,7 @@
 	 *******************************************************/
 	 
 import java.awt.Color;
+
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -15,6 +17,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -30,7 +33,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
-import javax.swing.table.JTableHeader;
+import javax.swing.table.*;
 public class ViewSummaryReportView extends JPanel {
 
 	private PayrollSystemModel model;
@@ -43,6 +46,7 @@ public class ViewSummaryReportView extends JPanel {
 	private JComboBox<Object> timePeriodCBox;
 	private JComboBox<Object> clientCBox;
 	
+	private DefaultTableModel summaryModel;
 	private JTable summaryTable;
 	private JScrollPane summaryPane;
 	
@@ -52,7 +56,7 @@ public class ViewSummaryReportView extends JPanel {
 		this.model = model;
 		
 		statusLbl = new JLabel("Status: No Data Found!");
-		statusLbl.setIcon(loadScaledImage("/images/notifs/warning.png",.08f));
+		statusLbl.setIcon(loadScaledImage("/notifs/warning.png",.08f));
 		
 		selectSummLbl = new JLabel("Select Summary Report: ");
 		selectClientLbl = new JLabel("Select Client: ");
@@ -62,11 +66,14 @@ public class ViewSummaryReportView extends JPanel {
 		viewCBox = new JComboBox<Object>();
 		timePeriodCBox = new JComboBox<Object>();
 		
+		updateViewList();
+		
 		summaryTable = new JTable(30,12);
 		summaryTable.setRowHeight(32);
 		summaryTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		summaryTable.setColumnSelectionAllowed(true);
 		summaryTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+		summaryModel = (DefaultTableModel) summaryTable.getModel();
 		
 		header = summaryTable.getTableHeader();
 		header.setBackground(new Color(0xFAFAFA));
@@ -252,11 +259,17 @@ public class ViewSummaryReportView extends JPanel {
 	}
 	
 	public void updateTableColumn(){
-	/*	ArrayList<String> column = model.getColumnName(getReport());
-		tableModel.setColumnCount(column.size());
-		for(int i = 0; i < column.size();i++){
-			summaryTable.getColumnModel().getColumn(i).setHeaderValue(column.get(i));
-		}*/
+		ArrayList<String> column = model.getColumnName(getReport());
+		//summaryModel.setColumnCount(column.size());
+		//for(int i = 0; i < column.size();i++){
+		//	summaryTable.getColumnModel().getColumn(i).setHeaderValue(column.get(i));
+		//}
+		summaryModel.setColumnCount(0);
+		for(int i = 0; i < column.size();i++)
+		{
+			summaryModel.addColumn(column.get(i));
+		}
+		summaryModel.setColumnCount(column.size());
 	}
 	
 	public String getClient(){ 
@@ -264,35 +277,33 @@ public class ViewSummaryReportView extends JPanel {
 	}
 	
 	public String getPeriodStartDate(){ 
-		return null;//(String)dateCBox.getSelectedItem(); 
+		return (String)timePeriodCBox.getSelectedItem(); 
 	}
 	
 	public String getReport(){ 
 		return (String)viewCBox.getSelectedItem(); 
 	}
 	
-/*	public void setPeriodStartDateListener(ActionListener list){
+	public void setPeriodStartDateListener(ActionListener list){
 		clientCBox.addActionListener(list);
 	}
 	
 	public void setViewListener(ActionListener list){
-		viewBtn.addActionListener(list);
+		viewCBox.addActionListener(list);
 	}
 	
-	public void backListener(ActionListener list){
-		backBtn.addActionListener(list);
-	}
-	*/
+	//public void backListener(ActionListener list){
+	//	backBtn.addActionListener(list);
+	//}
+	
 	public void updateTable(){
-	/*	tableModel.setRowCount(0);
+		summaryModel.setRowCount(0);
 		statusLbl.setText("Status: You are now viewing " + getReport().toLowerCase() + ".");
 		ArrayList<Object[]> row = model.getTableRow(getClient(),getPeriodStartDate(),getReport());
-		
 		for(Object[] t : row){
-			tableModel.addRow(t);
-		}*/
+			summaryModel.addRow(t);
+		}
 	}
-	
 	public void updateClientList(){
 		clientCBox.removeAllItems();
 		ArrayList<String> clients = model.getClientList();
@@ -303,10 +314,10 @@ public class ViewSummaryReportView extends JPanel {
 	}
 	
 	public void updateDateList(){
-	/*	dateCBox.removeAllItems();
+		timePeriodCBox.removeAllItems();
 		ArrayList<String> dates = model.getDateListPayslips(getClient());
 		for(String t : dates)
-			dateCBox.addItem(t);	*/	
+			timePeriodCBox.addItem(t);		
 	}
 	
 	public void updateViewList(){
@@ -336,3 +347,4 @@ public class ViewSummaryReportView extends JPanel {
 		return img_icon;
 	}
 }
+
