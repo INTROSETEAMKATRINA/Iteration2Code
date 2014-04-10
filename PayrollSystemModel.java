@@ -40,6 +40,7 @@ public class PayrollSystemModel {
 	private Connection con;
 	private Date periodStartDate;
 	private String client;
+	private String taxStatus[] = {"z", "sme", "s1me1", "s2me2", "s3me3", "s4me4"};
 	private String[] summaryReports = {"Daily time record summary",
 									   "Billing summary",
 									   "Atm/cash payroll summary",
@@ -495,7 +496,7 @@ public class PayrollSystemModel {
 					System.out.println("default vars");
 				}
 				
-				
+				float[][] wholeTable = getWholeTaxTable();
 				while(rs.next()){
 					String tin = rs.getString("TIN");
 					
@@ -533,6 +534,8 @@ public class PayrollSystemModel {
 					float adjustments = 0;
 					float transpoAllow = 0;
 					String type;
+					String taxStatus = rs.getString("taxstatus");
+					taxStatus =  taxStatus == null || taxStatus.equals("") ? "s" : taxStatus;
 					while(rs2.next()){
 						type = rs2.getString("type");
 						switch(type){
@@ -607,7 +610,23 @@ public class PayrollSystemModel {
 									otPay + nsdPay +
 									adjustments + legalHolidayOnRestDayPay + specialHolidayOnRestDayPay;
 					float netPay = grossPay - totalDeductions;
-					
+					int taxStatusIndex = 0;;
+					for(int i = 0 ; i < this.taxStatus.length; i++){
+						if(this.taxStatus[i].toLowerCase().contains(taxStatus)){
+							taxStatusIndex = i;
+							break;
+						}
+					}
+					int bracket = 0;
+					for(int i = 0 ; i < wholeTable.length; i++){
+						if(wholeTable[i][taxStatusIndex+2] > netPay){
+							bracket = i - 1;
+							break;
+						}else if(i == wholeTable.length - 1){
+							bracket = i;
+						}
+					}
+					wTax = wholeTable[bracket][0] + (wholeTable[bracket][1] * (netPay - wholeTable[bracket][taxStatusIndex+2])) / 100;
 					payslips.add(new Payslip(tin, assignment,  name, periodStartDate,
 					position, regularDaysWork, dailyRate,
 					grossPay, late, regularPay,
@@ -1371,6 +1390,15 @@ public class PayrollSystemModel {
 		return table;
 	}
 	
+	public float[][] getWholeTaxTable(){
+		int[] brackets = getBracketListInArray();
+		float[][] taxTable = new float[brackets.length][8];
+		for(int i = 0; i < brackets.length; i++){
+			taxTable[i] = getTaxTable(brackets[i]);
+		}
+		return taxTable;
+	}
+	
 	public void updateTaxTable(int bracket, float[] table) throws SQLException{
 		String sql = "UPDATE taxtable set " +
 		"tax = "+table[0]+", taxpercentover = " + table[1] +
@@ -1398,6 +1426,15 @@ public class PayrollSystemModel {
 				System.out.println(ex);
             }
 		return brackets;
+	}
+	
+	public int[] getBracketListInArray(){
+		ArrayList<String> brackets = getBracketList();
+		int bracket[] = new int[brackets.size()];
+		for(int i = 0; i < brackets.size(); i++){
+			bracket[i] = Integer.parseInt(brackets.get(i));
+		}
+		return bracket;
 	}
 	
 	public String getClient(){
