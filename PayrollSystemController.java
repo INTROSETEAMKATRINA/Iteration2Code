@@ -15,6 +15,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -41,7 +42,8 @@ public class PayrollSystemController{
 	private ChangePasswordView changePassword;
 	private ModifyClientVariablesView modifyClientsVar;
 	private ModifyTaxTableView modifyTaxPanel;
-	
+	private BackUpView backUpData;
+        
 	private String directory = "periodStartDate.txt";
 	private String lastChecked = "lastChecked.txt";
 	private String lastUpdatedData = "lastUpdatedData.txt";
@@ -115,6 +117,11 @@ public class PayrollSystemController{
 		modifyTaxPanel.setApplyListener(new modifyTax());
 		modifyTaxPanel.setBracketListener(new updateTax());
 		
+        backUpData = view.getbackUpPanel();
+		backUpData.setSelectFileListener(new fileSaverBackUpDataButtonListener());
+		backUpData.setGenerateListener(new backUpDataButtonListener());
+
+                
 		view.setNextTimeListener(new nextTimePeriod());
 		
 		/*
@@ -414,7 +421,39 @@ public class PayrollSystemController{
 			}
 		}
 	}
-	
+        
+    class fileSaverBackUpDataButtonListener implements ActionListener{
+		public void actionPerformed(ActionEvent e){
+			backUpData.setFileDirectory(backUpData.fileSaver());
+		}
+	}
+        
+    class backUpDataButtonListener implements ActionListener{
+		public void actionPerformed(ActionEvent e){
+			File file = backUpData.getFileDirectory();
+				
+                            if(file!=null){
+                                boolean go = true;
+                                if(file.exists()){
+                                        go = backUpData.askConfirmation();
+                                }
+                                if(go){
+                                        try{ 
+                                            model.backupData(file);
+                                            backUpData.setStatus("Success!", true);
+                                            printOnFile(lastBackUp, getDateToday());
+                                            view.updateLastBackUp(getLast(lastBackUp));
+                                            backUpData.setFileDirectory(null);
+                                        }catch(Exception ex){
+                                                backUpData.setStatus(ex.getMessage(), false);
+                                        }
+                                }
+                            }else{
+                                    backUpData.setStatus("No file chosen!", false);
+                            }
+		}
+	}
+
 	class exitListener extends WindowAdapter{
 		public void windowClosing(WindowEvent e) {
 			int confirm = JOptionPane.showOptionDialog(null, "Are You Sure to Close Application?", "Exit Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);

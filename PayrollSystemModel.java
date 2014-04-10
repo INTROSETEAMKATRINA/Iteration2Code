@@ -18,6 +18,7 @@
 	 *******************************************************/
 	 
 import java.io.File;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -27,7 +28,6 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-
 import jxl.Cell;
 import jxl.CellType;
 import jxl.DateCell;
@@ -981,8 +981,23 @@ public class PayrollSystemModel {
 	public void generateSummaryReport(File directory, String client){
 	}
 
-	public void backupDate(){
-	}
+	public void backupData(File directory) throws Exception{
+        Process exec = null;
+        ProcessBuilder pb = new ProcessBuilder("mysqldump", "-uroot", "-pp@ssword", "Payroll System", "adjustmentsanddeductions",
+                "client", "dtr", "payslip", "personnel", "taxtable");
+            
+        pb.redirectOutput(directory);
+        exec = pb.start();
+        }
+        
+    public void retrieveData(File directory) throws Exception{
+        Process exec = null;
+        ProcessBuilder pb = new ProcessBuilder("mysql", "-uroot", "-pp@ssword", "Payroll System");
+            
+        pb.redirectInput(directory);
+        exec = pb.start();
+    }
+
 
 	public ArrayList<String> getSummaryReport(String client, String report, Date periodStartDate){
 		return new ArrayList<String>();

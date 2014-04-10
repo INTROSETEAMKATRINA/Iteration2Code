@@ -6,10 +6,14 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
@@ -23,7 +27,9 @@ public class BackUpView extends JPanel {
 
 	private JButton saveBtn;
 	private JButton selSaveBtn;
-	
+        
+        private File file;
+
 	public BackUpView() {
 		
 		saveBtn = new JButton(new ImageIcon(getClass().getResource("/images/buttons/backup.png")));
@@ -151,4 +157,63 @@ public class BackUpView extends JPanel {
 		img_icon = new ImageIcon(img);
 		return img_icon;
 	}
+        
+	public File fileSaver(){
+		//Create a file chooser
+		JFileChooser fc = new JFileChooser();
+		//In response to a button click:
+		int returnVal = fc.showSaveDialog(this);
+		if(returnVal == JFileChooser.APPROVE_OPTION){
+			if(fc.toString().contains(".sql")){
+				return fc.getSelectedFile();
+			}
+			
+			return new File(fc.getSelectedFile()+".sql");
+		}else{
+			return null;
+		}
+	}
+        
+    public void setSelectFileListener(ActionListener list){
+		selSaveBtn.addActionListener(list);
+	}
+	
+	public void setGenerateListener(ActionListener list){
+		saveBtn.addActionListener(list);
+	}
+        
+    public void setFileDirectory(File f){
+		file = f;
+		
+		if(f!=null){
+			locationLbl.setText(file.getPath());
+		}else{
+			locationLbl.setText("");
+		}
+	}
+        
+    public File getFileDirectory(){
+		return file;
+	}
+        
+    public boolean askConfirmation(){
+		int confirmation = JOptionPane.showConfirmDialog(null, "Overwrite file?", "Overwrite file?",
+		
+		JOptionPane.YES_NO_OPTION);
+		if(confirmation ==JOptionPane.YES_OPTION){
+			return true;
+		}
+		return false;
+	}
+        
+    public void setStatus(String e, boolean b){
+		statusLbl.setText("Status: "+e);
+		
+		if(b){
+			statusLbl.setIcon(loadScaledImage("/images/notifs/right.png",.08f));
+		}else{
+			statusLbl.setIcon(loadScaledImage("/images/notifs/wrong.png",.08f));
+		}
+	}
+
 }

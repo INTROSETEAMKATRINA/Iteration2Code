@@ -1183,4 +1183,8 @@ public class PayrollSystemView extends JPanel {
 	public ModifyTaxTableView getTaxPanel(){
 		return modifyTaxPanel;
 	}
+        
+        public BackUpView getbackUpPanel(){
+                return backUpPanel;
+        }
 }
