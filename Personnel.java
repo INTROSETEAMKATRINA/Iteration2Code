@@ -19,7 +19,7 @@
 	 *  Visibility: public
 	 *******************************************************/
 
-
+import java.math.BigDecimal;
 public class Personnel {
 	private String name;
 	private String position;
@@ -27,24 +27,24 @@ public class Personnel {
 	private String employeeStatus;
 	private String tin;
 	private String taxStatus;
-	private float sss;
-	private float sssLoan;
-	private float phic;
-	private float hdmf;
-	private float hdmfLoan;
-	private float payrollAdvance;
-	private float houseRental;
-	private float uniformAndOthers;
-	private float dailyRate;
-	private float colaRate;
-	private float monthlyRate;
+	private BigDecimal sss;
+	private BigDecimal sssLoan;
+	private BigDecimal phic;
+	private BigDecimal hdmf;
+	private BigDecimal hdmfLoan;
+	private BigDecimal payrollAdvance;
+	private BigDecimal houseRental;
+	private BigDecimal uniformAndOthers;
+	private BigDecimal dailyRate;
+	private BigDecimal colaRate;
+	private BigDecimal monthlyRate;
 	private DTR dtr;
 
     public Personnel(String name, String position, String assignment,
     				 String employeeStatus, String tin, String taxStatus,
-    				 float sss, float sssLoan, float phic, float hdmf, float hdmfLoan,
-    				 float payrollAdvance, float houseRental, float uniformAndOthers,
-    				 float dailyRate, float colaRate,float monthlyRate) {
+    				 BigDecimal sss, BigDecimal sssLoan, BigDecimal phic, BigDecimal hdmf, BigDecimal hdmfLoan,
+    				 BigDecimal payrollAdvance, BigDecimal houseRental, BigDecimal uniformAndOthers,
+    				 BigDecimal dailyRate, BigDecimal colaRate,BigDecimal monthlyRate) {
 		this.name = name;
 		this.position = position;
 		this.assignment = assignment;
@@ -77,11 +77,11 @@ public class Personnel {
 		this.position = position;
 	}
 	
-	public float getDailyRate(){
+	public BigDecimal getDailyRate(){
 		return dailyRate;
 	}
 	
-	public void setDailyRate(float dailyRate){
+	public void setDailyRate(BigDecimal dailyRate){
 		this.dailyRate = dailyRate;
 	}
 	
@@ -93,11 +93,11 @@ public class Personnel {
 		this.assignment = assignment;
 	}
 	
-	public float getColaRate(){
+	public BigDecimal getColaRate(){
 		return colaRate;
 	}
 	
-	public void setColaRate(float colaRate){
+	public void setColaRate(BigDecimal colaRate){
 		this.colaRate = colaRate;
 	}
 	
@@ -121,39 +121,39 @@ public class Personnel {
         return employeeStatus;
     }
     
-    public float getMonthlyRate(){
+    public BigDecimal getMonthlyRate(){
    		return monthlyRate;
     }
     
-    public float getSSS(){
+    public BigDecimal getSSS(){
     	return sss;
     }
     
-    public float getSSSLoan(){
+    public BigDecimal getSSSLoan(){
         return sssLoan;
     }
     
-   	public float getPHIC(){
+   	public BigDecimal getPHIC(){
     	return phic;
     }
     
-    public float getHDMF(){
+    public BigDecimal getHDMF(){
         return hdmf;
     }
     
-    public float getHDMFLoan(){
+    public BigDecimal getHDMFLoan(){
         return hdmfLoan;
     }
     
-    public float getPayrollAdvance(){
+    public BigDecimal getPayrollAdvance(){
       	return payrollAdvance;
     }
     
-    public float getHouseRental(){
+    public BigDecimal getHouseRental(){
         return houseRental;
     }
     
-    public float getUniformAndOthers(){
+    public BigDecimal getUniformAndOthers(){
         return uniformAndOthers;
     }
 }

@@ -29,6 +29,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import java.math.BigDecimal;
 public class RemoveAdjustmentsView extends JPanel {
 	
 	private JLabel selectClientLbl;
@@ -284,7 +285,7 @@ public class RemoveAdjustmentsView extends JPanel {
 		return s.substring(0,i-1);
 	}
 	
-	public float getAdjustment(){
+	public BigDecimal getAdjustment(){
 		String s = (String)adjCBox.getSelectedItem();
 		int i;
 		for(i = 0;i<s.length();i++){
@@ -292,7 +293,7 @@ public class RemoveAdjustmentsView extends JPanel {
 				break;
 			}
 		}
-		return Float.parseFloat(s.substring(i+2,s.length()));
+		return new BigDecimal(s.substring(i+2,s.length()));
 	}
 	
 	public int getNumAdjustments(){

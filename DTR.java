@@ -19,28 +19,28 @@
 	 *******************************************************/
 
 import java.util.Date;
-
+import java.math.BigDecimal;
 public class DTR {
 	private String name;
 	private String tin;
-	private float regularDaysWorks;
-	private float regularOvertime;
-	private float regularNightShiftDifferential;
-	private float specialHoliday;
-	private float specialHolidayOvertime;
-	private float specialHolidayNightShiftDifferential;
-	private float legalHoliday;
-	private float legalHolidayOvertime;
-	private float legalHolidayNightShiftDifferential;
-	private float legalHolidayOnRestDay;
-	private float specialHolidayOnRestDay;
-	private float late;
+	private BigDecimal regularDaysWorks;
+	private BigDecimal regularOvertime;
+	private BigDecimal regularNightShiftDifferential;
+	private BigDecimal specialHoliday;
+	private BigDecimal specialHolidayOvertime;
+	private BigDecimal specialHolidayNightShiftDifferential;
+	private BigDecimal legalHoliday;
+	private BigDecimal legalHolidayOvertime;
+	private BigDecimal legalHolidayNightShiftDifferential;
+	private BigDecimal legalHolidayOnRestDay;
+	private BigDecimal specialHolidayOnRestDay;
+	private BigDecimal late;
 	private Date  periodStartDate;
 
-	public DTR(String name, String tin, float regularDaysWorks, float regularOvertime, float regularNightShiftDifferential,
-			   float specialHoliday, float specialHolidayOvertime, float specialHolidayNightShiftDifferential,
-			   float legalHoliday, float legalHolidayOvertime, float legalHolidayNightShiftDifferential, 
-			   float legalHolidayOnRestDay, float specialHolidayOnRestDay, float late, Date periodStartDate){
+	public DTR(String name, String tin, BigDecimal regularDaysWorks, BigDecimal regularOvertime, BigDecimal regularNightShiftDifferential,
+			   BigDecimal specialHoliday, BigDecimal specialHolidayOvertime, BigDecimal specialHolidayNightShiftDifferential,
+			   BigDecimal legalHoliday, BigDecimal legalHolidayOvertime, BigDecimal legalHolidayNightShiftDifferential, 
+			   BigDecimal legalHolidayOnRestDay, BigDecimal specialHolidayOnRestDay, BigDecimal late, Date periodStartDate){
 		this.name = name;
 		this.tin = tin;
 		this.regularDaysWorks = regularDaysWorks;
@@ -58,75 +58,75 @@ public class DTR {
 		this.periodStartDate = periodStartDate;
 	}
 	
-	public float getRegularDaysWorks(){
+	public BigDecimal getRegularDaysWorks(){
 		return regularDaysWorks;
 	}
 	
-	public void setRegularDaysWorks(float regularDaysWorks){
+	public void setRegularDaysWorks(BigDecimal regularDaysWorks){
 		this.regularDaysWorks = regularDaysWorks;
 	}
 	
-	public float getRegularOvertime(){
+	public BigDecimal getRegularOvertime(){
 		return regularOvertime;
 	}
 	
-	public void setRegularOvertime(float regularOvertime){
+	public void setRegularOvertime(BigDecimal regularOvertime){
 		this.regularOvertime = regularOvertime;
 	}
 	
-	public float getRegularNightShiftDifferential(){
+	public BigDecimal getRegularNightShiftDifferential(){
 		return regularNightShiftDifferential;
 	}
 	
-	public void setRegularNightShiftDifferential(float regularNightShiftDifferential){
+	public void setRegularNightShiftDifferential(BigDecimal regularNightShiftDifferential){
 		this.regularNightShiftDifferential = regularNightShiftDifferential;
 	}
 	
-	public float getSpecialHoliday(){
+	public BigDecimal getSpecialHoliday(){
 		return specialHoliday;
 	}
 	
-	public void setSpecialHoliday(float specialHoliday){
+	public void setSpecialHoliday(BigDecimal specialHoliday){
 		this.specialHoliday = specialHoliday;
 	}
 	
-	public float getSpecialHolidayOvertime(){
+	public BigDecimal getSpecialHolidayOvertime(){
 		return specialHolidayOvertime;
 	}
 	
-	public void setSpecialHolidayOvertime(float specialHolidayOvertime){
+	public void setSpecialHolidayOvertime(BigDecimal specialHolidayOvertime){
 		this.specialHolidayOvertime = specialHolidayOvertime;
 	}
 	
-	public float getSpecialHolidayNightShiftDifferential(){
+	public BigDecimal getSpecialHolidayNightShiftDifferential(){
 		return specialHolidayNightShiftDifferential;
 	}
 	
-	public void setSpecialHolidayNightShiftDifferential(float specialHolidayNightShiftDifferential){
+	public void setSpecialHolidayNightShiftDifferential(BigDecimal specialHolidayNightShiftDifferential){
 		this.specialHolidayNightShiftDifferential = specialHolidayNightShiftDifferential;
 	}
 	
-	public float getLegalHoliday(){
+	public BigDecimal getLegalHoliday(){
 		return legalHoliday;
 	}
 	
-	public void setLegalHoliday(float legalHoliday){
+	public void setLegalHoliday(BigDecimal legalHoliday){
 		this.legalHoliday = legalHoliday;
 	}
 	
-	public float getLegalHolidayOvertime(){
+	public BigDecimal getLegalHolidayOvertime(){
 		return legalHolidayOvertime;
 	}
 	
-	public void setLegalHolidayOvertime(float legalHolidayOvertime){
+	public void setLegalHolidayOvertime(BigDecimal legalHolidayOvertime){
 		this.legalHolidayOvertime = legalHolidayOvertime;
 	}
 	
-	public float getLegalHolidayNightShiftDifferential(){
+	public BigDecimal getLegalHolidayNightShiftDifferential(){
 		return legalHolidayNightShiftDifferential;
 	}
 	
-	public void setLegalHolidayNightShiftDifferential(float legalHolidayNightShiftDifferential){
+	public void setLegalHolidayNightShiftDifferential(BigDecimal legalHolidayNightShiftDifferential){
 		this.legalHolidayNightShiftDifferential = legalHolidayNightShiftDifferential;
 	}
 	
@@ -138,11 +138,11 @@ public class DTR {
 		this.periodStartDate = periodStartDate;
 	}
       
-	public float getLegalHolidayOnRestDay(){
+	public BigDecimal getLegalHolidayOnRestDay(){
 		return legalHolidayOnRestDay;
 	}
 	
-	public float getSpecialHolidayOnRestDay(){
+	public BigDecimal getSpecialHolidayOnRestDay(){
 		return specialHolidayOnRestDay;
 	}
 	
@@ -150,7 +150,7 @@ public class DTR {
         return tin;
     }
 	
-	public float getLate(){
+	public BigDecimal getLate(){
 		return late;
 	}
         

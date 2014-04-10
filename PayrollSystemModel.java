@@ -72,8 +72,8 @@ public class PayrollSystemModel {
 			Sheet sheet = workbook.getSheet(0);
 
 			String name,position,employeeStatus,tin,taxStatus;
-			float sss, sssLoan, phic, hdmf, hdmfLoan, payrollAdvance, houseRental, uniformAndOthers;
-			float dailyRate, colaRate, monthlyRate;
+			BigDecimal sss, sssLoan, phic, hdmf, hdmfLoan, payrollAdvance, houseRental, uniformAndOthers;
+			BigDecimal dailyRate, colaRate, monthlyRate;
 			Date psd;
 			int row,column;
 
@@ -117,11 +117,11 @@ public class PayrollSystemModel {
 					column++;
 					employeeStatus = sheet.getCell(column,row).getContents();
 					
-					float rates[] = new float[3];
+					BigDecimal rates[] = new BigDecimal[3];
 					for(int i = 0; i < 3;i++){
 						column++;
-						rates[i] = tryGetFloat(sheet.getCell(column,row).getContents());
-						if(rates[i] < 0){
+						rates[i] = tryGetBigDecimal(sheet.getCell(column,row).getContents());
+						if(rates[i].signum() < 0){
 							throw new Exception("Negative deduction or rate.");
 						}
 					}
@@ -137,11 +137,11 @@ public class PayrollSystemModel {
 					column++;
 					taxStatus = sheet.getCell(column,row).getContents();
 					
-					float deductions[] = new float[8];
+					BigDecimal deductions[] = new BigDecimal[8];
 					for(int i = 0; i < 8;i++){
 						column++;
-						deductions[i] = tryGetFloat(sheet.getCell(column,row).getContents());
-						if(deductions[i]<0){
+						deductions[i] = tryGetBigDecimal(sheet.getCell(column,row).getContents());
+						if(deductions[i].signum()<0){
 							throw new Exception("Negative deduction or rate.");
 						}
 					}
@@ -204,28 +204,28 @@ public class PayrollSystemModel {
                 stmt=con.prepareStatement(sql);
                 stmt.execute(sql);
 				String pTIN = personnel.getTIN();
-                if(personnel.getSSS()!=0){
+                if(personnel.getSSS().signum()!=0){
                     this.addAdjustment("SSS", personnel.getSSS(), pTIN, periodStartDate);
                 }
-                if(personnel.getSSSLoan()!=0){                
+                if(personnel.getSSSLoan().signum()!=0){                
                     this.addAdjustment("SSS Loan", personnel.getSSSLoan(), pTIN, periodStartDate);
                 }
-                if(personnel.getPHIC()!=0){
+                if(personnel.getPHIC().signum()!=0){
                     this.addAdjustment("PHIC", personnel.getPHIC(), pTIN, periodStartDate);
                 }
-                if(personnel.getHDMF()!=0){
+                if(personnel.getHDMF().signum()!=0){
                     this.addAdjustment("HDMF", personnel.getHDMF(), pTIN, periodStartDate);
                 }
-                if(personnel.getHDMFLoan()!=0){
+                if(personnel.getHDMFLoan().signum()!=0){
                     this.addAdjustment("HDMF Loan", personnel.getHDMFLoan(), pTIN, periodStartDate);
                 }
-                if(personnel.getPayrollAdvance()!=0){
+                if(personnel.getPayrollAdvance().signum()!=0){
                     this.addAdjustment("Payroll Advance", personnel.getPayrollAdvance(), pTIN, periodStartDate);
                 }
-                if(personnel.getHouseRental()!=0){
+                if(personnel.getHouseRental().signum()!=0){
                     this.addAdjustment("House Rental", personnel.getHouseRental(), pTIN, periodStartDate);
                 }
-                if(personnel.getUniformAndOthers()!=0){
+                if(personnel.getUniformAndOthers().signum()!=0){
                     this.addAdjustment("Uniform and Others", personnel.getUniformAndOthers(), pTIN, periodStartDate);
                 }
             } catch (SQLException ex){
@@ -294,7 +294,7 @@ public class PayrollSystemModel {
 			Sheet sheet = workbook.getSheet(0);
 
 			String name,tin;
-			float regularDaysWorks, regularOvertime, regularNightShiftDifferential,
+			BigDecimal regularDaysWorks, regularOvertime, regularNightShiftDifferential,
 				  specialHoliday, specialHolidayOvertime, specialHolidayNightShiftDifferential,
 				  legalHoliday, legalHolidayOvertime, legalHolidayNightShiftDifferential,
 				  specialHolidayOnRestDay, legalHolidayOnRestDay, late;
@@ -335,12 +335,12 @@ public class PayrollSystemModel {
 						throw new Exception("Lacking tin!");
 					}
 					
-					float timeWorked[] = new float[12];
+					BigDecimal timeWorked[] = new BigDecimal[12];
 					
 					for(int i = 0; i < 12;i++){
 						column++;
-						timeWorked[i] = tryGetFloat(sheet.getCell(column,row).getContents());
-						if(timeWorked[i] < 0){
+						timeWorked[i] = tryGetBigDecimal(sheet.getCell(column,row).getContents());
+						if(timeWorked[i].signum() < 0){
 							throw new Exception("Negative days worked or hours.");
 						}
 					}
@@ -433,7 +433,7 @@ public class PayrollSystemModel {
 
 	
 
-	public void addAdjustment(String reason, float adjustment, String tin, Date periodStartDate) {
+	public void addAdjustment(String reason, BigDecimal adjustment, String tin, Date periodStartDate) {
         Statement stmt = null;
         
 	    try {
@@ -450,7 +450,7 @@ public class PayrollSystemModel {
 		}
 	}
 
-	public void removeAdjustment(String reason, float adjustment, String tin, Date periodStartDate) {
+	public void removeAdjustment(String reason, BigDecimal adjustment, String tin, Date periodStartDate) {
         Statement stmt = null;
         
         try{
@@ -621,11 +621,11 @@ public class PayrollSystemModel {
 							totalDeductions = totalDeductions.add(hdmfLoan).add(payrollAdvance);
 							totalDeductions = totalDeductions.add(houseRental).add(uniformAndOthers);
 					BigDecimal eight = new BigDecimal("8");
-					BigDecimal hourlyRate = dailyRate.divide(eight);
-					BigDecimal shHourlyRate = dailyRate.add(shRate).divide(eight);
-					BigDecimal lhHourlyRate = dailyRate.add(lhRate).divide(eight);
+					BigDecimal hourlyRate = dailyRate.divide(eight, 2, BigDecimal.ROUND_HALF_UP);
+					BigDecimal shHourlyRate = dailyRate.add(shRate).divide(eight, 2, BigDecimal.ROUND_HALF_UP);
+					BigDecimal lhHourlyRate = dailyRate.add(lhRate).divide(eight, 2, BigDecimal.ROUND_HALF_UP);
 					BigDecimal basicPay = regularDaysWork.multiply(dailyRate);
-					BigDecimal deductionFromTardiness = dailyRate.divide(eight).divide(new BigDecimal("60")).multiply(late);
+					BigDecimal deductionFromTardiness = dailyRate.divide(eight, 2, BigDecimal.ROUND_HALF_UP).divide(new BigDecimal("60"), 2, BigDecimal.ROUND_HALF_UP).multiply(late);
 					BigDecimal colaAllowance = colaRate.multiply(regularDaysWork);
 					BigDecimal regularPay = basicPay.add(colaAllowance).subtract(deductionFromTardiness);
 					BigDecimal regularOvertimePay = regularOvertime.multiply(rotVar).multiply(hourlyRate);
@@ -660,7 +660,7 @@ public class PayrollSystemModel {
 							bracket = i;
 						}
 					}
-					wTax = wholeTable[bracket][0].add(wholeTable[bracket][1].multiply(netPay.subtract(wholeTable[bracket][taxStatusIndex+2])).divide(new BigDecimal("100")));
+					wTax = wholeTable[bracket][0].add(wholeTable[bracket][1].multiply(netPay.subtract(wholeTable[bracket][taxStatusIndex+2])).divide(new BigDecimal("100"), 2, BigDecimal.ROUND_HALF_UP));
 					netPay = netPay.subtract(wTax);
 					payslips.add(new Payslip(tin, assignment,  name, periodStartDate,
 					position, regularDaysWork, dailyRate,
@@ -836,7 +836,7 @@ public class PayrollSystemModel {
 			toBePrinted.add("SSS");
 			toBePrinted.add(p.getSSS().toString());
 			toBePrinted.add("Tardiness");
-			toBePrinted.add(p.getLate().multiply(p.getDailyRate().divide(new BigDecimal("8")).divide(new BigDecimal("60"))).setScale(2, BigDecimal.ROUND_HALF_UP).toString());
+			toBePrinted.add(p.getLate().multiply(p.getDailyRate().divide(new BigDecimal("8"), 2, BigDecimal.ROUND_HALF_UP).divide(new BigDecimal("60"), 2, BigDecimal.ROUND_HALF_UP)).setScale(2, BigDecimal.ROUND_HALF_UP).toString());
 			toBePrinted.add("SSS");
 			toBePrinted.add(p.getSSS().toString());
 
@@ -863,7 +863,7 @@ public class PayrollSystemModel {
 			toBePrinted.add(p.getHDMF().toString());
 
 			toBePrinted.add("Tardiness");
-			toBePrinted.add(p.getLate().multiply(p.getDailyRate().divide(new BigDecimal("8")).divide(new BigDecimal("60"))).setScale(2, BigDecimal.ROUND_HALF_UP).toString());
+			toBePrinted.add(p.getLate().multiply(p.getDailyRate().divide(new BigDecimal("8"), 2, BigDecimal.ROUND_HALF_UP).divide(new BigDecimal("60"), 2, BigDecimal.ROUND_HALF_UP)).setScale(2, BigDecimal.ROUND_HALF_UP).toString());
 			toBePrinted.add("SH on RD Hrs");
 			toBePrinted.add(p.getSpecialHolidayOnRestDay().toString());
 			toBePrinted.add("SSS Loan");
@@ -1395,8 +1395,15 @@ public class PayrollSystemModel {
 			return Float.parseFloat(s);
 		}catch(Exception e){
 			return 0.0f;
-		}
-		
+		}	
+	}
+	
+	private static BigDecimal tryGetBigDecimal(String s){
+		try{
+			return new BigDecimal(s);
+		}catch(Exception e){
+			return BigDecimal.ZERO;
+		}	
 	}
 	
 	private static String getExtension(String s){

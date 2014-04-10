@@ -28,6 +28,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import java.math.BigDecimal;
 public class AddAdjustmentsView extends JPanel {
 	
 	private JLabel selectClientLbl;
@@ -236,11 +237,11 @@ public class AddAdjustmentsView extends JPanel {
 		return reasonTextFld.getText(); 
 	}
 	
-	public float getAdjustment(){
+	public BigDecimal getAdjustment(){
 		try{
-			return Float.parseFloat(amountTextFld.getText());
+			return new BigDecimal(amountTextFld.getText());
 		}catch(Exception e){
-			return 0;
+			return BigDecimal.ZERO;
 		}
 	}
 	

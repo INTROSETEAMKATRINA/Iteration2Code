@@ -245,9 +245,9 @@ public class PayrollSystemController{
 	class addAdjustmentButtonListener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
 			String type = addAdjustments.getTypeAdjustment();
-			float adjustment = addAdjustments.getAdjustment();
+			BigDecimal adjustment = addAdjustments.getAdjustment();
 			String tin = addAdjustments.getTIN();
-			if(type.length()!=0 && adjustment !=0 && tin.length() != 0){
+			if(type.length()!=0 && adjustment.signum() !=0 && tin.length() != 0){
 				if(addAdjustments.askConfirmation()){
 					model.addAdjustment(type, adjustment, tin, periodStartDate);
 					addAdjustments.showSuccess();
@@ -271,7 +271,7 @@ public class PayrollSystemController{
 		public void actionPerformed(ActionEvent e){
 			if(removeAdjustments.getNumAdjustments()>0){
 				String type = removeAdjustments.getTypeAdjustment();
-				float adjustment = removeAdjustments.getAdjustment();
+				BigDecimal adjustment = removeAdjustments.getAdjustment();
 				String tin = removeAdjustments.getTIN();
 				if(removeAdjustments.askConfirmation()){
 					model.removeAdjustment(type, adjustment, tin, periodStartDate);
