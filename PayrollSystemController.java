@@ -40,7 +40,7 @@ public class PayrollSystemController{
 		this.view = view;
 		this.con = con;
 		try{
-			Scanner in = new Scanner(this.getClass().getResourceAsStream(directory));
+			Scanner in = new Scanner(new File(directory));
 			String s = in.next();
 			periodStartDate = sdf.parse(s);
 			view.updateTimePeriod(sdf.format(periodStartDate));
