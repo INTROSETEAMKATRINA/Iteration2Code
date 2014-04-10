@@ -32,6 +32,9 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -119,37 +122,32 @@ public class PayrollSystemView extends JPanel {
 	private boolean resize;
 	private boolean is_home;
 	
-	private String lastChecked = "lastChecked.txt";
-	private String lastUpdatedData = "lastUpdatedData.txt";
-	private String lastGeneratedReport = "lastGeneratedReport.txt";
-	private String lastClientModified = "lastCliendModified.txt";
-	private String lastGeneratedPayslips = "lastGeneratedPayslips.txt";
-	private String lastBackUp = "lastBackUp.txt";
+
 	
-	public void updateLastChecked(){
-		String s = "Last Checked: ";
-		try{
-			Scanner in = new Scanner(new File(lastChecked));
-			s = in.nextLine();
-			in.close();
-		}catch(Exception ex){
-			s += "NONE";
-		}
-		status1.setText(s);
+	public void updateLastChecked(String s){
+		status1.setText("Last Checked: " + s);
 	}
 	
-	public void updateLastUpdatedData(){
-		String s = "Last Updated Data: ";
-		try{
-			Scanner in = new Scanner(new File(lastUpdatedData));
-			s = in.nextLine();
-			in.close();
-		}catch(Exception ex){
-			s += "NONE";
-		}
-		status2.setText(s);
+	public void updateLastUpdatedData(String s){
+		status2.setText("Last Updated Data: " + s);
 	}
 	
+	public void updateLastGeneratedReport(String s){
+		status3.setText("Last Generated Report: " + s);
+	}
+	
+	public void updateLastClientModified(String s){
+		status4.setText("Last Client Modified: " + s);
+	}
+	
+	public void updateLastGeneratedPayslips(String s){
+		status5.setText("Last Generated Payslips: " + s);
+	}
+	
+	public void updateLastBackUp(String s){
+		status6.setText("Last Back-Up: " + s);
+	}
+
 	public PayrollSystemView(SettingsView sView, PayrollSystemModel model){	
 		this.model = model; 
 		homepane1 = new JPanel();
@@ -164,8 +162,6 @@ public class PayrollSystemView extends JPanel {
 		status5 = new JLabel("Last Generated Payslips: 01-01-14 ( LBC )", loadScaledImage("/images/icons/files.png",.55f),JLabel.RIGHT);
 		status6 = new JLabel("Last Back-Up: 01-01-14", loadScaledImage("/images/icons/disk.png",.55f),JLabel.RIGHT);
 
-		updateLastChecked();
-		updateLastUpdatedData();
 		clientCnt = new JLabel("",JLabel.CENTER);
 		clientLbl = new JLabel("CLIENT",JLabel.CENTER);
 		employeeCnt = new JLabel("",JLabel.CENTER);
@@ -251,7 +247,7 @@ public class PayrollSystemView extends JPanel {
 		
 		/*Initialize Application Frame*/
 		payrollSystemFrame = new JFrame();
-		payrollSystemFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		payrollSystemFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		payrollSystemFrame.setSize(1064, 750);
 		payrollSystemFrame.setContentPane(mainPanel);
 		payrollSystemFrame.setTitle("APS: A Payroll System");
@@ -259,6 +255,10 @@ public class PayrollSystemView extends JPanel {
 		payrollSystemFrame.setMinimumSize(new Dimension(970, 720));
 		payrollSystemFrame.setLocationRelativeTo(null);
 		payrollSystemFrame.setVisible(true);
+	}
+	
+	public void setCloseListener(WindowListener list){
+		payrollSystemFrame.addWindowListener(list);
 	}
 	
 	private void showHome(boolean option) {

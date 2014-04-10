@@ -9,8 +9,11 @@
 	 *  Visibility: public
 	 *******************************************************/
 
+import javax.swing.JOptionPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -27,7 +30,6 @@ public class PayrollSystemController{
 	private Date periodStartDate;
 	private PayrollSystemModel model;
 	private PayrollSystemView view;
-	private String directory = "periodStartDate.txt";
 	private LogInView loginPanel;
 	private GeneratePayslipsView generatePayslips;
 	private AddAdjustmentsView addAdjustments;
@@ -36,10 +38,21 @@ public class PayrollSystemController{
 	private ModifyClientVariablesView modifyClientsVar;
 	private ModifyTaxTableView modifyTaxPanel;
 	
+	private String directory = "periodStartDate.txt";
+	private String lastChecked = "lastChecked.txt";
+	private String lastUpdatedData = "lastUpdatedData.txt";
+	private String lastGeneratedReport = "lastGeneratedReport.txt";
+	private String lastClientModified = "lastCliendModified.txt";
+	private String lastGeneratedPayslips = "lastGeneratedPayslips.txt";
+	private String lastBackUp = "lastBackUp.txt";
+	
 	public PayrollSystemController(PayrollSystemModel model, PayrollSystemView view, SettingsView sView, Connection con){
 		this.model = model;
 		this.view = view;
 		this.con = con;
+		
+		view.setCloseListener(new exitListener());
+		
 		try{
 			Scanner in = new Scanner(new File(directory));
 			String s = in.next();
@@ -51,6 +64,13 @@ public class PayrollSystemController{
 			view.showPeriodStartDateNotFound();
 			System.exit(1);
 		}
+		view.updateLastChecked(getLast(lastChecked));
+		view.updateLastUpdatedData(getLast(lastUpdatedData));
+		view.updateLastGeneratedReport(getLast(lastGeneratedReport));
+		view.updateLastClientModified(getLast(lastClientModified));
+		view.updateLastGeneratedPayslips(getLast(lastGeneratedPayslips));
+		view.updateLastBackUp(getLast(lastBackUp));
+		
 		model.setPeriodStartDate(periodStartDate);
 		
 		loginPanel = view.getLogInView();
@@ -93,7 +113,34 @@ public class PayrollSystemController{
 		view.setChangePasswordListener(new changePasswordListener());
 		*/
 	}
-
+	
+	private void printOnFile(String dir, String s){
+		PrintWriter writer = null;
+			try{
+				writer = new PrintWriter(dir);
+			}catch(Exception ex){
+				System.out.println(ex);
+				return ;
+			}
+		writer.println(s);
+		writer.close();
+	}
+	
+	private String getLast(String d){
+		try{
+			Scanner in = new Scanner(new File(d));
+			String s = in.nextLine();
+			in.close();
+			return s;
+		}catch(Exception ex){
+			return "NONE";
+		}
+	}
+	
+	private String getDateToday(){
+		return sdf.format(new Date());
+	}
+	
 	//Login Button Listener
 	class loginListener implements ActionListener{
 		public void actionPerformed(ActionEvent arg0) {
@@ -272,6 +319,8 @@ public class PayrollSystemController{
 					if(go){
 						if(model.generatePayslips(f, client, psd)==0){
 							generatePayslips.setStatus("Success!", true);
+							printOnFile(lastGeneratedPayslips, getDateToday());
+							view.updateLastGeneratedPayslips(getLast(lastGeneratedPayslips));
 							generatePayslips.setFileDirectory(null);
 						}else{
 							generatePayslips.setStatus("File is in use!", false);
@@ -299,15 +348,7 @@ public class PayrollSystemController{
 			if(view.askConfirmation()){
 				periodStartDate = model.nextTimePeriod();
 				System.out.println(sdf.format(periodStartDate));
-				PrintWriter writer = null;
-				try{
-					writer = new PrintWriter(directory);
-				}catch(Exception ex){
-					System.out.println(ex);
-					return ;
-				}
-				writer.println(sdf.format(periodStartDate));
-				writer.close();
+				printOnFile(directory, sdf.format(periodStartDate));
 				view.updateTimePeriod(sdf.format(periodStartDate));
 			}
 		}
@@ -352,4 +393,15 @@ public class PayrollSystemController{
 			}
 		}
 	}
+	
+	class exitListener extends WindowAdapter{
+		public void windowClosing(WindowEvent e) {
+			int confirm = JOptionPane.showOptionDialog(null, "Are You Sure to Close Application?", "Exit Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+			if (confirm == 0) {
+				printOnFile(lastChecked, getDateToday());
+				System.exit(0);
+			}
+        }
+    }
+	
 }
