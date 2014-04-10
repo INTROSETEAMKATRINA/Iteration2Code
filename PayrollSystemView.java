@@ -151,7 +151,7 @@ public class PayrollSystemView extends JPanel {
 		addAdjPanel = new AddAdjustmentsView(model); 
 		genPayslipsPanel = new GeneratePayslipsView(model);
 		genSummaryPanel = new GenerateSummaryReportView();
-		modifyTaxPanel = new ModifyTaxTableView(); 
+		modifyTaxPanel = new ModifyTaxTableView(model); 
 		removeAdjPanel = new RemoveAdjustmentsView(model); 
 		removePersPanel = new RemovePersonnelView(model); 
 		viewPersPanel = new ViewPersonnelView(model); 
@@ -912,7 +912,7 @@ public class PayrollSystemView extends JPanel {
 				is_home = false;
 				showHome(false);
 				repaint();
-				
+				modifyTaxPanel.updateBracketList();
 				addDTRPanel.setVisible(false);
 				addPersPanel.setVisible(false);
 				addAdjPanel.setVisible(false);
@@ -1160,5 +1160,9 @@ public class PayrollSystemView extends JPanel {
 	
 	public RemoveAdjustmentsView getRemAdjPanel(){
 		return removeAdjPanel;
+	}
+	
+	public ModifyTaxTableView getTaxPanel(){
+		return modifyTaxPanel;
 	}
 }

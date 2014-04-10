@@ -1354,4 +1354,40 @@ public class PayrollSystemModel {
 		}
 		return true;
 	}
+	
+	public float[] getTaxTable(int bracket){
+		Statement stmt = null;
+		float table[] = new float[8];
+            try{
+				String sql="Select tax, taxpercentover, z, sme, s1me1, s2me2, s3me3," + 
+				"s4me4 from taxtable where bracket = "+bracket+";";
+				Statement st = con.createStatement();
+				ResultSet rs = st.executeQuery(sql);
+				if(rs.next()){
+					for(int i = 1;i < 9; i++){
+						table[i-1] = rs.getFloat(i);
+					}
+				}
+            } catch (Exception ex) {
+				System.out.println(ex);
+            }
+		return table;
+	}
+	
+	public ArrayList<String> getBracketList(){
+		Statement stmt = null;
+		ArrayList<String> brackets = new ArrayList<>();
+            
+            try{
+				String sql="Select bracket FROM taxtable order by bracket";
+				Statement st = con.createStatement();
+				ResultSet rs = st.executeQuery(sql);
+				while(rs.next()){
+					brackets.add(rs.getString("bracket"));
+				}
+            } catch (Exception ex) {
+				System.out.println(ex);
+            }
+		return brackets;
+	}
 }

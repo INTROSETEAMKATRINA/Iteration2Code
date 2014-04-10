@@ -34,6 +34,7 @@ public class PayrollSystemController{
 	private RemoveAdjustmentsView removeAdjustments;
 	private ChangePasswordView changePassword;
 	private ModifyClientVariablesView modifyClientsVar;
+	private ModifyTaxTableView modifyTaxPanel;
 	
 	public PayrollSystemController(PayrollSystemModel model, PayrollSystemView view, SettingsView sView, Connection con){
 		this.model = model;
@@ -74,6 +75,11 @@ public class PayrollSystemController{
 		modifyClientsVar = sView.getModifyVarsPanel();
 		modifyClientsVar.setClientListener(new updateVariables());
 		modifyClientsVar.setModifyListener(new modifyVariables());
+		
+		modifyTaxPanel = view.getTaxPanel();
+		modifyTaxPanel.setApplyListener(new modifyTax());
+		modifyTaxPanel.setBracketListener(new updateTax());
+		
 		view.setAddPersonnelListener(new addPersonnelListener());
 		view.setPersonnelFileLocationListener(new personnelFileLocationListener());
 		view.setAddDTRListener(new addDTRListener());
@@ -309,13 +315,7 @@ public class PayrollSystemController{
 	
 	class updateVariables implements ActionListener{
 		public void actionPerformed(ActionEvent e){
-			try{
-				float var[] = model.getVariables(modifyClientsVar.getClient());
-				modifyClientsVar.setVariables(var);
-			}catch(Exception ex){
-				modifyClientsVar.setVariablesToDefault();
-				System.out.println(ex);
-			}
+			modifyClientsVar.setVariables();
 		}
 	}
 	
@@ -328,6 +328,26 @@ public class PayrollSystemController{
 				modifyClientsVar.showSuccess();
 			}catch(Exception ex){
 				modifyClientsVar.showError("Input must be numbers.");
+				System.out.println(ex);
+			}
+		}
+	}
+
+	class updateTax implements ActionListener{
+		public void actionPerformed(ActionEvent e){
+			modifyTaxPanel.setTable();
+		}
+	}
+	
+	class modifyTax implements ActionListener{
+		public void actionPerformed(ActionEvent e){
+			try{
+				//float[] table = modifyTaxPanel.getTable();
+				int bracket = modifyTaxPanel.getBracket();
+				//model.modifyTaxTable(bracket, table);
+				modifyTaxPanel.showSuccess();
+			}catch(Exception ex){
+				modifyTaxPanel.showError("Input must be numbers.");
 				System.out.println(ex);
 			}
 		}

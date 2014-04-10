@@ -310,50 +310,39 @@ public class ModifyClientVariablesView extends JPanel {
 		return (String)clientCBox.getSelectedItem();
 	}
 	
-	public void setVariablesToDefault(){
-		var1TxtFld.setText(Float.toString(rotVar));
-		var2TxtFld.setText(Float.toString(rnsdVar));
-		var3TxtFld.setText(Float.toString(lhRate));
-		var4TxtFld.setText(Float.toString(lhVar));
-		var5TxtFld.setText(Float.toString(lhOTVar));
-		var6TxtFld.setText(Float.toString(lhNSDVar));
-		var7TxtFld.setText(Float.toString(lhRDVar));
-		var8TxtFld.setText(Float.toString(shRate));
-		var9TxtFld.setText(Float.toString(shVar));
-		var10TxtFld.setText(Float.toString(shOTVar));
-		var11TxtFld.setText(Float.toString(shNSDVar));
-		var12TxtFld.setText(Float.toString(shRDVar));
-	}
-	
-	public void setVariables(float[] vars){
-		var1TxtFld.setText(Float.toString(vars[0]));
-		var2TxtFld.setText(Float.toString(vars[1]));
-		var3TxtFld.setText(Float.toString(vars[2]));
-		var4TxtFld.setText(Float.toString(vars[3]));
-		var5TxtFld.setText(Float.toString(vars[4]));
-		var6TxtFld.setText(Float.toString(vars[5]));
-		var7TxtFld.setText(Float.toString(vars[6]));
-		var8TxtFld.setText(Float.toString(vars[7]));
-		var9TxtFld.setText(Float.toString(vars[8]));
-		var10TxtFld.setText(Float.toString(vars[9]));
-		var11TxtFld.setText(Float.toString(vars[10]));
-		var12TxtFld.setText(Float.toString(vars[11]));
-		var1TxtFld.setHint(Float.toString(vars[0]));
-		var2TxtFld.setHint(Float.toString(vars[1]));
-		var3TxtFld.setHint(Float.toString(vars[2]));
-		var4TxtFld.setHint(Float.toString(vars[3]));
-		var5TxtFld.setHint(Float.toString(vars[4]));
-		var6TxtFld.setHint(Float.toString(vars[5]));
-		var7TxtFld.setHint(Float.toString(vars[6]));
-		var8TxtFld.setHint(Float.toString(vars[7]));
-		var9TxtFld.setHint(Float.toString(vars[8]));
-		var10TxtFld.setHint(Float.toString(vars[9]));
-		var11TxtFld.setHint(Float.toString(vars[10]));
-		var12TxtFld.setHint(Float.toString(vars[11]));
+	public void setVariables(){
+		try{
+			float vars[] = model.getVariables(getClient());
+			var1TxtFld.setHint(Float.toString(vars[0]));
+			var2TxtFld.setHint(Float.toString(vars[1]));
+			var3TxtFld.setHint(Float.toString(vars[2]));
+			var4TxtFld.setHint(Float.toString(vars[3]));
+			var5TxtFld.setHint(Float.toString(vars[4]));
+			var6TxtFld.setHint(Float.toString(vars[5]));
+			var7TxtFld.setHint(Float.toString(vars[6]));
+			var8TxtFld.setHint(Float.toString(vars[7]));
+			var9TxtFld.setHint(Float.toString(vars[8]));
+			var10TxtFld.setHint(Float.toString(vars[9]));
+			var11TxtFld.setHint(Float.toString(vars[10]));
+			var12TxtFld.setHint(Float.toString(vars[11]));
+		}catch(Exception ex){
+			var1TxtFld.setHint(Float.toString(rotVar));
+			var2TxtFld.setHint(Float.toString(rnsdVar));
+			var3TxtFld.setHint(Float.toString(lhRate));
+			var4TxtFld.setHint(Float.toString(lhVar));
+			var5TxtFld.setHint(Float.toString(lhOTVar));
+			var6TxtFld.setHint(Float.toString(lhNSDVar));
+			var7TxtFld.setHint(Float.toString(lhRDVar));
+			var8TxtFld.setHint(Float.toString(shRate));
+			var9TxtFld.setHint(Float.toString(shVar));
+			var10TxtFld.setHint(Float.toString(shOTVar));
+			var11TxtFld.setHint(Float.toString(shNSDVar));
+			var12TxtFld.setHint(Float.toString(shRDVar));
+		}
 		repaint();
 	}
 	
-	public float[] getVariables(){
+	public float[] getVariables() throws Exception{
 		float variables[] = new float[12];
 		variables[0] = Float.parseFloat(var1TxtFld.getText());
 		variables[1] = Float.parseFloat(var2TxtFld.getText());

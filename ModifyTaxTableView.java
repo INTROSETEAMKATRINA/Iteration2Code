@@ -15,6 +15,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -23,6 +24,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import java.util.ArrayList;
 public class ModifyTaxTableView extends JPanel {
 
 	private JButton applyBtn;
@@ -37,26 +39,27 @@ public class ModifyTaxTableView extends JPanel {
 	private JLabel me3Lbl;
 	private JLabel me4Lbl;
 	
-	private JComboBox<Object> bracketCBox;
+	private JComboBox<String> bracketCBox;
 	
-	private JTextField taxTxtFld;
-	private JTextField taxOverTxtFld;
-	private JTextField zTxtFld;
-	private JTextField sMeTxtFld;
-	private JTextField me1TxtFld;
-	private JTextField me2TxtFld;
-	private JTextField me3TxtFld;
-	private JTextField me4TxtFld;
+	private CustomTextField taxTxtFld;
+	private CustomTextField taxOverTxtFld;
+	private CustomTextField zTxtFld;
+	private CustomTextField sMeTxtFld;
+	private CustomTextField me1TxtFld;
+	private CustomTextField me2TxtFld;
+	private CustomTextField me3TxtFld;
+	private CustomTextField me4TxtFld;
 	
 	private JLabel statusLbl;
 
 	private final static int TEXTBOX_WIDTH = 180;
 	private final static int TEXTBOX_HEIGHT = 41;
-	
-	public ModifyTaxTableView() {
+	private PayrollSystemModel model;
+	public ModifyTaxTableView(PayrollSystemModel model) {
+		this.model = model;
 		applyBtn = new JButton(loadScaledImage("/images/buttons/apply.png",1f));
 		
-		bracketCBox = new JComboBox<Object>();
+		bracketCBox = new JComboBox<String>();
 		
 		taxTxtFld = new CustomTextField("0.00", "/images/effects/in.png", "/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
 		taxOverTxtFld = new CustomTextField("0.00", "/images/effects/in.png", "/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
@@ -288,8 +291,7 @@ public class ModifyTaxTableView extends JPanel {
 		statusLbl.setFont(Utils.statusBarFont);
 	}
 	
-	public void paintComponent(Graphics g)
-	{		
+	public void paintComponent(Graphics g){		
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 	
@@ -306,19 +308,69 @@ public class ModifyTaxTableView extends JPanel {
 		g2d.setColor(Color.LIGHT_GRAY);
 		g2d.drawLine(0, this.getHeight()-Utils.HEIGHT, this.getWidth(), this.getHeight()-Utils.HEIGHT);
 	}
-	public String getClient(){ 
-		return null; 
+	
+	public int getBracket(){ 
+		return Integer.parseInt((String)bracketCBox.getSelectedItem()); 
 	}
 	
-	public void setPickerListener(){}
+	public float[] getTable() throws Exception{
+		float[] table = new float[8];
+		table[0] = Float.parseFloat(taxTxtFld.getText());
+		table[1] = Float.parseFloat(taxOverTxtFld.getText());
+		table[2] = Float.parseFloat(zTxtFld.getText());
+		table[3] = Float.parseFloat(sMeTxtFld.getText());
+		table[4] = Float.parseFloat(me1TxtFld.getText());
+		table[5] = Float.parseFloat(me2TxtFld.getText());
+		table[6] = Float.parseFloat(me3TxtFld.getText());
+		table[7] = Float.parseFloat(me4TxtFld.getText());
+		return table;
+	}
 	
-	private ImageIcon loadScaledImage(String img_url, float percent)
-	{	
+	public void setTable(){
+		float table[] = model.getTaxTable(getBracket());
+		taxTxtFld.setHint(Float.toString(table[0]));
+		taxOverTxtFld.setHint(Float.toString(table[1]));
+		zTxtFld.setHint(Float.toString(table[2]));
+		sMeTxtFld.setHint(Float.toString(table[3]));
+		me1TxtFld.setHint(Float.toString(table[4]));
+		me2TxtFld.setHint(Float.toString(table[5]));
+		me3TxtFld.setHint(Float.toString(table[6]));
+		me4TxtFld.setHint(Float.toString(table[7]));
+	}
+	
+	public void setBracketListener(ActionListener list){
+		bracketCBox.addActionListener(list);
+	}
+	
+	public void setApplyListener(ActionListener list){
+		applyBtn.addActionListener(list);
+	}
+	
+	private ImageIcon loadScaledImage(String img_url, float percent){	
 		ImageIcon img_icon = new ImageIcon(this.getClass().getResource(img_url));
 		int new_width = (int) (img_icon.getIconWidth()*percent);
 		int new_height = (int) (img_icon.getIconHeight()*percent);
 		Image img = img_icon.getImage().getScaledInstance(new_width,new_height,java.awt.Image.SCALE_SMOOTH);  
 		img_icon = new ImageIcon(img);
 		return img_icon;
+	}
+	
+	public void showSuccess(){
+		statusLbl.setText("Status: Variables succesfully updated!");
+		statusLbl.setIcon(loadScaledImage("/images/notifs/right.png",.08f));
+	}
+	
+	public void showError(String s){
+		statusLbl.setText(s);
+		statusLbl.setIcon(loadScaledImage("/images/notifs/wrong.png",.08f));
+	}
+	
+	public void updateBracketList(){
+		bracketCBox.removeAllItems();
+		ArrayList<String> brackets = model.getBracketList();
+		
+		for(String t : brackets){
+			bracketCBox.addItem(t);
+		}
 	}
 }
