@@ -109,7 +109,7 @@ public class CustomTextField extends JTextField implements FocusListener, Docume
 	}
 		  
 	public String getText() {
-	    return show ? "" : super.getText();
+	    return super.getText();
 	}
 
 	public void changedUpdate(DocumentEvent e) {

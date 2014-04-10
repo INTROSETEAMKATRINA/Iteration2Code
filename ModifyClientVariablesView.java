@@ -118,7 +118,6 @@ public class ModifyClientVariablesView extends JPanel {
 		var10TxtFld = new CustomTextField(Float.toString(shOTVar), "/images/effects/in.png", "/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
 		var11TxtFld = new CustomTextField(Float.toString(shNSDVar), "/images/effects/in.png", "/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
 		var12TxtFld = new CustomTextField(Float.toString(shRDVar), "/images/effects/in.png", "/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
-		
 		panel = new JPanel();
 		scrollPane = new JScrollPane(panel);
 		
