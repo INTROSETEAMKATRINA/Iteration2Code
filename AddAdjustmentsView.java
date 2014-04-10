@@ -260,11 +260,11 @@ public class AddAdjustmentsView extends JPanel {
 	}
 	
 	public void showSuccess(){
-		statusLbl.setText("Successfully added adjustment!");
+		statusLbl.setText("Status: Successfully added adjustment!");
 	}
 	
 	public void showWrongInput(){
-		statusLbl.setText("Wrong input!"); 
+		statusLbl.setText("Status: Wrong input!"); 
 	}
 	
 	public void clear(){

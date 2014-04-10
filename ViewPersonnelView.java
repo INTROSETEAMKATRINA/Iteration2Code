@@ -17,6 +17,9 @@ import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
@@ -29,19 +32,19 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 import javax.swing.table.JTableHeader;
+import javax.swing.table.DefaultTableModel;
 
 public class ViewPersonnelView extends JPanel {
 
 	@SuppressWarnings("unused")
 	private PayrollSystemModel model;
 	
-	private JLabel selectPersLbl;
 	private JLabel selectClientLbl;
 	private JLabel statusLbl;
-	private JComboBox<Object> viewCBox;
 	private JComboBox<Object> clientCBox;
 	private JTable personnelTable;
 	private JTableHeader header;
+	private DefaultTableModel tableModel;
 	private JScrollPane personnelPane;
 	
 	public ViewPersonnelView(PayrollSystemModel model) {
@@ -50,17 +53,20 @@ public class ViewPersonnelView extends JPanel {
 		statusLbl = new JLabel("Status: No Data Found!");
 		statusLbl.setIcon(loadScaledImage("/images/notifs/warning.png",.08f));
 		
-		selectPersLbl = new JLabel("Select Personnel: ");
 		selectClientLbl = new JLabel("Select Client: ");
 
 		clientCBox = new JComboBox<Object>();
-		viewCBox = new JComboBox<Object>();
 		
 		personnelTable = new JTable(30,12);
 		personnelTable.setRowHeight(32);
 		personnelTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		personnelTable.setColumnSelectionAllowed(true);
 		personnelTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+		
+		ArrayList<String> columnName = model.getTableColumn("personnel");
+		columnName.add(0, "No.");
+		tableModel = new DefaultTableModel(columnName.toArray(),0);
+		personnelTable.setModel(tableModel);
 		
 		header = personnelTable.getTableHeader();
 		header.setBackground(new Color(0xFAFAFA));
@@ -102,9 +108,6 @@ public class ViewPersonnelView extends JPanel {
 		
 		personnelPane.setPreferredSize(new Dimension(this.getWidth()-500,this.getHeight()-300));
 	
-		viewCBox.setPreferredSize(new Dimension(350,25));
-		viewCBox.setBackground(Utils.comboBoxBGColor);
-		viewCBox.setForeground(Utils.comboBoxFGColor);
 		clientCBox.setPreferredSize(new Dimension(350,25));
 		clientCBox.setBackground(Utils.comboBoxBGColor);
 		clientCBox.setForeground(Utils.comboBoxFGColor);
@@ -136,20 +139,6 @@ public class ViewPersonnelView extends JPanel {
 		gbc.gridy = 0;
 		add(clientCBox,gbc);
 		
-		gbc.fill = GridBagConstraints.NONE;
-		gbc.insets = new Insets(0,15,5,20);
-		gbc.gridwidth = 1;
-		gbc.gridx = 0;
-		gbc.gridy = 1;
-		add(selectPersLbl,gbc);
-		
-		gbc.fill = GridBagConstraints.NONE;
-		gbc.insets = new Insets(0,0,5,0);
-		gbc.gridwidth = 1;
-		gbc.gridx = 1;
-		gbc.gridy = 1;
-		add(viewCBox,gbc);
-		
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.insets = new Insets(5,15,25,15);
 		gbc.weighty = 1;
@@ -174,8 +163,6 @@ public class ViewPersonnelView extends JPanel {
 		header.setFont(Utils.tableFont);
 		clientCBox.setFont(Utils.comboBoxFont);
 		selectClientLbl.setFont(Utils.labelFont);
-		selectPersLbl.setFont(Utils.labelFont);
-		viewCBox.setFont(Utils.comboBoxFont);
 		statusLbl.setFont(Utils.statusBarFont);
 	}
 	
@@ -201,12 +188,18 @@ public class ViewPersonnelView extends JPanel {
 				int rowIndex = table.getSelectedRow();
 				int colIndex = table.getSelectedColumn();
 						
-				if(rowIndex == rowNum && colIndex == 0 && e.isPopupTrigger() && e.getComponent() instanceof JTable)
+				if(rowIndex == rowNum && colIndex == 0 && e.getModifiers() == e.META_MASK && e.getComponent() instanceof JTable)
 				{
 					JMenuItem menuItem = new JMenuItem("Delete Personnel");
 						menuItem.setFont(Utils.descFont);
 						menuItem.setBackground(Color.WHITE);
 						menuItem.setOpaque(false);
+						menuItem.addActionListener(new ActionListener(){
+							public void actionPerformed(ActionEvent actionEvent) {
+							    new RemovePersonnelView(model);
+							  }
+						});
+						
 					JPopupMenu popup = new JPopupMenu();
 						popup.setBackground(Color.WHITE);
 						
@@ -228,10 +221,6 @@ public class ViewPersonnelView extends JPanel {
 		g2d.drawLine(0, this.getHeight()-Utils.HEIGHT, this.getWidth(), this.getHeight()-Utils.HEIGHT);
 	}
 	
-	public String getClient(){ 
-		return null; 
-	}
-	
 	private ImageIcon loadScaledImage(String img_url, float percent)
 	{	
 		ImageIcon img_icon = new ImageIcon(this.getClass().getResource(img_url));
@@ -240,5 +229,42 @@ public class ViewPersonnelView extends JPanel {
 		Image img = img_icon.getImage().getScaledInstance(new_width,new_height,java.awt.Image.SCALE_SMOOTH);  
 		img_icon = new ImageIcon(img);
 		return img_icon;
+	}
+	
+	public void setClientListener(ActionListener list){
+		clientCBox.addActionListener(list);
+	}
+	
+	public void updateClientList(){
+		clientCBox.removeAllItems();
+		ArrayList<String> clients = model.getClientList();
+		
+		for(String t : clients){
+			clientCBox.addItem(t);
+		}
+	}
+	
+	public void updateTable(){
+		try{
+			ArrayList<Object[]> rowData = model.getPesonnelData((String)clientCBox.getSelectedItem());
+			for(Object[] data:rowData){
+				tableModel.addRow(data);
+			}
+			setStatus("Right click personnel's number to delete personnel.");
+		}catch(Exception ex){
+			setStatus(ex.getMessage(),false);
+		}
+	}
+	public void setStatus(String e, boolean b){
+		statusLbl.setText("Status: "+e);
+		if(b){
+			statusLbl.setIcon(loadScaledImage("/images/notifs/right.png",.08f));
+		}else{
+			statusLbl.setIcon(loadScaledImage("/images/notifs/wrong.png",.08f));
+		}
+	}
+	public void setStatus(String e){
+		statusLbl.setText("Status: "+e);
+		statusLbl.setIcon(null);
 	}
 }

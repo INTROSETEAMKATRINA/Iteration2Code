@@ -220,11 +220,11 @@ public class RemoveAdjustmentsView extends JPanel {
 	}
 	
 	public void showSuccess(){
-		statusLbl.setText("Successfully removed adjustment!"); 
+		statusLbl.setText("Status: Successfully removed adjustment!"); 
 	}
 
 	public void showNoAdjustments(){
-		statusLbl.setText("No adjustments to be removed!"); 
+		statusLbl.setText("Status: No adjustments to be removed!"); 
 	}
 		
 	public void updatePersonnelList(){

@@ -862,6 +862,7 @@ public class PayrollSystemView extends JPanel {
 				showHome(false);
 				repaint();
 				
+				viewPersPanel.updateClientList();
 				addDTRPanel.setVisible(false);
 				addPersPanel.setVisible(false);
 				addAdjPanel.setVisible(false);
@@ -1085,38 +1086,6 @@ public class PayrollSystemView extends JPanel {
 		return img_icon;
 	}
 	
-	public void setAddDTRListener(ActionListener list){
-		((DTRView) addDTRPanel).setAddDTRListener(list);
-	}
-	
-	public void setDTRFileLocationListener(ActionListener list){
-		((DTRView) addDTRPanel).setFileLocationListener(list);
-	}
-	
-	public String getDTRFileLocation(){
-		return ((DTRView) addDTRPanel).getFileLocation();
-	}
-	
-	public void setDTRFileLocation(String location){
-		((DTRView) addDTRPanel).setFileLocation(location);
-	}
-	
-	public void setAddPersonnelListener(ActionListener list){
-		((PersonnelView) addPersPanel).setAddPersonnelListener(list);
-	}
-	
-	public void setPersonnelFileLocationListener(ActionListener list){
-		((PersonnelView) addPersPanel).setFileLocationListener(list);
-	}
-	
-	public String getPersonnelFileLocation(){
-		return ((PersonnelView) addPersPanel).getFileLocation();
-	}
-	
-	public void setPersonnelFileLocation(String location){
-		((PersonnelView) addPersPanel).setFileLocation(location);
-	}
-	
 	public void setNextTimeListener(ActionListener list){
 		nextBtn.addActionListener(list);
 	}
@@ -1177,6 +1146,22 @@ public class PayrollSystemView extends JPanel {
 	public void setCount(){
 		clientCnt.setText(model.countClient() + "");
 		employeeCnt.setText(model.countEmployee() + "");
+	}
+	
+	public PersonnelView getAddPersPanel(){
+		return addPersPanel;
+	}
+	
+	public DTRView getAddDTRPanel(){
+		return addDTRPanel;
+	}
+	
+	public RemovePersonnelView getRemovePersPanel(){
+		return removePersPanel;
+	}
+	
+	public ViewPersonnelView getViewPersPanel(){
+		return viewPersPanel;
 	}
 	
 	public LogInView getLogInView(){

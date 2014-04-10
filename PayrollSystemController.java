@@ -31,6 +31,10 @@ public class PayrollSystemController{
 	private PayrollSystemModel model;
 	private PayrollSystemView view;
 	private LogInView loginPanel;
+	private PersonnelView addPersonnel;
+	private DTRView addDTR;
+	private ViewPersonnelView viewPersonnel;
+	private RemovePersonnelView removePersonnel;
 	private GeneratePayslipsView generatePayslips;
 	private AddAdjustmentsView addAdjustments;
 	private RemoveAdjustmentsView removeAdjustments;
@@ -76,6 +80,17 @@ public class PayrollSystemController{
 		loginPanel = view.getLogInView();
 		loginPanel.setLoginListener(new loginListener());
 		
+		addPersonnel = view.getAddPersPanel();
+		addPersonnel.setAddPersonnelListener(new addPersonnelListener());
+		addPersonnel.setFileLocationListener(new personnelFileLocationListener());
+		
+		addDTR = view.getAddDTRPanel();
+		addDTR.setAddDTRListener(new addDTRListener());
+		addDTR.setFileLocationListener(new dtrFileLocationListener());
+		
+		viewPersonnel = view.getViewPersPanel();
+		viewPersonnel.setClientListener(new clientListViewPersonnelListener());
+		
 		generatePayslips = view.getGenPayslips();
 		generatePayslips.setSelectFileListener(new fileSaverGeneratePayslipsButtonListener());
 		generatePayslips.setGenerateListener(new generatePayslipsButtonListener());
@@ -100,10 +115,6 @@ public class PayrollSystemController{
 		modifyTaxPanel.setApplyListener(new modifyTax());
 		modifyTaxPanel.setBracketListener(new updateTax());
 		
-		view.setAddPersonnelListener(new addPersonnelListener());
-		view.setPersonnelFileLocationListener(new personnelFileLocationListener());
-		view.setAddDTRListener(new addDTRListener());
-		view.setDTRFileLocationListener(new dtrFileLocationListener());
 		view.setNextTimeListener(new nextTimePeriod());
 		
 		/*
@@ -155,18 +166,15 @@ public class PayrollSystemController{
 	}
 	//Main Menu Buttons Listeners
 
-	//Add Personnel Button in Main Menu
 	class addPersonnelListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			view.setStatusPersonnel("Importing...");
-			File f = new File(view.getPersonnelFileLocation());
+			File f = new File(addPersonnel.getFileLocation());
 			if(f.isFile()){
 				try{
 					model.addPersonnel(f, periodStartDate);
 					view.setStatusPersonnel("Excel successfully added!", true);
 					view.setCount();
-					printOnFile(lastUpdatedData, getDateToday() + " (" + model.getClient() + ")");
-					view.updateLastUpdatedData(getLast(lastUpdatedData));
 				}catch(Exception ex){
 					view.setStatusPersonnel(ex.getMessage(), false);
 				}
@@ -180,23 +188,22 @@ public class PayrollSystemController{
 		public void actionPerformed(ActionEvent e) {
 			File f = view.fileChooser();
 			if(f.isFile()){
-				view.setPersonnelFileLocation(f.getPath());
+				addPersonnel.setFileLocation(f.getPath());
 			}else{
 				System.out.println("No file chosen");
 			}
 		}
 	}
+	
 	//Add DTR button in main menu
 	class addDTRListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			view.setStatusDTR("Importing...");
-			File f = new File(view.getDTRFileLocation());
+			File f = new File(addDTR.getFileLocation());
 			if(f.isFile()){
 				try{
 					model.addDTR(f, periodStartDate);
 					view.setStatusDTR("Excel successfully added!", true);
-					printOnFile(lastUpdatedData, getDateToday());
-					view.updateLastUpdatedData(getLast(lastUpdatedData));
 				}catch(Exception ex){
 					view.setStatusDTR(ex.getMessage(),false);
 				}
@@ -209,13 +216,21 @@ public class PayrollSystemController{
 		public void actionPerformed(ActionEvent e) {
 			File f = view.fileChooser();
 			if(f!=null){
-				view.setDTRFileLocation(f.getPath());
+				addDTR.setFileLocation(f.getPath());
 			}else{
 				System.out.println("No file chosen");
 			}
 		}
 	}
 	
+	//listener in view personnel
+	//client combo box listener
+	class clientListViewPersonnelListener implements ActionListener{
+		public void actionPerformed(ActionEvent e){
+			viewPersonnel.updateTable();
+			viewPersonnel.setStatus("viewing personnel data.", true);
+		}
+	}
 	//Listeners in Adjustments view
 	//Add adjustments button in add adjustments view
 	class addAdjustmentButtonListener implements ActionListener{

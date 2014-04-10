@@ -155,7 +155,7 @@ public class DTRView extends JPanel {
 		return locationLbl.getText();
 	}
 	public void setStatus(String e, boolean b){
-		statusLbl.setText(e);
+		statusLbl.setText("Status: "+e);
 		
 		if(b){
 			statusLbl.setIcon(loadScaledImage("/images/notifs/right.png",.08f));
@@ -165,7 +165,7 @@ public class DTRView extends JPanel {
 	}
 	
 	public void setStatus(String e){
-		statusLbl.setText(e);
+		statusLbl.setText("Status: "+e);
 		statusLbl.setIcon(null);
 	}
 	private ImageIcon loadScaledImage(String img_url, float percent)

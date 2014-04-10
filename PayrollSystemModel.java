@@ -232,7 +232,50 @@ public class PayrollSystemModel {
 		this.client = assignment;
 		return true;
 	}
-
+	
+	public ArrayList<String> getTableColumn(String tableName){
+		ArrayList<String> columnName = new ArrayList<String>();
+		
+		try{
+			String sql="Select COLUMN_NAME name From INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '"+tableName+"'";
+			Statement st = con.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			while(rs.next()){
+				columnName.add(rs.getString("name"));
+			}
+        } catch (Exception ex) {
+			System.out.println(ex);
+        }
+		return columnName;
+	}
+	
+	public ArrayList<Object[]> getPesonnelData(String client) throws Exception{
+		Statement stmt = null;
+		ArrayList<String> columnName = getTableColumn("personnel");
+		ArrayList<Object[]> rowData = new ArrayList<>();
+		int num = 1;
+		try{
+			String sql="Select * FROM `personnel` where assignment = '"+client+"' order by name";
+			Statement st = con.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			while(rs.next()){
+				ArrayList<String> data = new ArrayList<String>();
+				data.add(Integer.toString(num));
+				num++;
+				for(String name:columnName){
+					data.add(rs.getString(name));
+				}
+				rowData.add(data.toArray());
+			}
+        } catch (Exception ex) {
+			System.out.println(ex);
+        }
+		if(rowData.size() == 0){
+			throw new Exception("No Data Found!");
+		}
+		return rowData;
+	}
+	
 	public boolean addDTR(File fileDirectory, Date periodStartDate) throws Exception{
     	ArrayList<DTR> dtrs = new ArrayList<DTR>();
 
@@ -243,7 +286,6 @@ public class PayrollSystemModel {
 			if(!ext.equals("xls")){
 				throw new Exception("File is not an excel file.");
 			}
-			
 			
 			Workbook workbook = Workbook.getWorkbook(file);
 			Sheet sheet = workbook.getSheet(0);
@@ -386,12 +428,7 @@ public class PayrollSystemModel {
 		return true;
 	}
 
-	public void removePersonnel(String client){
-	}
-
-	public void getPersonnel(String client){ //returns ResultSet
-
-	}
+	
 
 	public void addAdjustment(String reason, float adjustment, String tin, Date periodStartDate) {
         Statement stmt = null;

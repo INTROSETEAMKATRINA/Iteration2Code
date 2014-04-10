@@ -156,7 +156,7 @@ public class PersonnelView extends JPanel {
 		return locationLbl.getText();
 	}
 	public void setStatus(String e, boolean b){
-		statusLbl.setText(e);
+		statusLbl.setText("Status: "+e);
 		if(b){
 			statusLbl.setIcon(loadScaledImage("/images/notifs/right.png",.08f));
 		}else{
@@ -164,7 +164,7 @@ public class PersonnelView extends JPanel {
 		}
 	}
 	public void setStatus(String e){
-		statusLbl.setText(e);
+		statusLbl.setText("Status: "+e);
 		statusLbl.setIcon(null);
 	}
 	

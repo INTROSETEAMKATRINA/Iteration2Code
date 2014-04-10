@@ -199,10 +199,6 @@ public class GeneratePayslipsView extends JPanel {
 		generateBtn.addActionListener(list);
 	}
 	
-	/*public void setCancelListener(ActionListener list){
-		backBtn.addActionListener(list);
-	}*/
-	
 	public File fileSaver(){
 		//Create a file chooser
 		JFileChooser fc = new JFileChooser();
@@ -222,10 +218,6 @@ public class GeneratePayslipsView extends JPanel {
 		return (String)clientCBox.getSelectedItem();
 	}
 	
-	public void showSuccess(){
-		JOptionPane.showMessageDialog(null, "Generate payslips success!", "Generate payslips success!", JOptionPane.PLAIN_MESSAGE); 
-	}
-	
 	public void setFileDirectory(File f){
 		file = f;
 		
@@ -241,7 +233,7 @@ public class GeneratePayslipsView extends JPanel {
 	}
 	
 	public void setStatus(String e, boolean b){
-		statusLbl.setText(e);
+		statusLbl.setText("Status: "+e);
 		
 		if(b){
 			statusLbl.setIcon(loadScaledImage("/images/notifs/right.png",.08f));
@@ -251,7 +243,7 @@ public class GeneratePayslipsView extends JPanel {
 	}
 	
 	public void setStatus(String e){
-		statusLbl.setText(e);
+		statusLbl.setText("Status: "+e);
 		statusLbl.setIcon(null);
 	}
 	
