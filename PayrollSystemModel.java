@@ -1566,4 +1566,55 @@ public class PayrollSystemModel {
 	public String getClient(){
 		return client;
 	}
+	public int generateSummaryReport(File directory, String date,String client, String report){
+		PrintWriter writer = null;
+		ArrayList<Object[]> data = getTableRow(client,date,report);
+		ArrayList<String> columnHeader = getColumnName(report);
+		int i = 0,j = 0;
+		try{
+			writer = new PrintWriter(directory, "UTF-8");
+		}catch(Exception ex){
+			System.out.println(ex);
+			return 1;
+		}
+		writer.print("\"888 GALLANT MANPOWER AND MANAGEMENT SERVICES INCORPORATED\"");
+		writer.println();
+		writer.print("\"Payroll - \""+client);
+		writer.println();
+		writer.println("\"For the preiod of \""+date);
+		writer.println();
+		
+		for(i = 0; i < columnHeader.size(); i++)
+		{
+			writer.print(columnHeader.get(i)+",");
+		}
+		writer.println();
+		for(Object[] t : data)
+		{
+			j++;
+			if(j == data.size())
+			{
+				writer.println();
+				for(i = 0; i < t.length; i++)
+				{
+					writer.print(t[i]+",");
+				}
+			}
+			else
+			{
+				for(i = 0; i < t.length; i++)
+				{
+					if(i == 1)
+					{
+						writer.print("\""+t[i]+"\""+",");
+					}
+					else
+					writer.print(t[i]+",");
+				}
+			}
+			writer.println();
+		}
+		writer.close();
+		return 0;
+	}
 }
