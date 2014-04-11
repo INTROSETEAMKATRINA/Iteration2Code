@@ -1,4 +1,5 @@
 import java.awt.Color;
+
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -6,19 +7,24 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
-import java.util.ArrayList;
 public class GenerateSummaryReportView extends JPanel {
 
+	private PayrollSystemModel model;
 	private JLabel selectClientLbl;
 	private JLabel selectReportLbl;
 	private JLabel selectTimeLbl;
@@ -32,8 +38,8 @@ public class GenerateSummaryReportView extends JPanel {
 	private JComboBox<Object> clientCBox;
 	private JComboBox<Object> timePeriodCBox;
 	private JComboBox<Object> reportCBox;
+	private File file;
 	
-	private PayrollSystemModel model;
 	public GenerateSummaryReportView(PayrollSystemModel model){
 		this.model = model;
 		generateBtn = new JButton(new ImageIcon(getClass().getResource("/images/buttons/generate.png")));
@@ -50,7 +56,7 @@ public class GenerateSummaryReportView extends JPanel {
 		clientCBox = new JComboBox<Object>();
 		timePeriodCBox = new JComboBox<Object>();
 		reportCBox = new JComboBox<Object>();
-		
+		updateViewList();
 		modifyUI();
 		initFont();
 	}
@@ -218,11 +224,106 @@ public class GenerateSummaryReportView extends JPanel {
 		g2d.setColor(Color.LIGHT_GRAY);
 		g2d.drawLine(0, this.getHeight()-Utils.HEIGHT, this.getWidth(), this.getHeight()-Utils.HEIGHT);
 	}
-
+	
+	private ImageIcon loadScaledImage(String img_url, float percent)
+	{	
+		ImageIcon img_icon = new ImageIcon(this.getClass().getResource(img_url));
+		int new_width = (int) (img_icon.getIconWidth()*percent);
+		int new_height = (int) (img_icon.getIconHeight()*percent);
+		Image img = img_icon.getImage().getScaledInstance(new_width,new_height,java.awt.Image.SCALE_SMOOTH);  
+		img_icon = new ImageIcon(img);
+		return img_icon;
+	}
+	public File fileSaver(){
+		JFileChooser fc = new JFileChooser();
+		int returnVal = fc.showSaveDialog(this);
+		if(returnVal == JFileChooser.APPROVE_OPTION){
+			if(fc.toString().contains(".csv")){
+				return fc.getSelectedFile();
+			}
+			return new File(fc.getSelectedFile()+".csv");
+		}else{
+			return null;
+		}
+	}
+	
+	
 	public String getClient(){ 
 		return (String)clientCBox.getSelectedItem();
 	}
 	
+	public String getPeriodStartDate(){ 
+		return (String)timePeriodCBox.getSelectedItem(); 
+	}
+	
+	public String getReport(){ 
+		return (String)reportCBox.getSelectedItem(); 
+	}
+	
+	public File getDirectory(){
+		return file;
+	}
+	
+	public void setPeriodStartDateListener(ActionListener list){
+		clientCBox.addActionListener(list);
+	}
+	
+	public void setViewListener(ActionListener list){
+		reportCBox.addActionListener(list);
+	}
+	public void setFileDirectoryListener(ActionListener list){
+		selSaveBtn.addActionListener(list);
+	}
+	public void setGenerateSummaryReportListener(ActionListener list){
+		generateBtn.addActionListener(list);
+	}
+	public void setFileDirectory(File f){
+		file = f;
+		
+		if(f!=null){
+			locationLbl.setText(file.getPath());
+		}else{
+			locationLbl.setText("");
+		}
+	}
+	public void ShowError(int i){
+		String error = "";
+		if(i == 0)
+		{
+			error = "Lacking input";
+		}
+		else if(i == 1)
+		{
+		}
+		JOptionPane.showMessageDialog(null, error, error, JOptionPane.ERROR_MESSAGE);
+	}
+	public void setStatus(String e){
+		statusLbl.setText(e);
+		statusLbl.setIcon(null);
+	}
+	public void showSuccessful(int i){
+		String message = "";
+		if(i == 0)
+		{
+			message = "Saved Successful!";
+			setFileDirectory(null);
+			setStatus("saved Successful!");
+		}
+		else if(i == 1)
+		{
+			message = "Failed";
+		}
+		JOptionPane.showMessageDialog(null, message, message, JOptionPane.INFORMATION_MESSAGE);
+	}
+	public boolean askConfirmation(){
+		int confirmation = JOptionPane.showConfirmDialog(null, "Do you want to overwrite the file?", "Overwrite file?",
+		
+		JOptionPane.YES_NO_OPTION);
+		if(confirmation ==JOptionPane.YES_OPTION){
+			return true;
+		}
+		return false;
+	}
 	public void updateClientList(){
 		clientCBox.removeAllItems();
 		ArrayList<String> clients = model.getClientList();
@@ -239,13 +340,10 @@ public class GenerateSummaryReportView extends JPanel {
 			timePeriodCBox.addItem(t);		
 	}
 	
-	private ImageIcon loadScaledImage(String img_url, float percent)
-	{	
-		ImageIcon img_icon = new ImageIcon(this.getClass().getResource(img_url));
-		int new_width = (int) (img_icon.getIconWidth()*percent);
-		int new_height = (int) (img_icon.getIconHeight()*percent);
-		Image img = img_icon.getImage().getScaledInstance(new_width,new_height,java.awt.Image.SCALE_SMOOTH);  
-		img_icon = new ImageIcon(img);
-		return img_icon;
+	public void updateViewList(){
+		reportCBox.removeAllItems();
+		String[] summaryReports = model.getSummaryReports();
+		for(String t : summaryReports)
+			reportCBox.addItem(t);
 	}
 }
