@@ -1570,6 +1570,7 @@ public class PayrollSystemModel {
 		PrintWriter writer = null;
 		ArrayList<Object[]> data = getTableRow(client,date,report);
 		ArrayList<String> columnHeader = getColumnName(report);
+		int day = Integer.parseInt(date.substring(8,10));
 		int i = 0,j = 0;
 		try{
 			writer = new PrintWriter(directory, "UTF-8");
@@ -1581,11 +1582,23 @@ public class PayrollSystemModel {
 		writer.println();
 		writer.print("\"Payroll - \""+client);
 		writer.println();
-		writer.println("\"For the preiod of \""+date);
+		if(day == 1)
+			writer.println("\"For the preiod of \""+date+"-15");
+		else
+			writer.println("\"For the preiod of \""+date+"-30");
 		writer.println();
 		
 		for(i = 0; i < columnHeader.size(); i++)
 		{
+			if(columnHeader.get(i).equals("Name"))
+			{
+				writer.print(columnHeader.get(i)+",,,");
+			}
+			else if(columnHeader.get(i).equals("Position"))
+			{
+				writer.print(columnHeader.get(i)+",,");
+			}
+			else
 			writer.print(columnHeader.get(i)+",");
 		}
 		writer.println();
@@ -1597,6 +1610,15 @@ public class PayrollSystemModel {
 				writer.println();
 				for(i = 0; i < t.length; i++)
 				{
+					if(i == 1)
+					{
+						writer.print("\""+t[i]+"\""+",,,");
+					}
+					else if(i == 2)
+					{
+						writer.print("\""+t[i]+"\""+",,");
+					}
+					else
 					writer.print(t[i]+",");
 				}
 			}
@@ -1606,7 +1628,11 @@ public class PayrollSystemModel {
 				{
 					if(i == 1)
 					{
-						writer.print("\""+t[i]+"\""+",");
+						writer.print("\""+t[i]+"\""+",,,");
+					}
+					else if(i == 2)
+					{
+						writer.print("\""+t[i]+"\""+",,");
 					}
 					else
 					writer.print(t[i]+",");
@@ -1614,6 +1640,8 @@ public class PayrollSystemModel {
 			}
 			writer.println();
 		}
+		writer.println();
+		writer.print("Prepared by: "+",,,,,,,,,,"+"Checked by: ");
 		writer.close();
 		return 0;
 	}
