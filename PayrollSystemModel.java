@@ -924,7 +924,7 @@ public class PayrollSystemModel {
 			toBePrinted.add("Total Deductions");
 			toBePrinted.add(p.getTotalDeductions().toString());
 			toBePrinted.add("SH on RD Pay");
-			toBePrinted.add(p.getRegularNightShiftDifferentialPay().toString());
+			toBePrinted.add(p.getSpecialHolidayOnRestDayPay().toString());
 			toBePrinted.add("Total Deductions");
 			toBePrinted.add(p.getTotalDeductions().toString());
 			
@@ -942,12 +942,12 @@ public class PayrollSystemModel {
 			writer.print("\"L/H Pay\",," + "\""+p.getLegalHolidayPay().toString()+"\"");
 			writer.println(",,,,,,,,,\"SH/RD NSD Pay\",,"+"\""+p.getSpecialHolidayNightShiftDifferentialPay().toString()+"\"" );
 			
-			writer.print("\"L/H on RD Hrs Worked\",," +p.getRegularNightShiftDifferential().toString());
+			writer.print("\"L/H on RD Hrs Worked\",," +p.getLegalHolidayOnRestDay().toString());
 			writer.print(",\"Adjustments\",," + "\""+p.getAdjustments().toString()+"\"");
 			writer.print(",,,,,");
 			writer.println(",\"Adjustments\",,"+"\""+p.getAdjustments().toString()+"\"" );
 			
-			writer.println("\"L/H on RD Pay\",," + "\""+p.getRegularNightShiftDifferentialPay().toString()+"\"");
+			writer.println("\"L/H on RD Pay\",," + "\""+p.getLegalHolidayOnRestDay().toString()+"\"");
 			
 			writer.print("\"L/H OT Hrs\",," + p.getLegalHolidayOvertime().toString());
 			writer.print(",\"Gross Pay\",," +"\""+p.getGrossPay().toString()+"\"");

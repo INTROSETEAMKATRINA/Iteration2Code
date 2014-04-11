@@ -16,6 +16,7 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import java.util.ArrayList;
 public class GenerateSummaryReportView extends JPanel {
 
 	private JLabel selectClientLbl;
@@ -32,7 +33,9 @@ public class GenerateSummaryReportView extends JPanel {
 	private JComboBox<Object> timePeriodCBox;
 	private JComboBox<Object> reportCBox;
 	
-	public GenerateSummaryReportView(){
+	private PayrollSystemModel model;
+	public GenerateSummaryReportView(PayrollSystemModel model){
+		this.model = model;
 		generateBtn = new JButton(new ImageIcon(getClass().getResource("/images/buttons/generate.png")));
 		selSaveBtn = new JButton(new ImageIcon(getClass().getResource("/images/buttons/select.png")));
 		
@@ -214,6 +217,26 @@ public class GenerateSummaryReportView extends JPanel {
 		g2d.fillRect(0, this.getHeight()-Utils.HEIGHT, this.getWidth(), Utils.HEIGHT);
 		g2d.setColor(Color.LIGHT_GRAY);
 		g2d.drawLine(0, this.getHeight()-Utils.HEIGHT, this.getWidth(), this.getHeight()-Utils.HEIGHT);
+	}
+
+	public String getClient(){ 
+		return (String)clientCBox.getSelectedItem();
+	}
+	
+	public void updateClientList(){
+		clientCBox.removeAllItems();
+		ArrayList<String> clients = model.getClientList();
+		
+		for(String t : clients){
+			clientCBox.addItem(t);
+		}
+	}
+	
+	public void updateDateList(){
+		timePeriodCBox.removeAllItems();
+		ArrayList<String> dates = model.getDateListPayslips(getClient());
+		for(String t : dates)
+			timePeriodCBox.addItem(t);		
 	}
 	
 	private ImageIcon loadScaledImage(String img_url, float percent)

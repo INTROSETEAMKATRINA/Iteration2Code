@@ -44,6 +44,8 @@ public class PayrollSystemController{
 	private ChangePasswordView changePassword;
 	private ModifyClientVariablesView modifyClientsVar;
 	private ModifyTaxTableView modifyTaxPanel;
+	private ViewSummaryReportView viewSummaryReport;
+	private GenerateSummaryReportView generateSummaryReport;
 	private BackUpView backUpData;
         
 	private String directory = "periodStartDate.txt";

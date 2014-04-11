@@ -183,7 +183,7 @@ public class PayrollSystemView extends JPanel {
 		modifyTaxPanel = new ModifyTaxTableView(model); 
 		removeAdjPanel = new RemoveAdjustmentsView(model); 
 		removePersPanel = new RemovePersonnelView(model); 
-		viewPersPanel = new ViewPersonnelView(model); 
+		viewPersPanel = new ViewPersonnelView(model);
 		viewSummPanel = new ViewSummaryReportView(model);
 		settingsPanel = sView;
 		backUpPanel = new BackUpView();
