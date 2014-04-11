@@ -55,7 +55,7 @@ public class ViewSummaryReportView extends JPanel {
 	public ViewSummaryReportView(PayrollSystemModel model) {
 		this.model = model;
 		
-		statusLbl = new JLabel("Status: No Data Found!");
+		statusLbl = new JLabel("Status: Do you wanna choose a report?");
 		statusLbl.setIcon(loadScaledImage("/images/notifs/warning.png",.08f));
 		selectSummLbl = new JLabel("Select Summary Report: ");
 		selectClientLbl = new JLabel("Select Client: ");
@@ -298,6 +298,7 @@ public class ViewSummaryReportView extends JPanel {
 	public void updateTable(){
 		summaryModel.setRowCount(0);
 		statusLbl.setText("Status: You are now viewing " + getReport().toLowerCase() + ".");
+		statusLbl.setIcon(loadScaledImage("/images/notifs/right.png",.08f));
 		ArrayList<Object[]> row = model.getTableRow(getClient(),getPeriodStartDate(),getReport());
 		for(Object[] t : row){
 			summaryModel.addRow(t);

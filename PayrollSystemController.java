@@ -187,7 +187,7 @@ public class PayrollSystemController{
 		public void actionPerformed(ActionEvent e) {
 			view.setStatusPersonnel("Importing...");
 			File f = new File(addPersonnel.getFileLocation());
-			if(f.isFile()){
+			if(f != null && f.isFile()){
 				try{
 					model.addPersonnel(f, periodStartDate);
 					view.setStatusPersonnel("Excel successfully added!", true);
@@ -204,7 +204,7 @@ public class PayrollSystemController{
 	class personnelFileLocationListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			File f = view.fileChooser();
-			if(f.isFile()){
+			if(f != null && f.isFile()){
 				addPersonnel.setFileLocation(f.getPath());
 			}else{
 				System.out.println("No file chosen");
