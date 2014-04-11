@@ -126,6 +126,8 @@ public class PayrollSystemController{
 		viewSummaryReport.setViewListener(new viewReportListener());
 		
 		generateSummaryReport = view.getGenerateSummaryPanel();
+		generateSummaryReport.setFileDirectoryListener(new saveFileGenerateSummaryReport());
+		generateSummaryReport.setGenerateSummaryReportListener(new generateSummaryReportListner());
 		
         backUpData = view.getbackUpPanel();
 		backUpData.setSelectFileListener(new fileSaverBackUpDataButtonListener());
@@ -503,6 +505,40 @@ public class PayrollSystemController{
 					viewSummaryReport.showError(1);
 				}
 			}
+		}
+	}
+	class saveFileGenerateSummaryReport implements ActionListener{
+		public void actionPerformed(ActionEvent e){
+			generateSummaryReport.setFileDirectory(generateSummaryReport.fileSaver());
+		}
+	}
+	class generateSummaryReportListner implements ActionListener{
+		public void actionPerformed(ActionEvent e){	
+		String client,date,report;
+		File file;
+		int check;
+		client = generateSummaryReport.getClient();
+		date = generateSummaryReport.getPeriodStartDate();
+		report = generateSummaryReport.getReport();
+		file = generateSummaryReport.getDirectory();
+		if(client == null || date == null || file == null)
+		{
+			generateSummaryReport.ShowError(0);
+		}
+		else
+		{
+			if(file != null){
+				boolean confirm = true;
+				if(file.exists()){
+					confirm = generateSummaryReport.askConfirmation();
+				}
+				if(confirm){
+					generateSummaryReport.showSuccessful(model.generateSummaryReport(file, date, client, report));
+				}
+				}else{
+				generatePayslips.setStatus("No file chosen!");
+			}
+		}
 		}
 	}
 	
