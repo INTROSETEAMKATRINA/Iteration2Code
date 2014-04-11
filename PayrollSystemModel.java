@@ -1245,7 +1245,7 @@ public class PayrollSystemModel {
 		Statement stmt = null;
 			
 			try{
-				String sql = "select distinct name, tin from `payslip` where assignment = '"+client+"' and PeriodStartDate = '"+date+"'";
+				String sql = "select distinct name, tin from `payslip` where assignment = '"+client+"' and PeriodStartDate = '"+date+"' order by name";
 				Statement st = con.createStatement();
 				ResultSet rs = st.executeQuery(sql);
 				ResultSet rs2;
