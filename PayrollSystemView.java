@@ -798,6 +798,7 @@ public class PayrollSystemView extends JPanel {
 				showHome(true);
 				repaint();
 				
+				setCount();
 				addDTRPanel.setVisible(false);
 				addPersPanel.setVisible(false);
 				addAdjPanel.setVisible(false);

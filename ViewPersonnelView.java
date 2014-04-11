@@ -33,6 +33,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.JButton;
 
 public class ViewPersonnelView extends JPanel {
 
@@ -46,6 +47,7 @@ public class ViewPersonnelView extends JPanel {
 	private JTableHeader header;
 	private DefaultTableModel tableModel;
 	private JScrollPane personnelPane;
+	private JButton removeBtn;
 	
 	public ViewPersonnelView(PayrollSystemModel model) {
 		this.model = model;
@@ -56,6 +58,8 @@ public class ViewPersonnelView extends JPanel {
 		selectClientLbl = new JLabel("Select Client: ");
 
 		clientCBox = new JComboBox<Object>();
+		
+		removeBtn = new JButton(new ImageIcon(getClass().getResource("/images/buttons/remove.png")));
 		
 		personnelTable = new JTable(30,12);
 		personnelTable.setRowHeight(32);
@@ -112,6 +116,15 @@ public class ViewPersonnelView extends JPanel {
 		clientCBox.setBackground(Utils.comboBoxBGColor);
 		clientCBox.setForeground(Utils.comboBoxFGColor);
 		
+		removeBtn.setContentAreaFilled(false);
+		removeBtn.setBorder(null);
+		removeBtn.setOpaque(false);
+		removeBtn.setForeground(null);
+		removeBtn.setFocusPainted(false);
+		removeBtn.setRolloverIcon(new ImageIcon(getClass().getResource("/images/buttons/remove-r.png")));
+		removeBtn.setPressedIcon(new ImageIcon(getClass().getResource("/images/buttons/remove-p.png")));
+		removeBtn.setSize(new Dimension(removeBtn.getIcon().getIconWidth(), removeBtn.getIcon().getIconHeight()));
+		
 		initFont();
 		addComponentsToPane();
 	}
@@ -138,6 +151,13 @@ public class ViewPersonnelView extends JPanel {
 		gbc.gridx = 1;
 		gbc.gridy = 0;
 		add(clientCBox,gbc);
+		
+		gbc.fill = GridBagConstraints.NONE;
+		gbc.insets = new Insets(10,10,0,0);
+		gbc.gridwidth = 1;
+		gbc.gridx = 2;
+		gbc.gridy = 0;
+		add(removeBtn,gbc);
 		
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.insets = new Insets(5,15,25,15);
@@ -196,7 +216,26 @@ public class ViewPersonnelView extends JPanel {
 						menuItem.setOpaque(false);
 						menuItem.addActionListener(new ActionListener(){
 							public void actionPerformed(ActionEvent actionEvent) {
-							    new RemovePersonnelView(model);
+							    String client,personnel="",TIN="";
+							    int row=0;
+							    client = getSelectedClient();
+							    for(int i=0;i < personnelTable.getColumnCount();i++){
+							    	if(personnelTable.getColumnName(i).compareToIgnoreCase("name") == 0){
+							    		row = personnelTable.getSelectedRow();
+							    		personnel = (String)tableModel.getValueAt(row,i);
+							    	}
+							    	else if(personnelTable.getColumnName(i).compareToIgnoreCase("tin") == 0){
+							    		row = personnelTable.getSelectedRow();
+							    		TIN = (String)tableModel.getValueAt(row,i);
+									}
+							    }
+							    try{
+							    	model.removePersonnel(client, personnel, TIN);
+							    	tableModel.removeRow(row);
+							    	setStatus("Successfully deleted.",true);
+							    }catch(Exception ex){
+							    	setStatus(ex.getMessage(),false);
+							    }
 							  }
 						});
 						
@@ -235,6 +274,16 @@ public class ViewPersonnelView extends JPanel {
 		clientCBox.addActionListener(list);
 	}
 	
+	public void setRemoveListener(ActionListener list){
+		removeBtn.addActionListener(list);
+	}
+	
+	public String getSelectedClient(){
+		String client = "";
+		client = (String)clientCBox.getSelectedItem();
+		return client;
+	}
+	
 	public void updateClientList(){
 		clientCBox.removeAllItems();
 		ArrayList<String> clients = model.getClientList();
@@ -245,6 +294,7 @@ public class ViewPersonnelView extends JPanel {
 	}
 	
 	public void updateTable(){
+		tableModel.setRowCount(0);
 		try{
 			ArrayList<Object[]> rowData = model.getPesonnelData((String)clientCBox.getSelectedItem());
 			for(Object[] data:rowData){

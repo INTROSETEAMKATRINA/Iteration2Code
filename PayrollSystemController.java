@@ -37,7 +37,6 @@ public class PayrollSystemController{
 	private PersonnelView addPersonnel;
 	private DTRView addDTR;
 	private ViewPersonnelView viewPersonnel;
-	private RemovePersonnelView removePersonnel;
 	private GeneratePayslipsView generatePayslips;
 	private AddAdjustmentsView addAdjustments;
 	private RemoveAdjustmentsView removeAdjustments;
@@ -96,6 +95,7 @@ public class PayrollSystemController{
 		
 		viewPersonnel = view.getViewPersPanel();
 		viewPersonnel.setClientListener(new clientListViewPersonnelListener());
+		viewPersonnel.setRemoveListener(new removePersonnelButtonListener());
 		
 		generatePayslips = view.getGenPayslips();
 		generatePayslips.setSelectFileListener(new fileSaverGeneratePayslipsButtonListener());
@@ -246,6 +246,16 @@ public class PayrollSystemController{
 		public void actionPerformed(ActionEvent e){
 			viewPersonnel.updateTable();
 			viewPersonnel.setStatus("viewing personnel data.", true);
+		}
+	}
+	
+	class removePersonnelButtonListener implements ActionListener{
+		public void actionPerformed(ActionEvent e){
+			try{
+				model.removePersonnel(viewPersonnel.getSelectedClient());
+				viewPersonnel.updateClientList();
+				viewPersonnel.updateTable();
+			}catch(Exception ex){}
 		}
 	}
 	//Listeners in Adjustments view

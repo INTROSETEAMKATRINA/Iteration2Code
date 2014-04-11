@@ -236,6 +236,27 @@ public class PayrollSystemModel {
 		return true;
 	}
 	
+	public void removePersonnel(String client) throws Exception{
+		try{
+			String sql = "DELETE From client WHERE name = '"+client+"';";
+			Statement st = con.createStatement();
+			st.execute(sql);
+		}catch(Exception ex){
+			System.out.println(ex);
+			throw new Exception(ex);
+		}
+	}
+	public void removePersonnel(String client, String personnel, String TIN) throws Exception{
+		try{
+			String sql = "DELETE From personnel WHERE name = '"+personnel+
+						 "' AND assignment = '"+client+"' AND TIN = '"+TIN+"';";
+			Statement st = con.createStatement();
+			st.execute(sql);
+		}catch(Exception ex){
+			System.out.println(ex);
+			throw new Exception(ex);
+		}
+	}
 	public ArrayList<String> getTableColumn(String tableName){
 		ArrayList<String> columnName = new ArrayList<String>();
 		
