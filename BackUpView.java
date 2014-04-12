@@ -37,8 +37,7 @@ public class BackUpView extends JPanel {
 		
 		saveLbl = new JLabel("Save Location: ");
 		locationLbl = new JLabel();
-		statusLbl = new JLabel("Status: Back up Success!");
-		statusLbl.setIcon(loadScaledImage("/images/notifs/right.png",Utils.statusIconSize));
+		statusLbl = new JLabel("Do you wanna to back up?");
 		
 		modifyUI();
 	}
@@ -176,11 +175,11 @@ public class BackUpView extends JPanel {
         
     public void setSelectFileListener(ActionListener list){
 		selSaveBtn.addActionListener(list);
-	}
+    }
 	
-	public void setGenerateListener(ActionListener list){
+    public void setGenerateListener(ActionListener list){
 		saveBtn.addActionListener(list);
-	}
+    }
         
     public void setFileDirectory(File f){
 		file = f;
@@ -190,11 +189,11 @@ public class BackUpView extends JPanel {
 		}else{
 			locationLbl.setText("");
 		}
-	}
+    }
         
     public File getFileDirectory(){
 		return file;
-	}
+    }
         
     public boolean askConfirmation(){
 		int confirmation = JOptionPane.showConfirmDialog(null, "Overwrite file?", "Overwrite file?",
@@ -214,6 +213,6 @@ public class BackUpView extends JPanel {
 		}else{
 			statusLbl.setIcon(loadScaledImage("/images/notifs/wrong.png",.08f));
 		}
-	}
+    }
 
 }

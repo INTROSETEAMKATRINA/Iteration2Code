@@ -46,6 +46,7 @@ public class PayrollSystemController{
 	private ViewSummaryReportView viewSummaryReport;
 	private GenerateSummaryReportView generateSummaryReport;
 	private BackUpView backUpData;
+        private RestoreBackUpView restoreBackUp;
         
 	private String directory = "periodStartDate.txt";
 	private String lastChecked = "lastChecked.txt";
@@ -134,6 +135,9 @@ public class PayrollSystemController{
 		backUpData.setSelectFileListener(new fileSaverBackUpDataButtonListener());
 		backUpData.setGenerateListener(new backUpDataButtonListener());
 
+        restoreBackUp = sView.getRestorePanel();
+        restoreBackUp.setSelectFileListener(new fileChooserRestoreBackUpButtonListener());
+        restoreBackUp.setRestoreListener(new RestoreBackUpButtonListener());
                 
 		view.setNextTimeListener(new nextTimePeriod());
 		
@@ -476,6 +480,36 @@ public class PayrollSystemController{
                             }
 		}
 	}
+    
+    class fileChooserRestoreBackUpButtonListener implements ActionListener{
+		public void actionPerformed(ActionEvent e){
+			restoreBackUp.setFileDirectory(restoreBackUp.fileChooser());
+                }
+    }
+    
+    class RestoreBackUpButtonListener implements ActionListener{
+        public void actionPerformed(ActionEvent e){
+                File file = restoreBackUp.getFileDirectory();
+
+                    if(file!=null){
+                        boolean go = true;
+                        if(file.exists()){
+                                go = restoreBackUp.askConfirmation();
+                        }
+                        if(go){
+                                try{ 
+                                    model.restoreFromBackUp(file);
+                                    restoreBackUp.setStatus("Success!", true);
+                                    restoreBackUp.setFileDirectory(null);
+                                }catch(Exception ex){
+                                        restoreBackUp.setStatus(ex.getMessage(), false);
+                                }
+                        }
+                    }else{
+                            restoreBackUp.setStatus("No file chosen!", false);
+                    }
+        }
+    }
 
 	class exitListener extends WindowAdapter{
 		public void windowClosing(WindowEvent e) {

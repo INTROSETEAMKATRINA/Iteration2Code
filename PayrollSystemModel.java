@@ -1007,7 +1007,7 @@ public class PayrollSystemModel {
         exec = pb.start();
         }
         
-    public void retrieveData(File directory) throws Exception{
+    public void restoreFromBackUp(File directory) throws Exception{
         Process exec = null;
         ProcessBuilder pb = new ProcessBuilder("mysql", "-uroot", "-pp@ssword", "Payroll System");
             

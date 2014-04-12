@@ -216,4 +216,9 @@ public class SettingsView extends JPanel  {
 	public ModifyClientVariablesView getModifyVarsPanel(){
 		return modifyVarPanel;
 	}
+        
+        public RestoreBackUpView getRestorePanel(){
+            return restorePanel;
+        }
+
 }

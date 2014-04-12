@@ -19,14 +19,19 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class RestoreBackUpView extends JPanel {
 	
@@ -37,6 +42,8 @@ public class RestoreBackUpView extends JPanel {
 	private JButton restoreBtn;
 	private JButton selSaveBtn;
 	
+        private File file;
+
 	public RestoreBackUpView() {
 		
 		restoreBtn = new JButton(new ImageIcon(getClass().getResource("/images/buttons/restore.png")));
@@ -44,8 +51,7 @@ public class RestoreBackUpView extends JPanel {
 		
 		saveLbl = new JLabel("Back Up Location: ");
 		locationLbl = new JLabel();
-		statusLbl = new JLabel("Status: Back up Success!");
-		statusLbl.setIcon(loadScaledImage("/images/notifs/right.png",Utils.statusIconSize));
+		statusLbl = new JLabel("Do you wanna restore from back up?");
 		
 		modifyUI();
 	}
@@ -163,4 +169,62 @@ public class RestoreBackUpView extends JPanel {
 		img_icon = new ImageIcon(img);
 		return img_icon;
 	}
+        
+        public File getFileDirectory(){
+            return file;
+        }
+
+        public File fileChooser(){
+		JFileChooser fc = null;
+		fc = new JFileChooser();
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("sql files", "sql");
+		fc.setFileFilter(filter);
+		
+		//In response to a button click:
+		int returnVal = fc.showOpenDialog(this);
+		if(returnVal == JFileChooser.APPROVE_OPTION){
+			return fc.getSelectedFile();
+		}else{
+			return null;
+		}
+	}
+            
+        public void setFileDirectory(File f){
+		file = f;
+		
+		if(f!=null){
+			locationLbl.setText(file.getPath());
+		}else{
+			locationLbl.setText("");
+		}
+        }
+        
+        public boolean askConfirmation(){
+		int confirmation = JOptionPane.showConfirmDialog(null, "Are you sure you want to restore from back up?", "Restore from back up",
+		
+		JOptionPane.YES_NO_OPTION);
+		if(confirmation ==JOptionPane.YES_OPTION){
+			return true;
+		}
+		return false;
+	}
+        
+        public void setStatus(String e, boolean b){
+		statusLbl.setText("Status: "+e);
+		
+		if(b){
+			statusLbl.setIcon(loadScaledImage("/images/notifs/right.png",.08f));
+		}else{
+			statusLbl.setIcon(loadScaledImage("/images/notifs/wrong.png",.08f));
+		}
+        }
+        
+        public void setSelectFileListener(ActionListener list){
+		selSaveBtn.addActionListener(list);
+        }
+	
+        public void setRestoreListener(ActionListener list){
+		restoreBtn.addActionListener(list);
+        }
+
 }
