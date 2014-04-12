@@ -49,7 +49,7 @@ public class GenerateSummaryReportView extends JPanel {
 		selectTimeLbl = new JLabel("Select Time Period: ");
 		selectReportLbl = new JLabel("Select Report: ");
 		saveLbl = new JLabel("Save Location: ");
-		locationLbl = new JLabel("C:// ");
+		locationLbl = new JLabel();
 		statusLbl = new JLabel("Do you wanna generate a summary report?");
 		statusLbl.setIcon(loadScaledImage("/images/notifs/right.png",.08f));
 		
