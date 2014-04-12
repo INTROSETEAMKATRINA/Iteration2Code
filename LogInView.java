@@ -171,4 +171,8 @@ public class LogInView extends JPanel  {
 	public String getPassword(){
 		return passwordTxtFld.getText();
 	}
+	
+	public void removeBalloon(){
+		btip1.setVisible(false);
+	}
 }

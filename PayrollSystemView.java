@@ -129,26 +129,32 @@ public class PayrollSystemView extends JPanel {
 	
 	public void updateLastChecked(String s){
 		status1.setText("Last Checked: " + s);
+		status1.setToolTipText("Last Checked: " + s);
 	}
 	
 	public void updateLastUpdatedData(String s){
 		status2.setText("Last Updated Data: " + s);
+		status2.setToolTipText("Last Updated Data: " + s);
 	}
 	
 	public void updateLastGeneratedReport(String s){
 		status3.setText("Last Generated Report: " + s);
+		status3.setToolTipText("Last Generated Report: " + s);
 	}
 	
 	public void updateLastClientModified(String s){
 		status4.setText("Last Client Vars Modified: " + s);
+		status4.setToolTipText("Last Client Vars Modified: " + s);
 	}
 	
 	public void updateLastGeneratedPayslips(String s){
 		status5.setText("Last Generated Payslips: " + s);
+		status5.setToolTipText("Last Generated Payslips: " + s);
 	}
 	
 	public void updateLastBackUp(String s){
 		status6.setText("Last Back-Up: " + s);
+		status6.setToolTipText("Last Back-Up: " + s);
 	}	
 	
 	public PayrollSystemView(SettingsView sView, PayrollSystemModel model)

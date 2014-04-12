@@ -201,6 +201,7 @@ public class PayrollSystemController{
 				loginPanel.fadeInBalloon();
 			}
 			else{
+				loginPanel.removeBalloon();
 				loginPanel.setVisible(false);
 				PayrollSystemView.showBlackPane(false);
 			}
@@ -592,7 +593,7 @@ public class PayrollSystemController{
 				if(confirm){
 					generateSummaryReport.showSuccessful(model.generateSummaryReport(file, date, client, report));
 					printOnFile(lastGeneratedReport, getDateToday() + " (" + client + ")");
-					view.updateLastGeneratedPayslips(getLast(lastGeneratedReport));
+					view.updateLastGeneratedReport(getLast(lastGeneratedReport));
 				}
 				}else{
 				generatePayslips.setStatus("No file chosen!");
