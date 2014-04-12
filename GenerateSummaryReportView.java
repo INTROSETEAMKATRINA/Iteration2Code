@@ -50,8 +50,8 @@ public class GenerateSummaryReportView extends JPanel {
 		selectReportLbl = new JLabel("Select Report: ");
 		saveLbl = new JLabel("Save Location: ");
 		locationLbl = new JLabel("C:// ");
-		statusLbl = new JLabel("Warning: No Data Found!");
-		statusLbl.setIcon(loadScaledImage("/images/notifs/warning.png",.08f));
+		statusLbl = new JLabel("Do you wanna generate a summary report?");
+		statusLbl.setIcon(loadScaledImage("/images/notifs/right.png",.08f));
 		
 		clientCBox = new JComboBox<Object>();
 		timePeriodCBox = new JComboBox<Object>();
@@ -288,32 +288,32 @@ public class GenerateSummaryReportView extends JPanel {
 	}
 	public void ShowError(int i){
 		String error = "";
-		if(i == 0)
-		{
+		if(i == 0){
 			error = "Lacking input";
+		}else if(i == 1){
+			error = "No payslips for client in current period!";
 		}
-		else if(i == 1)
-		{
-		}
-		JOptionPane.showMessageDialog(null, error, error, JOptionPane.ERROR_MESSAGE);
+		statusLbl.setText(error);
+		statusLbl.setIcon(loadScaledImage("/images/notifs/wrong.png",.08f));
 	}
+	
 	public void setStatus(String e){
 		statusLbl.setText(e);
 		statusLbl.setIcon(null);
 	}
+	
 	public void showSuccessful(int i){
 		String message = "";
-		if(i == 0)
-		{
+		if(i == 0){
 			message = "Saved Successful!";
 			setFileDirectory(null);
-			setStatus("saved Successful!");
+			statusLbl.setIcon(loadScaledImage("/images/notifs/right.png",.08f));
 		}
-		else if(i == 1)
-		{
+		else if(i == 1){
 			message = "Failed";
+			statusLbl.setIcon(loadScaledImage("/images/notifs/wrong.png",.08f));
 		}
-		JOptionPane.showMessageDialog(null, message, message, JOptionPane.INFORMATION_MESSAGE);
+		statusLbl.setText(message);
 	}
 	public boolean askConfirmation(){
 		int confirmation = JOptionPane.showConfirmDialog(null, "Do you want to overwrite the file?", "Overwrite file?",

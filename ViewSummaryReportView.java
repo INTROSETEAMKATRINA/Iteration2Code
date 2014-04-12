@@ -56,7 +56,7 @@ public class ViewSummaryReportView extends JPanel {
 		this.model = model;
 		
 		statusLbl = new JLabel("Status: Do you wanna choose a report?");
-		statusLbl.setIcon(loadScaledImage("/images/notifs/warning.png",.08f));
+		statusLbl.setIcon(loadScaledImage("/images/notifs/right.png",.08f));
 		selectSummLbl = new JLabel("Select Summary Report: ");
 		selectClientLbl = new JLabel("Select Client: ");
 		selectTimeLbl = new JLabel("Select Time Period: ");
@@ -334,7 +334,8 @@ public class ViewSummaryReportView extends JPanel {
 		}else if(i==1){
 			error = "No payslips for client in current period!";
 		}
-		JOptionPane.showMessageDialog(null, error, error, JOptionPane.ERROR_MESSAGE);
+		statusLbl.setText(error);
+		statusLbl.setIcon(loadScaledImage("/images/notifs/wrong.png",.08f));
 	}
 	
 	private ImageIcon loadScaledImage(String img_url, float percent)

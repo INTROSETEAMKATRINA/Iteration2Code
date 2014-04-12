@@ -24,7 +24,7 @@ public class PayrollSystem{
 			Class.forName("com.mysql.jdbc.Driver");
 			String url = "jdbc:mysql://localhost:3306/payroll system";
 			String uname = "root";
-			String pass = "1991829";
+			String pass = "p@ssword";
 			con = DriverManager.getConnection (url, uname, pass);
 			System.out.println("Connected!");
 			boolean loggedIn = false;

@@ -53,7 +53,7 @@ public class ViewPersonnelView extends JPanel {
 		this.model = model;
 		
 		statusLbl = new JLabel("Status: No Data Found!");
-		statusLbl.setIcon(loadScaledImage("/images/notifs/warning.png",.08f));
+		statusLbl.setIcon(loadScaledImage("/images/notifs/right.png",.08f));
 		
 		selectClientLbl = new JLabel("Select Client: ");
 
