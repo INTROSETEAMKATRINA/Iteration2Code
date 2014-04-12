@@ -230,6 +230,7 @@ public class ViewSummaryReportView extends JPanel {
 	public void initFont(){
 		categoryLbl.setFont(Utils.labelFont);
 		categoryCBox.setFont(Utils.comboBoxFont);
+		timePeriodCBox.setFont(Utils.comboBoxFont);
 		summaryTable.setFont(Utils.tableFont);
 		header.setFont(Utils.tableFont);
 		clientCBox.setFont(Utils.comboBoxFont);

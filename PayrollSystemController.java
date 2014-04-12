@@ -128,6 +128,7 @@ public class PayrollSystemController{
 		generateSummaryReport = view.getGenerateSummaryPanel();
 		generateSummaryReport.setFileDirectoryListener(new saveFileGenerateSummaryReport());
 		generateSummaryReport.setGenerateSummaryReportListener(new generateSummaryReportListner());
+		generateSummaryReport.setClientListener(new generateSumRepDateListener());
 		
         backUpData = view.getbackUpPanel();
 		backUpData.setSelectFileListener(new fileSaverBackUpDataButtonListener());
@@ -488,6 +489,12 @@ public class PayrollSystemController{
     class addPeriodStartDateListener implements ActionListener{ //This is going to be updated
 		public void actionPerformed(ActionEvent e){
 			viewSummaryReport.updateDateList();
+		}
+	}
+	
+	class generateSumRepDateListener implements ActionListener{ //This is going to be updated
+		public void actionPerformed(ActionEvent e){
+			generateSummaryReport.updateDateList();
 		}
 	}
 	

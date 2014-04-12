@@ -194,8 +194,8 @@ public class GenerateSummaryReportView extends JPanel {
 		add(statusLbl,gbc);
 	}
 	
-	public void initFont()
-	{
+	public void initFont(){
+		reportCBox.setFont(Utils.comboBoxFont);
 		clientCBox.setFont(Utils.comboBoxFont);
 		timePeriodCBox.setFont(Utils.comboBoxFont);
 		selectClientLbl.setFont(Utils.labelFont);
@@ -345,5 +345,8 @@ public class GenerateSummaryReportView extends JPanel {
 		String[] summaryReports = model.getSummaryReports();
 		for(String t : summaryReports)
 			reportCBox.addItem(t);
+	}
+	public void setClientListener(ActionListener list){
+		clientCBox.addActionListener(list);
 	}
 }
