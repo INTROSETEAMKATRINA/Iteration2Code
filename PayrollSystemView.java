@@ -887,8 +887,12 @@ public class PayrollSystemView extends JPanel {
 				showHome(false);
 				repaint();
 				
-				viewSummPanel.updateClientList(); /////////////////
+				viewSummPanel.updateClientList();
 				viewSummPanel.updateDateList();
+				if(model.checkPeriodForPayslips(viewSummPanel.getClient(), viewSummPanel.getPeriodStartDate())){
+					viewSummPanel.updateTableColumn();
+					viewSummPanel.updateTable();
+				}
 				addDTRPanel.setVisible(false);
 				addPersPanel.setVisible(false);
 				addAdjPanel.setVisible(false);
