@@ -62,6 +62,7 @@ import net.java.balloontip.BalloonTip.AttachLocation;
 import net.java.balloontip.BalloonTip.Orientation;
 import net.java.balloontip.styles.RoundedBalloonStyle;
 import net.java.balloontip.utils.FadingUtils;
+import net.java.balloontip.utils.ToolTipUtils;
 
 import com.mysql.jdbc.Connection;
 
@@ -560,7 +561,8 @@ public class PayrollSystemView extends JPanel {
 		
 			final int index = balloonTips.size()-1;
 			
-			holder.get(index).addMouseListener(new MouseAdapter() { 
+			ToolTipUtils.balloonToToolTip(balloonTips.get(index), 1000, 5000);
+			/*holder.get(index).addMouseListener(new MouseAdapter() { 
 		          public void mouseEntered(MouseEvent e) {
 		        	  FadingUtils.fadeInBalloon(balloonTips.get(index), null, 200, 16);
 		          }
@@ -571,7 +573,7 @@ public class PayrollSystemView extends JPanel {
 		        		}
 		        	  , 200, 16);
 		          } 
-		    });
+		    });*/
 			balloonTips.get(index).setVisible(false);
 		}
 	}
