@@ -22,8 +22,7 @@ import javax.swing.JToggleButton;
 public class SettingsView extends JPanel  {
 
 	private JToggleButton changePassBtn;
-	private JToggleButton accessBtn;
-	private JToggleButton appearanceBtn;
+	private JToggleButton restoreBtn;
 	private JToggleButton modifyVarBtn;
 	
 	private ButtonGroup sideGroup;
@@ -32,7 +31,7 @@ public class SettingsView extends JPanel  {
 	
 	private JPanel sidePane;
 	private ChangePasswordView changePassPanel;
-	private JPanel accessPanel;
+	private RestoreBackUpView restorePanel;
 	private ModifyClientVariablesView modifyVarPanel;
 	
 	@SuppressWarnings("unused")
@@ -43,13 +42,12 @@ public class SettingsView extends JPanel  {
 		
 		sideGroup = new ButtonGroup();
 		changePassBtn = new CustomToggleButton("Change Password");
-		accessBtn= new CustomToggleButton("Accessibility");
-		appearanceBtn = new CustomToggleButton("Appearance");
-		modifyVarBtn = new CustomToggleButton("Modify Variables");
+		restoreBtn= new CustomToggleButton("      Restore From Back up");
+		modifyVarBtn = new CustomToggleButton("Modify Variables   ");
 		
 		sidePane = new JPanel();
 		changePassPanel = new ChangePasswordView();
-		accessPanel = new JPanel();
+		restorePanel = new RestoreBackUpView();
 		modifyVarPanel = new ModifyClientVariablesView(model);
 		try {
 			settings_img = ImageIO.read(getClass().getResource("/images/settings.png"));
@@ -73,9 +71,9 @@ public class SettingsView extends JPanel  {
 		changePassPanel.setSize(new Dimension(this.getWidth()-214,changePassPanel.getHeight()));
 		changePassPanel.setBounds(214, 50, changePassPanel.getWidth(), changePassPanel.getHeight());
 		
-		accessPanel.setOpaque(false);
-		accessPanel.setSize(new Dimension(this.getWidth()-214,accessPanel.getHeight()));
-		accessPanel.setBounds(214, 50, accessPanel.getWidth(), accessPanel.getHeight());
+		restorePanel.setOpaque(false);
+		restorePanel.setSize(new Dimension(this.getWidth()-214,restorePanel.getHeight()));
+		restorePanel.setBounds(214, 50, restorePanel.getWidth(), restorePanel.getHeight());
 		
 		modifyVarPanel.setOpaque(false);
 		modifyVarPanel.setSize(new Dimension(this.getWidth()-214,modifyVarPanel.getHeight()));
@@ -87,27 +85,24 @@ public class SettingsView extends JPanel  {
 	
 	private void addComponentsToPane() {
 		sideGroup.add(changePassBtn);
-		sideGroup.add(accessBtn);
-		sideGroup.add(appearanceBtn);
+		sideGroup.add(restoreBtn);
 		sideGroup.add(modifyVarBtn);
 		
 		sidePane.add(Box.createRigidArea(new Dimension(0,55)));
 		sidePane.add(changePassBtn);
 		sidePane.add(Box.createRigidArea(new Dimension(0,10)));
-		sidePane.add(accessBtn);
+		sidePane.add(restoreBtn);
 		sidePane.add(Box.createRigidArea(new Dimension(0,10)));
-		sidePane.add(appearanceBtn);
-		sidePane.add(Box.createRigidArea(new Dimension(0,60)));
 		sidePane.add(modifyVarBtn);
 		
 		sidePane.setVisible(true);
 		changePassPanel.setVisible(true);
-		accessPanel.setVisible(false);
+		restorePanel.setVisible(false);
 		modifyVarPanel.setVisible(false);
 		
 		add(sidePane);
 		add(changePassPanel);
-		add(accessPanel);
+		add(restorePanel);
 		add(modifyVarPanel);
 	}
 
@@ -126,29 +121,17 @@ public class SettingsView extends JPanel  {
 		changePassBtn.setForeground(Utils.menuFGColor);
 		changePassBtn.setSelected(true);
 		
-		accessBtn.setContentAreaFilled(false);
-		accessBtn.setBorder(null);
-		accessBtn.setHorizontalTextPosition(JButton.CENTER);
-		accessBtn.setVerticalTextPosition(JButton.CENTER);
-		accessBtn.setIcon(loadScaledImage("/images/effects/key.png", .5f));
-		accessBtn.setSelectedIcon(loadScaledImage("/images/effects/key-p.png", .5f));
-		accessBtn.setRolloverIcon(loadScaledImage("/images/effects/key-r.png", .5f));
-		accessBtn.setForeground(null);
-		accessBtn.setFocusPainted(false);
-		accessBtn.setFont(Utils.menuFont);
-		accessBtn.setForeground(Utils.menuFGColor);
-		
-		appearanceBtn.setContentAreaFilled(false);
-		appearanceBtn.setBorder(null);
-		appearanceBtn.setHorizontalTextPosition(JButton.CENTER);
-		appearanceBtn.setVerticalTextPosition(JButton.CENTER);
-		appearanceBtn.setIcon(loadScaledImage("/images/effects/tile.png", .5f));
-		appearanceBtn.setSelectedIcon(loadScaledImage("/images/effects/tile-p.png", .5f));
-		appearanceBtn.setRolloverIcon(loadScaledImage("/images/effects/tile-r.png", .5f));
-		appearanceBtn.setForeground(null);
-		appearanceBtn.setFocusPainted(false);
-		appearanceBtn.setFont(Utils.menuFont);
-		appearanceBtn.setForeground(Utils.menuFGColor);
+		restoreBtn.setContentAreaFilled(false);
+		restoreBtn.setBorder(null);
+		restoreBtn.setHorizontalTextPosition(JButton.CENTER);
+		restoreBtn.setVerticalTextPosition(JButton.CENTER);
+		restoreBtn.setIcon(loadScaledImage("/images/effects/tile.png", .5f));
+		restoreBtn.setSelectedIcon(loadScaledImage("/images/effects/tile-p.png", .5f));
+		restoreBtn.setRolloverIcon(loadScaledImage("/images/effects/tile-r.png", .5f));
+		restoreBtn.setForeground(null);
+		restoreBtn.setFocusPainted(false);
+		restoreBtn.setFont(Utils.menuFont);
+		restoreBtn.setForeground(Utils.menuFGColor);
 		
 		modifyVarBtn.setContentAreaFilled(false);
 		modifyVarBtn.setBorder(null);
@@ -166,25 +149,16 @@ public class SettingsView extends JPanel  {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				changePassPanel.setVisible(true);
-				accessPanel.setVisible(false);
+				restorePanel.setVisible(false);
 				modifyVarPanel.setVisible(false);
 			}
 		});
 		
-		appearanceBtn.addActionListener(new ActionListener(){
+		restoreBtn.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				changePassPanel.setVisible(false);
-				accessPanel.setVisible(false);
-				modifyVarPanel.setVisible(false);
-			}
-		});
-		
-		accessBtn.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				changePassPanel.setVisible(false);
-				accessPanel.setVisible(true);
+				restorePanel.setVisible(true);
 				modifyVarPanel.setVisible(false);
 			}
 		});
@@ -194,7 +168,7 @@ public class SettingsView extends JPanel  {
 			public void actionPerformed(ActionEvent arg0) {
 				modifyVarPanel.updateClientList();
 				changePassPanel.setVisible(false);
-				accessPanel.setVisible(false);
+				restorePanel.setVisible(false);
 				modifyVarPanel.setVisible(true);
 			}
 		});
@@ -227,10 +201,6 @@ public class SettingsView extends JPanel  {
         g2d.setFont(Utils.labelFont);
         g2d.setColor(Utils.settingsHColor);
         g2d.drawString("SYSTEM", 30, 85);
-        
-        g2d.setFont(Utils.labelFont);
-        g2d.setColor(Utils.settingsHColor);
-        g2d.drawString("OTHERS", 30, 240);
         
         //Header
 		g2d.setColor(Utils.settingsHColor);

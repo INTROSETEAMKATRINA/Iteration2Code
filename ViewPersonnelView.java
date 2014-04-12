@@ -47,19 +47,18 @@ public class ViewPersonnelView extends JPanel {
 	private JTableHeader header;
 	private DefaultTableModel tableModel;
 	private JScrollPane personnelPane;
-	private JButton removeBtn;
+	private JButton deleteBtn;
 	
 	public ViewPersonnelView(PayrollSystemModel model) {
 		this.model = model;
 		
+		deleteBtn = new JButton(new ImageIcon(getClass().getResource("/images/buttons/delete.png")));
 		statusLbl = new JLabel("Status: No Data Found!");
-		statusLbl.setIcon(loadScaledImage("/images/notifs/right.png",.08f));
+		statusLbl.setIcon(loadScaledImage("/images/notifs/warning.png",.08f));
 		
 		selectClientLbl = new JLabel("Select Client: ");
 
 		clientCBox = new JComboBox<Object>();
-		
-		removeBtn = new JButton(new ImageIcon(getClass().getResource("/images/buttons/remove.png")));
 		
 		personnelTable = new JTable(30,12);
 		personnelTable.setRowHeight(32);
@@ -70,8 +69,7 @@ public class ViewPersonnelView extends JPanel {
 		ArrayList<String> columnName = model.getTableColumn("personnel");
 		columnName.add(0, "No.");
 		tableModel = new DefaultTableModel(columnName.toArray(),0);
-		personnelTable.setModel(tableModel);
-		
+		personnelTable.setModel(tableModel);		
 		header = personnelTable.getTableHeader();
 		header.setBackground(new Color(0xFAFAFA));
 		header.setPreferredSize(new Dimension(header.getPreferredSize().width, 25));
@@ -112,18 +110,18 @@ public class ViewPersonnelView extends JPanel {
 		
 		personnelPane.setPreferredSize(new Dimension(this.getWidth()-500,this.getHeight()-300));
 	
+		deleteBtn.setContentAreaFilled(false);
+		deleteBtn.setBorder(null);
+		deleteBtn.setOpaque(false);
+		deleteBtn.setForeground(null);
+		deleteBtn.setFocusPainted(false);
+		deleteBtn.setRolloverIcon(new ImageIcon(getClass().getResource("/images/buttons/delete-r.png")));
+		deleteBtn.setPressedIcon(new ImageIcon(getClass().getResource("/images/buttons/delete-p.png")));
+		deleteBtn.setSize(new Dimension(deleteBtn.getIcon().getIconWidth(), deleteBtn.getIcon().getIconHeight()));
+		
 		clientCBox.setPreferredSize(new Dimension(350,25));
 		clientCBox.setBackground(Utils.comboBoxBGColor);
 		clientCBox.setForeground(Utils.comboBoxFGColor);
-		
-		removeBtn.setContentAreaFilled(false);
-		removeBtn.setBorder(null);
-		removeBtn.setOpaque(false);
-		removeBtn.setForeground(null);
-		removeBtn.setFocusPainted(false);
-		removeBtn.setRolloverIcon(new ImageIcon(getClass().getResource("/images/buttons/remove-r.png")));
-		removeBtn.setPressedIcon(new ImageIcon(getClass().getResource("/images/buttons/remove-p.png")));
-		removeBtn.setSize(new Dimension(removeBtn.getIcon().getIconWidth(), removeBtn.getIcon().getIconHeight()));
 		
 		initFont();
 		addComponentsToPane();
@@ -153,11 +151,11 @@ public class ViewPersonnelView extends JPanel {
 		add(clientCBox,gbc);
 		
 		gbc.fill = GridBagConstraints.NONE;
-		gbc.insets = new Insets(10,10,0,0);
+		gbc.insets = new Insets(15,15,5,0);
 		gbc.gridwidth = 1;
 		gbc.gridx = 2;
 		gbc.gridy = 0;
-		add(removeBtn,gbc);
+		add(deleteBtn,gbc);
 		
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.insets = new Insets(5,15,25,15);
@@ -275,7 +273,7 @@ public class ViewPersonnelView extends JPanel {
 	}
 	
 	public void setRemoveListener(ActionListener list){
-		removeBtn.addActionListener(list);
+		deleteBtn.addActionListener(list);
 	}
 	
 	public String getSelectedClient(){

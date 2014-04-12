@@ -328,6 +328,9 @@ public class ModifyTaxTableView extends JPanel {
 	}
 	
 	public void setTable(){
+		if(bracketCBox.getItemCount() == 0){
+			return ;
+		}
 		BigDecimal table[] = model.getTaxTable(getBracket());
 		taxTxtFld.setHint(table[0].toString());
 		taxOverTxtFld.setHint(table[1].toString());
@@ -337,6 +340,7 @@ public class ModifyTaxTableView extends JPanel {
 		me2TxtFld.setHint(table[5].toString());
 		me3TxtFld.setHint(table[6].toString());
 		me4TxtFld.setHint(table[7].toString());
+
 	}
 	
 	public void setBracketListener(ActionListener list){

@@ -22,6 +22,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
+import javax.swing.JTextField;
+import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -37,6 +39,11 @@ import javax.swing.table.*;
 public class ViewSummaryReportView extends JPanel {
 
 	private PayrollSystemModel model;
+	
+	private JTextField searchTxtFld;
+	private JButton searchBtn;
+	private JLabel categoryLbl;
+	private JComboBox<Object> categoryCBox;
 	
 	private JLabel selectSummLbl;
 	private JLabel selectClientLbl;
@@ -55,8 +62,15 @@ public class ViewSummaryReportView extends JPanel {
 	public ViewSummaryReportView(PayrollSystemModel model) {
 		this.model = model;
 		
-		statusLbl = new JLabel("Status: Do you wanna choose a report?");
-		statusLbl.setIcon(loadScaledImage("/images/notifs/right.png",.08f));
+		//
+		searchTxtFld = new CustomTextField("Enter search keyword here.", "/images/effects/in.png", "/images/effects/out.png", 180, 41);
+		categoryLbl = new JLabel("Select Category to search: ");
+		categoryCBox = new JComboBox<Object>();
+		searchBtn = new JButton(new ImageIcon(getClass().getResource("/images/buttons/search.png")));
+		
+		statusLbl = new JLabel("Status: No Data Found!");
+		statusLbl.setIcon(loadScaledImage("/images/notifs/warning.png",.08f));
+		
 		selectSummLbl = new JLabel("Select Summary Report: ");
 		selectClientLbl = new JLabel("Select Client: ");
 		selectTimeLbl = new JLabel("Select Time Period: ");
@@ -124,9 +138,21 @@ public class ViewSummaryReportView extends JPanel {
 		clientCBox.setPreferredSize(new Dimension(350,25));
 		clientCBox.setBackground(Utils.comboBoxBGColor);
 		clientCBox.setForeground(Utils.comboBoxFGColor);
-		timePeriodCBox.setPreferredSize(new Dimension(350,25));
+		timePeriodCBox.setPreferredSize(new Dimension(200,25));
 		timePeriodCBox.setBackground(Utils.comboBoxBGColor);
 		timePeriodCBox.setForeground(Utils.comboBoxFGColor);
+		categoryCBox.setPreferredSize(new Dimension(150,25));
+		categoryCBox.setBackground(Utils.comboBoxBGColor);
+		categoryCBox.setForeground(Utils.comboBoxFGColor);
+		
+		searchBtn.setContentAreaFilled(false);
+		searchBtn.setBorder(null);
+		searchBtn.setOpaque(false);
+		searchBtn.setForeground(null);
+		searchBtn.setFocusPainted(false);
+		searchBtn.setRolloverIcon(new ImageIcon(getClass().getResource("/images/buttons/search-r.png")));
+		searchBtn.setPressedIcon(new ImageIcon(getClass().getResource("/images/buttons/search-p.png")));
+		searchBtn.setSize(new Dimension(searchBtn.getIcon().getIconWidth(), searchBtn.getIcon().getIconHeight()));
 		
 		addComponentsToPane();
 	}
@@ -185,7 +211,7 @@ public class ViewSummaryReportView extends JPanel {
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.insets = new Insets(5,15,25,15);
 		gbc.weighty = 1;
-		gbc.gridwidth = 3;
+		gbc.gridwidth = 5;
 		gbc.gridx = 0;
 		gbc.gridy = 3;
 		add(summaryPane,gbc);
@@ -201,8 +227,9 @@ public class ViewSummaryReportView extends JPanel {
 		add(statusLbl,gbc);
 	}
 
-	public void initFont()
-	{
+	public void initFont(){
+		categoryLbl.setFont(Utils.labelFont);
+		categoryCBox.setFont(Utils.comboBoxFont);
 		summaryTable.setFont(Utils.tableFont);
 		header.setFont(Utils.tableFont);
 		clientCBox.setFont(Utils.comboBoxFont);
@@ -346,6 +373,12 @@ public class ViewSummaryReportView extends JPanel {
 		Image img = img_icon.getImage().getScaledInstance(new_width,new_height,java.awt.Image.SCALE_SMOOTH);  
 		img_icon = new ImageIcon(img);
 		return img_icon;
+	}
+	
+	public boolean empty(){
+		if(clientCBox.getItemCount() == 0 || timePeriodCBox.getItemCount() == 0)
+			return true;
+		return false;
 	}
 }
 

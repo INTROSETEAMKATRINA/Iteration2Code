@@ -10,6 +10,8 @@
 import java.sql.Connection;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
+import javax.swing.UIManager;
+
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -20,8 +22,8 @@ public class PayrollSystem{
 		Connection con;
 		
 		try{
-			Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
 			Class.forName("com.mysql.jdbc.Driver");
+			UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
 			String url = "jdbc:mysql://localhost:3306/payroll system";
 			String uname = "root";
 			String pass = "p@ssword";

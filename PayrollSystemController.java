@@ -521,12 +521,10 @@ public class PayrollSystemController{
 		date = generateSummaryReport.getPeriodStartDate();
 		report = generateSummaryReport.getReport();
 		file = generateSummaryReport.getDirectory();
-		if(client == null || date == null || file == null)
-		{
+		if(client == null || date == null || file == null){
 			generateSummaryReport.ShowError(0);
 		}
-		else
-		{
+		else{
 			if(file != null){
 				boolean confirm = true;
 				if(file.exists()){
@@ -534,11 +532,13 @@ public class PayrollSystemController{
 				}
 				if(confirm){
 					generateSummaryReport.showSuccessful(model.generateSummaryReport(file, date, client, report));
+					printOnFile(lastGeneratedReport, getDateToday() + " (" + client + ")");
+					view.updateLastGeneratedPayslips(getLast(lastGeneratedReport));
 				}
 				}else{
 				generatePayslips.setStatus("No file chosen!");
+				}
 			}
-		}
 		}
 	}
 	
