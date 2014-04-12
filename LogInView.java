@@ -159,6 +159,7 @@ public class LogInView extends JPanel  {
 	
 	public void setLoginListener(ActionListener a){
 		loginBtn.addActionListener(a);
+		passwordTxtFld.addActionListener(a);
 	}
 	
 	public void fadeInBalloon(){
