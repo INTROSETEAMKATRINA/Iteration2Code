@@ -65,6 +65,7 @@ public class ViewPersonnelView extends JPanel {
 		personnelTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		personnelTable.setColumnSelectionAllowed(true);
 		personnelTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+		personnelTable.setEnabled(false);
 		
 		ArrayList<String> columnName = model.getTableColumn("personnel");
 		columnName.add(0, "No.");
