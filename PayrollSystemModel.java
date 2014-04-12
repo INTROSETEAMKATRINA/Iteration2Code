@@ -1282,10 +1282,7 @@ public class PayrollSystemModel {
 					do{
 						tin = rs.getString("tin");
 						name = rs.getString("name");
-						sql = "select position,RDW,DailyRate,TranspoAllow,RegularPay,ROT,ROTPay,RNSD,RNSDPay,LH,LHPay," +
-							  "LHOT,LHOTPay,LHNSD,LHNSDPay,SH,SHPay,SHOT,SHOTPay,SHNSD,SHNSDPay," +
-							  "Adjustments,GrossPay,SSS,PHIC,HDMF,SSSLoan,PayrollAdvance,HouseRental," +
-							  "UniformAndOthers,Savings,NetPay,LHRD,LHRDPay,SHRD,SHRDPay from `payslip` where tin = '"+tin+"' and PeriodStartDate = '"+date+"';";
+						sql = "select * from `payslip` where tin = '"+tin+"' and PeriodStartDate = '"+date+"';";
 						st = con.createStatement();
 						rs2 = st.executeQuery(sql);
 						
@@ -1296,26 +1293,26 @@ public class PayrollSystemModel {
 																	PayrollAdvance = 0,HouseRental = 0,UniformAndOthers = 0,Savings = 0,NetPay = 0;
 						if(rs2.next()){
 							position = rs2.getString("position");
-		    	 			RDW += rs2.getInt(2); DailyRate += rs2.getInt(3); TranspoAllow += rs2.getInt(4);
-							RegularPay += rs2.getInt(5); ROT += rs2.getInt("ROT"); ROTPay += rs2.getInt(7); RNSD += rs2.getInt(8);
-							RNSDPay += rs2.getInt(9); LH += rs2.getInt(10); LHPay += rs2.getInt(11); LHOT += rs2.getInt(12);
-							LHOTPay += rs2.getInt(13); LHNSD += rs2.getInt(14);
-							LHNSDPay += rs2.getInt(15); SH += rs2.getInt(16); SHPay += rs2.getInt(17);
-							SHOT += rs2.getInt(18); SHOTPay += rs2.getInt(19); SHNSD += rs2.getInt(20); SHNSDPay += rs2.getInt(21);
-							Adjustments += rs2.getInt(22); GrossPay += rs2.getInt(23); SSS += rs2.getInt(24); PHIC += rs2.getInt(25);
-							HDMF += rs2.getInt(26); SSSLoan += rs2.getInt(27); PayrollAdvance += rs2.getInt(28); HouseRental += rs2.getInt(29);
-							UniformAndOthers += rs2.getInt(30); Savings += rs2.getInt(31); NetPay += rs2.getInt(32);LHRD += rs2.getInt(33);
-							LHRDPay += rs2.getInt(34); SHRD += rs2.getInt(35); SHRDPay += rs2.getInt(36);
-							TRDW += rs2.getInt(2); DailyRate += rs2.getInt(3); TranspoAllow += rs2.getInt(4);
-							TRegularPay += rs2.getInt(5); TROT += rs2.getInt(6); TROTPay += rs2.getInt(7); TRNSD += rs2.getInt(8);
-							TRNSDPay += rs2.getInt(9); TLH += rs2.getInt(10); TLHPay += rs2.getInt(11); TLHOT += rs2.getInt(12);
-							TLHOTPay += rs2.getInt(13); TLHNSD += rs2.getInt(14);
-							TLHNSDPay += rs2.getInt(15); TSH += rs2.getInt(16); TSHPay += rs2.getInt(17);
-							TSHOT += rs2.getInt(18); TSHOTPay += rs2.getInt(19); TSHNSD += rs2.getInt(20); TSHNSDPay += rs2.getInt(21);
-							TAdjustments += rs2.getInt(22); TGrossPay += rs2.getInt(23); TSSS += rs2.getInt(24); TPHIC += rs2.getInt(25);
-							THDMF += rs2.getInt(26); TSSSLoan += rs2.getInt(27); TPayrollAdvance += rs2.getInt(28); THouseRental += rs2.getInt(29);
-							TUniformAndOthers += rs2.getInt(30); TSavings += rs2.getInt(31); TNetPay += rs2.getInt(32);TLHRD += rs2.getInt(33);
-							TLHRDPay += rs2.getInt(34); TSHRD += rs2.getInt(35); TSHRDPay += rs2.getInt(36);
+		    	 			RDW += rs2.getInt("RDW"); DailyRate += rs2.getInt("DailyRate"); TranspoAllow += rs2.getInt("TranspoAllow");
+							RegularPay += rs2.getInt("RegularPay"); ROT += rs2.getInt("ROT"); ROTPay += rs2.getInt("ROTPay"); RNSD += rs2.getInt("RNSD");
+							RNSDPay += rs2.getInt("RNSDPay"); LH += rs2.getInt("LH"); LHPay += rs2.getInt("LHPay"); LHOT += rs2.getInt("LHOT");
+							LHOTPay += rs2.getInt("LHOTPay"); LHNSD += rs2.getInt("LHNSD");
+							LHNSDPay += rs2.getInt("LHNSDPay"); SH += rs2.getInt("SH"); SHPay += rs2.getInt("SHPay");
+							SHOT += rs2.getInt("SHOT"); SHOTPay += rs2.getInt("SHOTPay"); SHNSD += rs2.getInt("SHNSD"); SHNSDPay += rs2.getInt("SHNSDPay");
+							Adjustments += rs2.getInt("Adjustments"); GrossPay += rs2.getInt("GrossPay"); SSS += rs2.getInt("SSS"); PHIC += rs2.getInt("PHIC");
+							HDMF += rs2.getInt("HDMF"); SSSLoan += rs2.getInt("SSSLoan"); PayrollAdvance += rs2.getInt("PayrollAdvance"); HouseRental += rs2.getInt("HouseRental");
+							UniformAndOthers += rs2.getInt("UniformAndOthers"); Savings += rs2.getInt("Savings"); NetPay += rs2.getInt("NetPay");LHRD += rs2.getInt("LHRD");
+							LHRDPay += rs2.getInt("LHRDPay"); SHRD += rs2.getInt("SHRD"); SHRDPay += rs2.getInt("SHRDPay");
+							TRDW += rs2.getInt("RDW"); DailyRate += rs2.getInt("DailyRate"); TranspoAllow += rs2.getInt("TranspoAllow");
+							TRegularPay += rs2.getInt("RegularPay"); TROT += rs2.getInt("ROT"); TROTPay += rs2.getInt("ROTPay"); TRNSD += rs2.getInt("RNSD");
+							TRNSDPay += rs2.getInt("RNSDPay"); TLH += rs2.getInt("LH"); TLHPay += rs2.getInt("LHPay"); TLHOT += rs2.getInt("LHOT");
+							TLHOTPay += rs2.getInt("LHOTPay"); TLHNSD += rs2.getInt("LHNSD");
+							TLHNSDPay += rs2.getInt("LHNSDPay"); TSH += rs2.getInt("SH"); TSHPay += rs2.getInt("SHPay");
+							TSHOT += rs2.getInt("SHOT"); TSHOTPay += rs2.getInt("SHOTPay"); TSHNSD += rs2.getInt("SHNSD"); TSHNSDPay += rs2.getInt("SHNSDPay");
+							TAdjustments += rs2.getInt("Adjustments"); TGrossPay += rs2.getInt("GrossPay"); TSSS += rs2.getInt("SSS"); TPHIC += rs2.getInt("PHIC");
+							THDMF += rs2.getInt("HDMF"); TSSSLoan += rs2.getInt("SSSLoan"); TPayrollAdvance += rs2.getInt("PayrollAdvance"); THouseRental += rs2.getInt("HouseRental");
+							TUniformAndOthers += rs2.getInt("UniformAndOthers"); TSavings += rs2.getInt("Savings"); TNetPay += rs2.getInt("NetPay");TLHRD += rs2.getInt("LHRD");
+							TLHRDPay += rs2.getInt("LHRDPay"); TSHRD += rs2.getInt("SHRD"); TSHRDPay += rs2.getInt("SHRDPay");
 		    	 		}
 						
 		    	 		if(report.equals(getSummaryReport(0))){
