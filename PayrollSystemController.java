@@ -84,7 +84,7 @@ public class PayrollSystemController{
 			in.close();
 		}catch(Exception ex){
 			System.out.println("ERROR!");
-			view.showPeriodStartDateNotFound();
+			view.showMinWageNotFound();
 			System.exit(1);
 		}
 		
