@@ -37,7 +37,7 @@ public class BackUpView extends JPanel {
 		
 		saveLbl = new JLabel("Save Location: ");
 		locationLbl = new JLabel();
-		statusLbl = new JLabel("Do you wanna to back up?");
+		statusLbl = new JLabel("Do you wanna back up?");
 		
 		modifyUI();
 	}
