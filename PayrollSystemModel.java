@@ -517,7 +517,7 @@ public class PayrollSystemModel {
 	public void modfyClientVariables(float specialHoliday, float legalHoliday){
 	}
 
-	public int generatePayslips(File directory, String client, String psd){
+	public int generatePayslips(File directory, String client, String psd, int minWage){
 		Statement stmt = null;
 		ArrayList<Payslip> payslips = new ArrayList<>();
             
@@ -666,22 +666,24 @@ public class PayrollSystemModel {
 								grossPay = grossPay.add(adjustments).add(legalHolidayOnRestDayPay).add(specialHolidayOnRestDayPay);
 					BigDecimal netPay = grossPay.subtract(totalDeductions);
 					int taxStatusIndex = 0;
-					for(int i = 0 ; i < this.taxStatus.length; i++){
-						if(this.taxStatus[i].toLowerCase().contains(taxStatus)){
-							taxStatusIndex = i;
-							break;
+					if(dailyRate.compareTo(new BigDecimal(minWage + "")) >= 1){
+						for(int i = 0 ; i < this.taxStatus.length; i++){
+							if(this.taxStatus[i].toLowerCase().contains(taxStatus)){
+								taxStatusIndex = i;
+								break;
+							}
 						}
-					}
-					int bracket = 0;
-					for(int i = 0 ; i < wholeTable.length; i++){
-						if(wholeTable[i][taxStatusIndex+2].compareTo(netPay)>=1){
-							bracket = i - 1;
-							break;
-						}else if(i == wholeTable.length - 1){
-							bracket = i;
+						int bracket = 0;
+						for(int i = 0 ; i < wholeTable.length; i++){
+							if(wholeTable[i][taxStatusIndex+2].compareTo(netPay)>=1){
+								bracket = i - 1;
+								break;
+							}else if(i == wholeTable.length - 1){
+								bracket = i;
+							}
 						}
-					}
 					wTax = wholeTable[bracket][0].add(wholeTable[bracket][1].multiply(netPay.subtract(wholeTable[bracket][taxStatusIndex+2])).divide(new BigDecimal("100"), 2, BigDecimal.ROUND_HALF_UP));
+					}
 					netPay = netPay.subtract(wTax);
 					payslips.add(new Payslip(tin, assignment,  name, periodStartDate,
 					position, regularDaysWork, dailyRate,

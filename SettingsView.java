@@ -24,6 +24,7 @@ public class SettingsView extends JPanel  {
 	private JToggleButton changePassBtn;
 	private JToggleButton restoreBtn;
 	private JToggleButton modifyVarBtn;
+	private JToggleButton changeMinWageBtn;
 	
 	private ButtonGroup sideGroup;
 	
@@ -33,6 +34,7 @@ public class SettingsView extends JPanel  {
 	private ChangePasswordView changePassPanel;
 	private RestoreBackUpView restorePanel;
 	private ModifyClientVariablesView modifyVarPanel;
+	private ChangeMinWageView changeMinWagPanel;
 	
 	@SuppressWarnings("unused")
 	private PayrollSystemModel model;
@@ -44,11 +46,13 @@ public class SettingsView extends JPanel  {
 		changePassBtn = new CustomToggleButton("Change Password");
 		restoreBtn= new CustomToggleButton("      Restore From Back up");
 		modifyVarBtn = new CustomToggleButton("Modify Variables   ");
+		changeMinWageBtn = new CustomToggleButton("      Change Minimum Wage");
 		
 		sidePane = new JPanel();
 		changePassPanel = new ChangePasswordView();
 		restorePanel = new RestoreBackUpView();
 		modifyVarPanel = new ModifyClientVariablesView(model);
+		changeMinWagPanel = new ChangeMinWageView();
 		try {
 			settings_img = ImageIO.read(getClass().getResource("/images/settings.png"));
 			side_img = ImageIO.read(getClass().getResource("/images/side_white.png"));
@@ -79,6 +83,10 @@ public class SettingsView extends JPanel  {
 		modifyVarPanel.setSize(new Dimension(this.getWidth()-214,modifyVarPanel.getHeight()));
 		modifyVarPanel.setBounds(214, 50, modifyVarPanel.getWidth(), modifyVarPanel.getHeight());
 		
+		changeMinWagPanel.setOpaque(false);
+		changeMinWagPanel.setSize(new Dimension(this.getWidth()-214,changeMinWagPanel.getHeight()));
+		changeMinWagPanel.setBounds(214, 50, changeMinWagPanel.getWidth(), changeMinWagPanel.getHeight());
+		
 		initButtons();
 		addComponentsToPane();
 	}
@@ -87,6 +95,7 @@ public class SettingsView extends JPanel  {
 		sideGroup.add(changePassBtn);
 		sideGroup.add(restoreBtn);
 		sideGroup.add(modifyVarBtn);
+		sideGroup.add(changeMinWageBtn);
 		
 		sidePane.add(Box.createRigidArea(new Dimension(0,55)));
 		sidePane.add(changePassBtn);
@@ -94,16 +103,20 @@ public class SettingsView extends JPanel  {
 		sidePane.add(restoreBtn);
 		sidePane.add(Box.createRigidArea(new Dimension(0,10)));
 		sidePane.add(modifyVarBtn);
+		sidePane.add(Box.createRigidArea(new Dimension(0,10)));
+		sidePane.add(changeMinWageBtn);
 		
 		sidePane.setVisible(true);
 		changePassPanel.setVisible(true);
 		restorePanel.setVisible(false);
 		modifyVarPanel.setVisible(false);
+		changeMinWagPanel.setVisible(false);
 		
 		add(sidePane);
 		add(changePassPanel);
 		add(restorePanel);
 		add(modifyVarPanel);
+		add(changeMinWagPanel);
 	}
 
 	private void initButtons()
@@ -145,12 +158,26 @@ public class SettingsView extends JPanel  {
 		modifyVarBtn.setFont(Utils.menuFont);
 		modifyVarBtn.setForeground(Utils.menuFGColor);
 		
+		changeMinWageBtn.setContentAreaFilled(false);
+		changeMinWageBtn.setBorder(null);
+		changeMinWageBtn.setHorizontalTextPosition(JButton.CENTER);
+		changeMinWageBtn.setVerticalTextPosition(JButton.CENTER);
+		/*changeMinWageBtn.setIcon(loadScaledImage("/images/effects/mw.png", .5f));
+		changeMinWageBtn.setSelectedIcon(loadScaledImage("/images/effects/mw-p.png", .5f));
+		changeMinWageBtn.setRolloverIcon(loadScaledImage("/images/effects/mw-r.png", .5f));*/
+		changeMinWageBtn.setForeground(null);
+		changeMinWageBtn.setFocusPainted(false);
+		changeMinWageBtn.setFont(Utils.menuFont);
+		changeMinWageBtn.setForeground(Utils.menuFGColor);
+		
+		
 		changePassBtn.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				changePassPanel.setVisible(true);
 				restorePanel.setVisible(false);
 				modifyVarPanel.setVisible(false);
+				changeMinWagPanel.setVisible(false);
 			}
 		});
 		
@@ -160,6 +187,7 @@ public class SettingsView extends JPanel  {
 				changePassPanel.setVisible(false);
 				restorePanel.setVisible(true);
 				modifyVarPanel.setVisible(false);
+				changeMinWagPanel.setVisible(false);
 			}
 		});
 		
@@ -170,6 +198,17 @@ public class SettingsView extends JPanel  {
 				changePassPanel.setVisible(false);
 				restorePanel.setVisible(false);
 				modifyVarPanel.setVisible(true);
+				changeMinWagPanel.setVisible(false);
+			}
+		});
+		
+		changeMinWageBtn.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				changePassPanel.setVisible(false);
+				restorePanel.setVisible(false);
+				modifyVarPanel.setVisible(false);
+				changeMinWagPanel.setVisible(true);
 			}
 		});
 		
@@ -217,8 +256,11 @@ public class SettingsView extends JPanel  {
 		return modifyVarPanel;
 	}
         
-        public RestoreBackUpView getRestorePanel(){
-            return restorePanel;
-        }
-
+	public RestoreBackUpView getRestorePanel(){
+		return restorePanel;
+	}
+	
+	public ChangeMinWageView getMinWagePanel(){
+		return changeMinWagPanel;
+	}
 }

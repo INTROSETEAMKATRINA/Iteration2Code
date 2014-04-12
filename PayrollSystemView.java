@@ -1192,6 +1192,11 @@ public class PayrollSystemView extends JPanel {
 		String error = "Period Start Date not found. Program will now quit.";
 		JOptionPane.showMessageDialog(null, error, error, JOptionPane.ERROR_MESSAGE); 
 	}
+
+	public void showMinWageNotFound(){
+		String error = "Minimum wage not found. Program will now quit.";
+		JOptionPane.showMessageDialog(null, error, error, JOptionPane.ERROR_MESSAGE); 
+	}
 	
 	public void setStatusDTR(String e){
 		addDTRPanel.setStatus(e);

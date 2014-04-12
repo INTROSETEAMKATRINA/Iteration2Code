@@ -47,7 +47,8 @@ public class PayrollSystemController{
 	private GenerateSummaryReportView generateSummaryReport;
 	private BackUpView backUpData;
     private RestoreBackUpView restoreBackUp;
-        
+    private ChangeMinWageView changeMinWage;
+	
 	private String directory = "periodStartDate.txt";
 	private String lastChecked = "lastChecked.txt";
 	private String lastUpdatedData = "lastUpdatedData.txt";
@@ -55,7 +56,8 @@ public class PayrollSystemController{
 	private String lastClientModified = "lastCliendModified.txt";
 	private String lastGeneratedPayslips = "lastGeneratedPayslips.txt";
 	private String lastBackUp = "lastBackUp.txt";
-	
+	private String minimumWage = "minimumWage";
+	private int minWage;
 	public PayrollSystemController(PayrollSystemModel model, PayrollSystemView view, SettingsView sView, Connection con){
 		this.model = model;
 		this.view = view;
@@ -74,6 +76,18 @@ public class PayrollSystemController{
 			view.showPeriodStartDateNotFound();
 			System.exit(1);
 		}
+		
+		try{
+			Scanner in = new Scanner(new File(minimumWage));
+			String s = in.next();
+			minWage = Integer.parseInt(s);
+			in.close();
+		}catch(Exception ex){
+			System.out.println("ERROR!");
+			view.showPeriodStartDateNotFound();
+			System.exit(1);
+		}
+		
 		view.updateLastChecked(getLast(lastChecked));
 		view.updateLastUpdatedData(getLast(lastUpdatedData));
 		view.updateLastGeneratedReport(getLast(lastGeneratedReport));
@@ -139,6 +153,10 @@ public class PayrollSystemController{
         restoreBackUp.setSelectFileListener(new fileChooserRestoreBackUpButtonListener());
         restoreBackUp.setRestoreListener(new RestoreBackUpButtonListener());
                 
+		changeMinWage = sView.getMinWagePanel();		
+		changeMinWage.setText(minWage + "");
+		changeMinWage.setChangeListener(new changeMinWageListener());
+		
 		view.setNextTimeListener(new nextTimePeriod());
 		
 		/*
@@ -370,7 +388,7 @@ public class PayrollSystemController{
 						go = generatePayslips.askConfirmation();
 					}
 					if(go){
-						if(model.generatePayslips(f, client, psd)==0){
+						if(model.generatePayslips(f, client, psd, minWage)==0){
 							generatePayslips.setStatus("Success!", true);
 							printOnFile(lastGeneratedPayslips, getDateToday() + " (" + client + ")");
 							view.updateLastGeneratedPayslips(getLast(lastGeneratedPayslips));
@@ -583,4 +601,18 @@ public class PayrollSystemController{
 		}
 	}
 	
+	class changeMinWageListener implements ActionListener{
+		public void actionPerformed(ActionEvent e){
+			String s = changeMinWage.getMinWageTxtFld();
+			try{
+				minWage = Integer.parseInt(s);
+				printOnFile(minimumWage, s);
+				changeMinWage.setText(s);
+				changeMinWage.showSuccess();
+			}catch(Exception ex){
+				changeMinWage.showError("Integer only.");
+			}
+			
+		}
+	}
 }
