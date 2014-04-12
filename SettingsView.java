@@ -46,7 +46,7 @@ public class SettingsView extends JPanel  {
 		changePassBtn = new CustomToggleButton("Change Password");
 		restoreBtn= new CustomToggleButton("      Restore From Back up");
 		modifyVarBtn = new CustomToggleButton("Modify Variables   ");
-		changeMinWageBtn = new CustomToggleButton("      Change Minimum Wage");
+		changeMinWageBtn = new CustomToggleButton("       Change Minimum Wage");
 		
 		sidePane = new JPanel();
 		changePassPanel = new ChangePasswordView();
@@ -162,9 +162,9 @@ public class SettingsView extends JPanel  {
 		changeMinWageBtn.setBorder(null);
 		changeMinWageBtn.setHorizontalTextPosition(JButton.CENTER);
 		changeMinWageBtn.setVerticalTextPosition(JButton.CENTER);
-		/*changeMinWageBtn.setIcon(loadScaledImage("/images/effects/mw.png", .5f));
+		changeMinWageBtn.setIcon(loadScaledImage("/images/effects/mw.png", .5f));
 		changeMinWageBtn.setSelectedIcon(loadScaledImage("/images/effects/mw-p.png", .5f));
-		changeMinWageBtn.setRolloverIcon(loadScaledImage("/images/effects/mw-r.png", .5f));*/
+		changeMinWageBtn.setRolloverIcon(loadScaledImage("/images/effects/mw-r.png", .5f));
 		changeMinWageBtn.setForeground(null);
 		changeMinWageBtn.setFocusPainted(false);
 		changeMinWageBtn.setFont(Utils.menuFont);
