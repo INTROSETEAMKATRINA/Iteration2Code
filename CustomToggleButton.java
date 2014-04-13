@@ -1,3 +1,13 @@
+/*******************************************************
+	 *  Class name: CustomToggleButton
+ 	 *  Inheritance: JToggleButton
+	 *  Attributes: 
+	 *  Methods:	
+	 *  Functionality: View
+	 *  Visibility: public
+	 *******************************************************/
+
+
 import java.awt.Color;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -9,8 +19,7 @@ public class CustomToggleButton extends JToggleButton implements ItemListener {
 
 	private final static Color LIGHTBLUE = new Color(0x56A7E0);
 	
-	public CustomToggleButton(String label)
-	{
+	public CustomToggleButton(String label){
 		super(label);
 		this.addItemListener(this);
 	}

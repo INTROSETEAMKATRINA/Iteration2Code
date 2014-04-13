@@ -1,3 +1,13 @@
+/*******************************************************
+	 *  Class name: CustomTextField
+ 	 *  Inheritance: JTextField
+	 *  Attributes: hint, show
+	 *  Methods: setHint
+	 *  Functionality: View
+	 *  Visibility: public
+	 *******************************************************/
+
+
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -29,8 +39,7 @@ public class CustomTextField extends JTextField implements FocusListener, Docume
 	
 	private int width, height;
 	  
-	public CustomTextField(String hint, String img_url, String hover_url, int width, int height)
-	{
+	public CustomTextField(String hint, String img_url, String hover_url, int width, int height){
 		this.hint = hint;
 		on_focus = loadImage(img_url);
 		not_focus = loadImage(hover_url);
@@ -55,29 +64,25 @@ public class CustomTextField extends JTextField implements FocusListener, Docume
 		setSelectionColor(new Color(0,0,0,15));
 	}
 	
-	protected class AlphaTimer {
+	protected class AlphaTimer{
 		public void setOpacity(float newValue) {
 			opacity = newValue;
 			repaint();
 		}
 	}
 	
-	public void paint(Graphics g)
-	{
+	public void paint(Graphics g){
 		super.paint(g);
 		
 		Graphics2D g2d = (Graphics2D) g;
 		
-		if(isFocusOwner())
-		{
+		if(isFocusOwner()){
 			g2d.setComposite(AlphaComposite.SrcOver.derive(1.0f - opacity));
 			g2d.drawImage(not_focus, 0, 0, width, height, null);
 			
 			g2d.setComposite(AlphaComposite.SrcOver.derive(opacity));
 			g2d.drawImage(on_focus, 0, 0, width, height, null);
-		}
-		else
-		{
+		}else{
 			g2d.setComposite(AlphaComposite.SrcOver.derive(1.0f - opacity));
 			g2d.drawImage(on_focus, 0, 0, width, height, null);
 			
@@ -132,14 +137,10 @@ public class CustomTextField extends JTextField implements FocusListener, Docume
 	public void removeUpdate(DocumentEvent e) {
 	}
 	
-	private BufferedImage loadImage(String img_url)
-	{
-		try
-		{
+	private BufferedImage loadImage(String img_url){
+		try{
 			return ImageIO.read(getClass().getResource(img_url));
-	    }
-		catch (IOException e)
-		{
+	    }catch (IOException e){
 			return null;
 		}
 	}
