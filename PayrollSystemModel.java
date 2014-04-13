@@ -1082,18 +1082,22 @@ public class PayrollSystemModel {
 	}
 
 	public void backupData(File directory) throws Exception{
+		Process exec = null;
         ProcessBuilder pb = new ProcessBuilder("mysqldump", "-uroot", "-pp@ssword",
         		"Payroll System", "adjustmentsanddeductions", "client", "dtr", 
         		"payslip", "personnel", "taxtable");
             
         pb.redirectOutput(directory);
+		exec = pb.start();
     }
         
     public void restoreFromBackUp(File directory) throws Exception{
+		Process exec = null;
         ProcessBuilder pb = new ProcessBuilder("mysql", "-uroot", "-pp@ssword", 
         		"Payroll System");
             
         pb.redirectInput(directory);
+		exec = pb.start();
     }
 
 	public ArrayList<String> getClientList(){
