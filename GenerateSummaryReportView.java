@@ -342,7 +342,7 @@ public class GenerateSummaryReportView extends JPanel {
 			statusLbl.setIcon(loadScaledImage("/images/notifs/right.png",.08f));
 		}
 		else if(i == 1){
-			message = "Failed";
+			message = "File is in use!";
 			statusLbl.setIcon(loadScaledImage("/images/notifs/wrong.png",.08f));
 		}
 		statusLbl.setText(message);

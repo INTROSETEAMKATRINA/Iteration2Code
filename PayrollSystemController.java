@@ -573,7 +573,7 @@ public class PayrollSystemController{
 	class exitListener extends WindowAdapter{
 		public void windowClosing(WindowEvent e) {
 			int confirm = JOptionPane.showOptionDialog(null,
-					"Are You Sure to Close Application?", "Exit Confirmation", 
+					"Are you sure you want to exit?", "Exit", 
 					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 			
 			if(confirm == 0) {

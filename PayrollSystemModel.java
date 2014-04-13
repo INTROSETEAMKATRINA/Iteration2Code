@@ -1684,11 +1684,7 @@ public class PayrollSystemModel {
 		writer.println();
 		writer.print("\"Payroll - \"" + client);
 		writer.println();
-		
-		if(day == 1)
-			writer.println("\"For the preiod of \"" + date + "-15");
-		else
-			writer.println("\"For the preiod of \"" + date + "-30");
+		writer.println("\"For the period of \"" + date);
 		writer.println();
 		
 		for(i = 0; i < columnHeader.size(); i++){
@@ -1696,6 +1692,12 @@ public class PayrollSystemModel {
 				writer.print(columnHeader.get(i) + ",,,");
 			}else if(columnHeader.get(i).equals("Position")){
 				writer.print(columnHeader.get(i) + ",,");
+			}else if(columnHeader.get(i).equals("Gross pay")){
+				if(report.equals(getSummaryReport(2))){
+					writer.print(columnHeader.get(i) + ",,");
+				}else{
+					writer.print(columnHeader.get(i) + ",");
+				}
 			}else{
 				writer.print(columnHeader.get(i) + ",");
 			}
@@ -1704,24 +1706,12 @@ public class PayrollSystemModel {
 		
 		for(Object[] t : data){
 			j++;
-			if(j == data.size()){
-				writer.println();
-				for(i = 0; i < t.length; i++){
-					if(i == 1){
-						writer.print("\"" + t[i] + "\"" + ",,,");
-					}else if(i == 2){
-						writer.print("\"" + t[i] + "\"" + ",,");
-					}else{
-						writer.print(t[i] + ",");
-					}
-				}
-			}else{
-				for(i = 0; i < t.length; i++){
-					if(i == 1){
-						writer.print("\"" + t[i] + "\"" + ",,,");
-					}else if(i == 2){
-						writer.print("\"" + t[i] + "\"" + ",,");
-					}else
+			for(i = 0; i < t.length; i++){
+				if(i == 1){
+					writer.print("\"" + t[i] + "\"" + ",,,");
+				}else if(i == 2){
+					writer.print("\"" + t[i] + "\"" + ",,");
+				}else{
 					writer.print(t[i] + ",");
 				}
 			}
