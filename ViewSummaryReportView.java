@@ -62,6 +62,7 @@ public class ViewSummaryReportView extends JPanel {
 	private DefaultTableModel summaryModel;
 	private JTable summaryTable;
 	private JScrollPane summaryPane;
+	private ArrayList<String> column;
 	
     private JTableHeader header;
 	
@@ -93,7 +94,9 @@ public class ViewSummaryReportView extends JPanel {
 		summaryTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		summaryTable.setColumnSelectionAllowed(true);
 		summaryTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-		summaryModel = (DefaultTableModel) summaryTable.getModel();
+		column = model.getColumnName(getReport());
+		summaryModel = new DefaultTableModel(column.toArray(),0);
+		summaryTable.setModel(summaryModel);
 		
 		header = summaryTable.getTableHeader();
 		header.setBackground(new Color(0xFAFAFA));
@@ -286,7 +289,7 @@ public class ViewSummaryReportView extends JPanel {
 	}
 	
 	public void updateTableColumn(){
-		ArrayList<String> column = model.getColumnName(getReport());
+		column = model.getColumnName(getReport());
 		summaryModel.setColumnCount(0);
 		for(String s : column){
 			summaryModel.addColumn(s);
