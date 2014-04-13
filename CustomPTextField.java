@@ -26,7 +26,8 @@ import javax.swing.event.DocumentListener;
 
 import org.pushingpixels.trident.Timeline;
 
-public class CustomPTextField extends JPasswordField implements FocusListener, DocumentListener {
+public class CustomPTextField extends JPasswordField 
+		implements FocusListener, DocumentListener {
 	
 	private String hint;
 	private boolean show;
@@ -38,7 +39,8 @@ public class CustomPTextField extends JPasswordField implements FocusListener, D
 	
 	private int width, height;
 	  
-	public CustomPTextField(String hint, String img_url, String hover_url, int width, int height){
+	public CustomPTextField(String hint, String img_url, String hover_url,
+			int width, int height){
 		this.hint = hint;
 		on_focus = loadImage(img_url);
 		not_focus = loadImage(hover_url);
@@ -93,8 +95,9 @@ public class CustomPTextField extends JPasswordField implements FocusListener, D
 
 	public void focusGained(FocusEvent e) {
 		selectAll();
-	    if(getText().isEmpty())
+	    if(getText().isEmpty()){
 	    	show = false;
+	    }
 	    
 		timeline.addPropertyToInterpolate("opacity", 0.0f, 1.0f);
 		timeline.play();

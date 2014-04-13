@@ -25,7 +25,6 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 import java.math.BigDecimal;
 
@@ -71,14 +70,22 @@ public class ModifyTaxTableView extends JPanel {
 		
 		bracketCBox = new JComboBox<String>();
 		
-		taxTxtFld = new CustomTextField("0.00", "/images/effects/in.png", "/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
-		taxOverTxtFld = new CustomTextField("0.00", "/images/effects/in.png", "/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
-		zTxtFld = new CustomTextField("0.00", "/images/effects/in.png", "/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
-		sMeTxtFld = new CustomTextField("0.00", "/images/effects/in.png", "/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
-		me1TxtFld = new CustomTextField("0.00", "/images/effects/in.png", "/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
-		me2TxtFld = new CustomTextField("0.00", "/images/effects/in.png", "/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
-		me3TxtFld = new CustomTextField("0.00", "/images/effects/in.png", "/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
-		me4TxtFld = new CustomTextField("0.00", "/images/effects/in.png", "/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
+		taxTxtFld = new CustomTextField("0.00", "/images/effects/in.png", 
+				"/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
+		taxOverTxtFld = new CustomTextField("0.00", "/images/effects/in.png", 
+				"/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
+		zTxtFld = new CustomTextField("0.00", "/images/effects/in.png",
+				"/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
+		sMeTxtFld = new CustomTextField("0.00", "/images/effects/in.png", 
+				"/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
+		me1TxtFld = new CustomTextField("0.00", "/images/effects/in.png", 
+				"/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
+		me2TxtFld = new CustomTextField("0.00", "/images/effects/in.png",
+				"/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
+		me3TxtFld = new CustomTextField("0.00", "/images/effects/in.png",
+				"/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
+		me4TxtFld = new CustomTextField("0.00", "/images/effects/in.png", 
+				"/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
 		
 		bracketLbl = new JLabel("Bracket: ");
 		taxLbl = new JLabel("Tax:");
@@ -124,9 +131,12 @@ public class ModifyTaxTableView extends JPanel {
 		applyBtn.setOpaque(false);
 		applyBtn.setForeground(null);
 		applyBtn.setFocusPainted(false);
-		applyBtn.setRolloverIcon(new ImageIcon(getClass().getResource("/images/buttons/apply-r.png")));
-		applyBtn.setPressedIcon(new ImageIcon(getClass().getResource("/images/buttons/apply-p.png")));
-		applyBtn.setSize(new Dimension(applyBtn.getIcon().getIconWidth(), applyBtn.getIcon().getIconHeight()));
+		applyBtn.setRolloverIcon(new ImageIcon(
+				getClass().getResource("/images/buttons/apply-r.png")));
+		applyBtn.setPressedIcon(new ImageIcon(
+				getClass().getResource("/images/buttons/apply-p.png")));
+		applyBtn.setSize(new Dimension(applyBtn.getIcon().getIconWidth(), 
+				applyBtn.getIcon().getIconHeight()));
 	}
 
 	private void addComponentsToPane() {
@@ -309,12 +319,14 @@ public class ModifyTaxTableView extends JPanel {
 		g2d.setFont(Utils.headerFont);
 		g2d.drawString("Modify Tax Table", 20, 35);
 		g2d.setFont(Utils.descFont);
-		g2d.drawString("This section allows you to modify the values related to tax.", 20, 55);
+		g2d.drawString("This section allows you to modify the values related to tax.", 
+				20, 55);
 		
 		g2d.setColor(Utils.statusBGColor);
-		g2d.fillRect(0, this.getHeight()-Utils.HEIGHT, this.getWidth(), Utils.HEIGHT);
+		g2d.fillRect(0, this.getHeight() - Utils.HEIGHT, this.getWidth(), Utils.HEIGHT);
 		g2d.setColor(Color.LIGHT_GRAY);
-		g2d.drawLine(0, this.getHeight()-Utils.HEIGHT, this.getWidth(), this.getHeight()-Utils.HEIGHT);
+		g2d.drawLine(0, this.getHeight() - Utils.HEIGHT, this.getWidth(), 
+				this.getHeight() - Utils.HEIGHT);
 	}
 	
 	public int getBracket(){ 
@@ -361,7 +373,8 @@ public class ModifyTaxTableView extends JPanel {
 		ImageIcon img_icon = new ImageIcon(this.getClass().getResource(img_url));
 		int new_width = (int) (img_icon.getIconWidth()*percent);
 		int new_height = (int) (img_icon.getIconHeight()*percent);
-		Image img = img_icon.getImage().getScaledInstance(new_width,new_height,java.awt.Image.SCALE_SMOOTH);  
+		Image img = img_icon.getImage().getScaledInstance(new_width,new_height,
+				java.awt.Image.SCALE_SMOOTH);  
 		img_icon = new ImageIcon(img);
 		return img_icon;
 	}

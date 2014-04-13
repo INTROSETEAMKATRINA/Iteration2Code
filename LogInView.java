@@ -55,7 +55,8 @@ public class LogInView extends JPanel  {
 	public LogInView() {
 		loginBtn = new JButton(loadScaledImage("/images/buttons/login.png",.5f));
 				
-		passwordTxtFld = new CustomPTextField("",  "/images/effects/in.png", "/images/effects/out.png", 250, 47);
+		passwordTxtFld = new CustomPTextField("",  "/images/effects/in.png",
+				"/images/effects/out.png", 250, 47);
 		
 		modifyUI();
 		
@@ -72,7 +73,8 @@ public class LogInView extends JPanel  {
 
         addMouseMotionListener(new MouseMotionAdapter(){
             public void mouseDragged(MouseEvent e){
-                setLocation(e.getX() - draggedAtX + getLocation().x,e.getY() - draggedAtY + getLocation().y);
+                setLocation(e.getX() - draggedAtX + getLocation().x,
+                		e.getY() - draggedAtY + getLocation().y);
                 btip1.closeBalloon();
             }
         });
@@ -89,14 +91,16 @@ public class LogInView extends JPanel  {
 	}
 	
 	private void initToolTips(){
-		RoundedBalloonStyle rbs = new RoundedBalloonStyle(6,6,transparent_red,Color.LIGHT_GRAY);
+		RoundedBalloonStyle rbs = new RoundedBalloonStyle(6,6,transparent_red,
+				Color.LIGHT_GRAY);
 		
 		String blank_password = "<html>Oops! You entered a wrong password.<br></html>";
 		JLabel label = new JLabel(blank_password);
 		label.setFont(tooltipfont);
 		label.setForeground(Color.WHITE);
 		
-		btip1 = new BalloonTip(passwordTxtFld, label, rbs, Orientation.LEFT_BELOW, AttachLocation.SOUTH, 60, 10, false);
+		btip1 = new BalloonTip(passwordTxtFld, label, rbs, Orientation.LEFT_BELOW, 
+				AttachLocation.SOUTH, 60, 10, false);
 		
 		passwordTxtFld.addFocusListener(new FocusListener()
 		{
@@ -123,13 +127,16 @@ public class LogInView extends JPanel  {
 		loginBtn.setFocusPainted(false);
 		loginBtn.setRolloverIcon(loadScaledImage("/images/buttons/login-r.png", .5f));
 		loginBtn.setPressedIcon(loadScaledImage("/images/buttons/login-p.png", .5f));
-		loginBtn.setPreferredSize(new Dimension(loginBtn.getIcon().getIconWidth(), loginBtn.getIcon().getIconHeight()));
-		loginBtn.setSize(new Dimension(loginBtn.getIcon().getIconWidth(), loginBtn.getIcon().getIconHeight()));
+		loginBtn.setPreferredSize(new Dimension(loginBtn.getIcon().getIconWidth(), 
+				loginBtn.getIcon().getIconHeight()));
+		loginBtn.setSize(new Dimension(loginBtn.getIcon().getIconWidth(), 
+				loginBtn.getIcon().getIconHeight()));
 	}
 	
 	private void addComponentsToPane(){
 		passwordTxtFld.setBounds(8,65,passwordTxtFld.getWidth(),passwordTxtFld.getHeight());
-		loginBtn.setBounds(passwordTxtFld.getWidth()+10,70,loginBtn.getWidth(),loginBtn.getHeight());
+		loginBtn.setBounds(passwordTxtFld.getWidth()+10,70,loginBtn.getWidth(),
+				loginBtn.getHeight());
 		
 		add(passwordTxtFld);
 		add(loginBtn);
@@ -139,8 +146,10 @@ public class LogInView extends JPanel  {
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 		
-		g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-        g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+		g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, 
+				RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+        g2d.setRenderingHint(RenderingHints.KEY_RENDERING, 
+        		RenderingHints.VALUE_RENDER_QUALITY);
         
         g2d.setColor(Color.WHITE);
 		g2d.fillRect(0, 0, this.getWidth(), this.getHeight());
@@ -157,7 +166,8 @@ public class LogInView extends JPanel  {
 		ImageIcon img_icon = new ImageIcon(getClass().getResource(img_url));
 		int new_width = (int) (img_icon.getIconWidth()*percent);
 		int new_height = (int) (img_icon.getIconHeight()*percent);
-		Image img = img_icon.getImage().getScaledInstance(new_width,new_height,java.awt.Image.SCALE_SMOOTH);  
+		Image img = img_icon.getImage().getScaledInstance(new_width,new_height,
+				java.awt.Image.SCALE_SMOOTH);  
 		img_icon = new ImageIcon(img);
 		return img_icon;
 	}

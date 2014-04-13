@@ -57,8 +57,10 @@ public class GenerateSummaryReportView extends JPanel {
 	
 	public GenerateSummaryReportView(PayrollSystemModel model){
 		this.model = model;
-		generateBtn = new JButton(new ImageIcon(getClass().getResource("/images/buttons/generate.png")));
-		selSaveBtn = new JButton(new ImageIcon(getClass().getResource("/images/buttons/select.png")));
+		generateBtn = new JButton(new ImageIcon(
+				getClass().getResource("/images/buttons/generate.png")));
+		selSaveBtn = new JButton(new ImageIcon(
+				getClass().getResource("/images/buttons/select.png")));
 		
 		selectClientLbl = new JLabel("Select Client: ");
 		selectTimeLbl = new JLabel("Select Time Period: ");
@@ -102,18 +104,24 @@ public class GenerateSummaryReportView extends JPanel {
 		generateBtn.setOpaque(false);
 		generateBtn.setForeground(null);
 		generateBtn.setFocusPainted(false);
-		generateBtn.setRolloverIcon(new ImageIcon(getClass().getResource("/images/buttons/generate-r.png")));
-		generateBtn.setPressedIcon(new ImageIcon(getClass().getResource("/images/buttons/generate-p.png")));
-		generateBtn.setSize(new Dimension(generateBtn.getIcon().getIconWidth(), generateBtn.getIcon().getIconHeight()));
+		generateBtn.setRolloverIcon(new ImageIcon(
+				getClass().getResource("/images/buttons/generate-r.png")));
+		generateBtn.setPressedIcon(new ImageIcon(
+				getClass().getResource("/images/buttons/generate-p.png")));
+		generateBtn.setSize(new Dimension(generateBtn.getIcon().getIconWidth(), 
+				generateBtn.getIcon().getIconHeight()));
 		
 		selSaveBtn.setContentAreaFilled(false);
 		selSaveBtn.setBorder(null);
 		selSaveBtn.setOpaque(false);
 		selSaveBtn.setForeground(null);
 		selSaveBtn.setFocusPainted(false);
-		selSaveBtn.setRolloverIcon(new ImageIcon(getClass().getResource("/images/buttons/select-r.png")));
-		selSaveBtn.setPressedIcon(new ImageIcon(getClass().getResource("/images/buttons/select-p.png")));
-		selSaveBtn.setPreferredSize(new Dimension(selSaveBtn.getIcon().getIconWidth(), selSaveBtn.getIcon().getIconHeight()));
+		selSaveBtn.setRolloverIcon(new ImageIcon(
+				getClass().getResource("/images/buttons/select-r.png")));
+		selSaveBtn.setPressedIcon(new ImageIcon(
+				getClass().getResource("/images/buttons/select-p.png")));
+		selSaveBtn.setPreferredSize(new Dimension(selSaveBtn.getIcon().getIconWidth(),
+				selSaveBtn.getIcon().getIconHeight()));
 		
 		addComponentsToPane();
 	}
@@ -231,19 +239,23 @@ public class GenerateSummaryReportView extends JPanel {
 		g2d.setFont(Utils.headerFont);
         g2d.drawString("Generate Summary Report", 20, 35);
 		g2d.setFont(Utils.descFont);
-        g2d.drawString("This section allows you to generate summary reports of a client.", 20, 55);
+        g2d.drawString("This section allows you to generate summary reports of a client.",
+        		20, 55);
 		
 		g2d.setColor(Utils.statusBGColor);
-		g2d.fillRect(0, this.getHeight()-Utils.HEIGHT, this.getWidth(), Utils.HEIGHT);
+		g2d.fillRect(0, this.getHeight()-Utils.HEIGHT, this.getWidth(),
+				Utils.HEIGHT);
 		g2d.setColor(Color.LIGHT_GRAY);
-		g2d.drawLine(0, this.getHeight()-Utils.HEIGHT, this.getWidth(), this.getHeight()-Utils.HEIGHT);
+		g2d.drawLine(0, this.getHeight()-Utils.HEIGHT, this.getWidth(), 
+				this.getHeight()-Utils.HEIGHT);
 	}
 	
 	private ImageIcon loadScaledImage(String img_url, float percent){	
 		ImageIcon img_icon = new ImageIcon(this.getClass().getResource(img_url));
 		int new_width = (int) (img_icon.getIconWidth()*percent);
 		int new_height = (int) (img_icon.getIconHeight()*percent);
-		Image img = img_icon.getImage().getScaledInstance(new_width,new_height,java.awt.Image.SCALE_SMOOTH);  
+		Image img = img_icon.getImage().getScaledInstance(new_width,new_height,
+				java.awt.Image.SCALE_SMOOTH);  
 		img_icon = new ImageIcon(img);
 		return img_icon;
 	}
@@ -337,10 +349,11 @@ public class GenerateSummaryReportView extends JPanel {
 	}
 	
 	public boolean askConfirmation(){
-		int confirmation = JOptionPane.showConfirmDialog(null, "Do you want to overwrite the file?", "Overwrite file?",
+		int confirmation = JOptionPane.showConfirmDialog(null, 
+				"Do you want to overwrite the file?", "Overwrite file?",
 		
 		JOptionPane.YES_NO_OPTION);
-		if(confirmation ==JOptionPane.YES_OPTION){
+		if(confirmation == JOptionPane.YES_OPTION){
 			return true;
 		}
 		return false;

@@ -91,7 +91,8 @@ public class ModifyClientVariablesView extends JPanel {
 		selectClientLbl = new JLabel("Select Client: ");
 		clientCBox = new JComboBox<Object>();
 		
-		applyBtn = new JButton(new ImageIcon(getClass().getResource("/images/buttons/apply.png")));
+		applyBtn = new JButton(new ImageIcon(
+				getClass().getResource("/images/buttons/apply.png")));
 		
 		var1Lbl = new JLabel("Regular Overtime: ");
 		var2Lbl = new JLabel("Regular NSD: ");
@@ -107,18 +108,30 @@ public class ModifyClientVariablesView extends JPanel {
 		var12Lbl = new JLabel("Special Holiday RD: ");
 		statusLbl = new JLabel();
 		
-		var1TxtFld = new CustomTextField(rotVar.toString(), "/images/effects/in.png", "/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
-		var2TxtFld = new CustomTextField(rnsdVar.toString(), "/images/effects/in.png", "/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
-		var3TxtFld = new CustomTextField(lhRate.toString(), "/images/effects/in.png", "/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
-		var4TxtFld = new CustomTextField(lhVar.toString(), "/images/effects/in.png", "/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
-		var5TxtFld = new CustomTextField(lhOTVar.toString(), "/images/effects/in.png", "/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
-		var6TxtFld = new CustomTextField(lhNSDVar.toString(), "/images/effects/in.png", "/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
-		var7TxtFld = new CustomTextField(lhRDVar.toString(), "/images/effects/in.png", "/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
-		var8TxtFld = new CustomTextField(shRate.toString(), "/images/effects/in.png", "/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
-		var9TxtFld = new CustomTextField(shVar.toString(), "/images/effects/in.png", "/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
-		var10TxtFld = new CustomTextField(shOTVar.toString(), "/images/effects/in.png", "/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
-		var11TxtFld = new CustomTextField(shNSDVar.toString(), "/images/effects/in.png", "/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
-		var12TxtFld = new CustomTextField(shRDVar.toString(), "/images/effects/in.png", "/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
+		var1TxtFld = new CustomTextField(rotVar.toString(), "/images/effects/in.png",
+				"/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
+		var2TxtFld = new CustomTextField(rnsdVar.toString(), "/images/effects/in.png",
+				"/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
+		var3TxtFld = new CustomTextField(lhRate.toString(), "/images/effects/in.png",
+				"/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
+		var4TxtFld = new CustomTextField(lhVar.toString(), "/images/effects/in.png",
+				"/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
+		var5TxtFld = new CustomTextField(lhOTVar.toString(), "/images/effects/in.png",
+				"/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
+		var6TxtFld = new CustomTextField(lhNSDVar.toString(), "/images/effects/in.png",
+				"/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
+		var7TxtFld = new CustomTextField(lhRDVar.toString(), "/images/effects/in.png", 
+				"/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
+		var8TxtFld = new CustomTextField(shRate.toString(), "/images/effects/in.png", 
+				"/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
+		var9TxtFld = new CustomTextField(shVar.toString(), "/images/effects/in.png",
+				"/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
+		var10TxtFld = new CustomTextField(shOTVar.toString(), "/images/effects/in.png",
+"/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
+		var11TxtFld = new CustomTextField(shNSDVar.toString(), "/images/effects/in.png",
+				"/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
+		var12TxtFld = new CustomTextField(shRDVar.toString(), "/images/effects/in.png", 
+				"/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
 		panel = new JPanel();
 		scrollPane = new JScrollPane(panel);
 		
@@ -162,9 +175,12 @@ public class ModifyClientVariablesView extends JPanel {
 		applyBtn.setOpaque(false);
 		applyBtn.setForeground(null);
 		applyBtn.setFocusPainted(false);
-		applyBtn.setRolloverIcon(new ImageIcon(getClass().getResource("/images/buttons/apply-r.png")));
-		applyBtn.setPressedIcon(new ImageIcon(getClass().getResource("/images/buttons/apply-p.png")));
-		applyBtn.setSize(new Dimension(applyBtn.getIcon().getIconWidth(), applyBtn.getIcon().getIconHeight()));
+		applyBtn.setRolloverIcon(new ImageIcon(
+				getClass().getResource("/images/buttons/apply-r.png")));
+		applyBtn.setPressedIcon(new ImageIcon(
+				getClass().getResource("/images/buttons/apply-p.png")));
+		applyBtn.setSize(new Dimension(applyBtn.getIcon().getIconWidth(),
+				applyBtn.getIcon().getIconHeight()));
 		
 		addComponentsToPane();
 	}
@@ -207,15 +223,15 @@ public class ModifyClientVariablesView extends JPanel {
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.gridwidth = 1;
 		
-		for(int i = 0; i < 12; i++)
-		{
+		for(int i = 0; i < 12; i++){
 			gbc.gridy = i;
-			for(int j = 0; j < 2; j++)
-			{
-				if(j == 0)
+			for(int j = 0; j < 2; j++){
+				if(j == 0){
 					gbc.anchor = GridBagConstraints.EAST;
-				else
+				}	
+				else{
 					gbc.anchor = GridBagConstraints.WEST;
+				}
 				
 				gbc.gridx = j;
 				
@@ -291,8 +307,7 @@ public class ModifyClientVariablesView extends JPanel {
 		statusLbl.setFont(Utils.statusBarFont);
 	}
 	
-	public void paintComponent(Graphics g)
-	{
+	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 		
@@ -302,10 +317,12 @@ public class ModifyClientVariablesView extends JPanel {
 		g2d.setFont(Utils.headerFont);
         g2d.drawString("Modify Variables", 20, 35);
 		g2d.setFont(Utils.descFont);
-        g2d.drawString("This section allows you to modify allowed variables.", 20, 55);
+        g2d.drawString("This section allows you to modify allowed variables.", 
+        		20, 55);
 		
 		g2d.setColor(Color.LIGHT_GRAY);
-		g2d.drawLine(0, this.getHeight()-FOOTER_HEIGHT, this.getWidth(), this.getHeight()-FOOTER_HEIGHT);
+		g2d.drawLine(0, this.getHeight()-FOOTER_HEIGHT, this.getWidth(), 
+				this.getHeight()-FOOTER_HEIGHT);
 	}
 	
 	public String getClient(){
@@ -380,9 +397,10 @@ public class ModifyClientVariablesView extends JPanel {
 	
 	private ImageIcon loadScaledImage(String img_url, float percent){	
 		ImageIcon img_icon = new ImageIcon(this.getClass().getResource(img_url));
-		int new_width = (int) (img_icon.getIconWidth()*percent);
-		int new_height = (int) (img_icon.getIconHeight()*percent);
-		Image img = img_icon.getImage().getScaledInstance(new_width,new_height,java.awt.Image.SCALE_SMOOTH);  
+		int new_width = (int) (img_icon.getIconWidth() * percent);
+		int new_height = (int) (img_icon.getIconHeight() * percent);
+		Image img = img_icon.getImage().getScaledInstance(new_width,new_height,
+				java.awt.Image.SCALE_SMOOTH);  
 		img_icon = new ImageIcon(img);
 		return img_icon;
 	}

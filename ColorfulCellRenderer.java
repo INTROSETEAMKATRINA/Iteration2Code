@@ -33,8 +33,10 @@ public class ColorfulCellRenderer extends DefaultTableCellRenderer {
 	    return false;
 	}
 
-	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int col) {
-	    JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
+	public Component getTableCellRendererComponent(JTable table, Object value,
+			boolean isSelected, boolean hasFocus, int row, int col) {
+	    JLabel label = (JLabel) super.getTableCellRendererComponent(table, value,
+	    		isSelected, hasFocus, row, col);
 	    
 	    if(isSelected){
 	    	if(colorfulColumns.contains(col)){

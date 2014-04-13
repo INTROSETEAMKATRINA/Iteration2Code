@@ -21,12 +21,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.JOptionPane;
-
-import java.util.Scanner;
-import java.io.File;
-
 
 public class ChangeMinWageView extends JPanel {
 	
@@ -41,10 +36,12 @@ public class ChangeMinWageView extends JPanel {
 	private final static int TEXTBOX_HEIGHT = 41;
 	
 	public ChangeMinWageView() {
-		applyBtn = new JButton(new ImageIcon(getClass().getResource("/images/buttons/apply.png")));
+		applyBtn = new JButton(new ImageIcon(
+				getClass().getResource("/images/buttons/apply.png")));
 		minWageLbl = new JLabel("Minimum Wage: ");
 		statusLbl = new JLabel();
-		minWageTxtFldTxtFld = new CustomTextField("", "/images/effects/in.png", "/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
+		minWageTxtFldTxtFld = new CustomTextField("", "/images/effects/in.png",
+				"/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
 		
 		modifyUI();
 		initFont();
@@ -62,9 +59,12 @@ public class ChangeMinWageView extends JPanel {
 		applyBtn.setOpaque(false);
 		applyBtn.setForeground(null);
 		applyBtn.setFocusPainted(false);
-		applyBtn.setRolloverIcon(new ImageIcon(getClass().getResource("/images/buttons/apply-r.png")));
-		applyBtn.setPressedIcon(new ImageIcon(getClass().getResource("/images/buttons/apply-p.png")));
-		applyBtn.setSize(new Dimension(applyBtn.getIcon().getIconWidth(), applyBtn.getIcon().getIconHeight()));
+		applyBtn.setRolloverIcon(new ImageIcon(
+				getClass().getResource("/images/buttons/apply-r.png")));
+		applyBtn.setPressedIcon(new ImageIcon(
+				getClass().getResource("/images/buttons/apply-p.png")));
+		applyBtn.setSize(new Dimension(applyBtn.getIcon().getIconWidth(),
+				applyBtn.getIcon().getIconHeight()));
 		
 		addComponentsToPane();
 	}
@@ -128,7 +128,9 @@ public class ChangeMinWageView extends JPanel {
 	}
 	
 	public boolean askConfirmation(){ 
-		int confirmation = JOptionPane.showConfirmDialog(null, "Are you sure you want to change minimum wage?", "Change Minimum Wage!", JOptionPane.YES_NO_OPTION);
+		int confirmation = JOptionPane.showConfirmDialog(null, 
+				"Are you sure you want to change minimum wage?", "Change Minimum Wage!",
+				JOptionPane.YES_NO_OPTION);
 		
 		if(confirmation ==JOptionPane.YES_OPTION){
 			return true;
@@ -154,7 +156,8 @@ public class ChangeMinWageView extends JPanel {
 		ImageIcon img_icon = new ImageIcon(this.getClass().getResource(img_url));
 		int new_width = (int) (img_icon.getIconWidth()*percent);
 		int new_height = (int) (img_icon.getIconHeight()*percent);
-		Image img = img_icon.getImage().getScaledInstance(new_width,new_height,java.awt.Image.SCALE_SMOOTH);  
+		Image img = img_icon.getImage().getScaledInstance(new_width,new_height,
+				java.awt.Image.SCALE_SMOOTH);  
 		img_icon = new ImageIcon(img);
 		return img_icon;
 	}

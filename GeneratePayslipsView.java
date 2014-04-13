@@ -56,8 +56,10 @@ public class GeneratePayslipsView extends JPanel {
 	
 	public GeneratePayslipsView(PayrollSystemModel model){
 		this.model = model;
-		generateBtn = new JButton(new ImageIcon(getClass().getResource("/images/buttons/generate.png")));
-		selSaveBtn = new JButton(new ImageIcon(getClass().getResource("/images/buttons/select.png")));
+		generateBtn = new JButton(new ImageIcon(
+				getClass().getResource("/images/buttons/generate.png")));
+		selSaveBtn = new JButton(new ImageIcon(
+				getClass().getResource("/images/buttons/select.png")));
 		
 		selectClientLbl = new JLabel("Select Client: ");
 		saveLbl = new JLabel("Save Location: ");
@@ -80,7 +82,8 @@ public class GeneratePayslipsView extends JPanel {
 		clientCBox.setBackground(Utils.comboBoxBGColor);
 		clientCBox.setForeground(Utils.comboBoxFGColor);
 		
-		locationLbl.setBorder(new CompoundBorder(new LineBorder(Color.LIGHT_GRAY), new EmptyBorder(5,5,5,5)));
+		locationLbl.setBorder(new CompoundBorder(new LineBorder(Color.LIGHT_GRAY),
+				new EmptyBorder(5,5,5,5)));
 		locationLbl.setPreferredSize(new Dimension(350,25));
 		
 		generateBtn.setContentAreaFilled(false);
@@ -88,18 +91,24 @@ public class GeneratePayslipsView extends JPanel {
 		generateBtn.setOpaque(false);
 		generateBtn.setForeground(null);
 		generateBtn.setFocusPainted(false);
-		generateBtn.setRolloverIcon(new ImageIcon(getClass().getResource("/images/buttons/generate-r.png")));
-		generateBtn.setPressedIcon(new ImageIcon(getClass().getResource("/images/buttons/generate-p.png")));
-		generateBtn.setSize(new Dimension(generateBtn.getIcon().getIconWidth(), generateBtn.getIcon().getIconHeight()));
+		generateBtn.setRolloverIcon(new ImageIcon(
+				getClass().getResource("/images/buttons/generate-r.png")));
+		generateBtn.setPressedIcon(new ImageIcon(
+				getClass().getResource("/images/buttons/generate-p.png")));
+		generateBtn.setSize(new Dimension(generateBtn.getIcon().getIconWidth(),
+				generateBtn.getIcon().getIconHeight()));
 		
 		selSaveBtn.setContentAreaFilled(false);
 		selSaveBtn.setBorder(null);
 		selSaveBtn.setOpaque(false);
 		selSaveBtn.setForeground(null);
 		selSaveBtn.setFocusPainted(false);
-		selSaveBtn.setRolloverIcon(new ImageIcon(getClass().getResource("/images/buttons/select-r.png")));
-		selSaveBtn.setPressedIcon(new ImageIcon(getClass().getResource("/images/buttons/select-p.png")));
-		selSaveBtn.setPreferredSize(new Dimension(selSaveBtn.getIcon().getIconWidth(), selSaveBtn.getIcon().getIconHeight()));
+		selSaveBtn.setRolloverIcon(new ImageIcon(
+				getClass().getResource("/images/buttons/select-r.png")));
+		selSaveBtn.setPressedIcon(new ImageIcon(
+				getClass().getResource("/images/buttons/select-p.png")));
+		selSaveBtn.setPreferredSize(new Dimension(selSaveBtn.getIcon().getIconWidth(),
+				selSaveBtn.getIcon().getIconHeight()));
 		
 		initFont();
 		addComponentsToPane();
@@ -185,12 +194,15 @@ public class GeneratePayslipsView extends JPanel {
 		g2d.setFont(Utils.headerFont);
         g2d.drawString("Generate Payslips", 20, 35);
 		g2d.setFont(Utils.descFont);
-        g2d.drawString("This section allows you to generate payslips of a client.", 20, 55);
+        g2d.drawString("This section allows you to generate payslips of a client.",
+        		20, 55);
 		
 		g2d.setColor(Utils.statusBGColor);
-		g2d.fillRect(0, this.getHeight()-Utils.HEIGHT, this.getWidth(), Utils.HEIGHT);
+		g2d.fillRect(0, this.getHeight()-Utils.HEIGHT, this.getWidth(),
+				Utils.HEIGHT);
 		g2d.setColor(Color.LIGHT_GRAY);
-		g2d.drawLine(0, this.getHeight()-Utils.HEIGHT, this.getWidth(), this.getHeight()-Utils.HEIGHT);
+		g2d.drawLine(0, this.getHeight()-Utils.HEIGHT, this.getWidth(), 
+				this.getHeight()-Utils.HEIGHT);
 	}
 	
 	public void setSelectFileListener(ActionListener list){
@@ -210,7 +222,7 @@ public class GeneratePayslipsView extends JPanel {
 			if(fc.toString().contains(".csv")){
 				return fc.getSelectedFile();
 			}
-			return new File(fc.getSelectedFile()+".csv");
+			return new File(fc.getSelectedFile() + ".csv");
 		}else{
 			return null;
 		}
@@ -223,7 +235,7 @@ public class GeneratePayslipsView extends JPanel {
 	public void setFileDirectory(File f){
 		file = f;
 		
-		if(f!=null){
+		if(f != null){
 			locationLbl.setText(file.getPath());
 		}else{
 			locationLbl.setText("");
@@ -259,10 +271,11 @@ public class GeneratePayslipsView extends JPanel {
 	}
 	
 	public boolean askConfirmation(){
-		int confirmation = JOptionPane.showConfirmDialog(null, "Overwrite file?", "Overwrite file?",
+		int confirmation = JOptionPane.showConfirmDialog(null, "Overwrite file?",
+				"Overwrite file?",
 		
 		JOptionPane.YES_NO_OPTION);
-		if(confirmation ==JOptionPane.YES_OPTION){
+		if(confirmation == JOptionPane.YES_OPTION){
 			return true;
 		}
 		return false;
@@ -272,7 +285,8 @@ public class GeneratePayslipsView extends JPanel {
 		ImageIcon img_icon = new ImageIcon(this.getClass().getResource(img_url));
 		int new_width = (int) (img_icon.getIconWidth()*percent);
 		int new_height = (int) (img_icon.getIconHeight()*percent);
-		Image img = img_icon.getImage().getScaledInstance(new_width,new_height,java.awt.Image.SCALE_SMOOTH);  
+		Image img = img_icon.getImage().getScaledInstance(new_width,new_height,
+				java.awt.Image.SCALE_SMOOTH);  
 		img_icon = new ImageIcon(img);
 		return img_icon;
 	}

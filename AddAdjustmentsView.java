@@ -56,7 +56,8 @@ public class AddAdjustmentsView extends JPanel {
 	
 	public AddAdjustmentsView(PayrollSystemModel model) {
 		this.model = model;
-		addBtn = new JButton(new ImageIcon(getClass().getResource("/images/buttons/add.png")));
+		addBtn = new JButton(new ImageIcon(
+				getClass().getResource("/images/buttons/add.png")));
 		
 		selectClientLbl = new JLabel("Select Client: ");
 		selectPersLbl = new JLabel("Select Personnel: ");
@@ -65,8 +66,10 @@ public class AddAdjustmentsView extends JPanel {
 		statusLbl = new JLabel("Status: New adjustments can be added!");
 		statusLbl.setIcon(loadScaledImage("/images/notifs/right.png", .08f));
 		
-		amountTextFld = new CustomTextField("Amount", "/images/effects/in.png", "/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
-		reasonTextFld = new CustomTextField("Reason", "/images/effects/in.png", "/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
+		amountTextFld = new CustomTextField("Amount", "/images/effects/in.png",
+				"/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
+		reasonTextFld = new CustomTextField("Reason", "/images/effects/in.png",
+				"/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
 		
 		personnelCBox = new JComboBox<Object>();
 		clientCBox = new JComboBox<Object>();
@@ -96,9 +99,12 @@ public class AddAdjustmentsView extends JPanel {
 		addBtn.setOpaque(false);
 		addBtn.setForeground(null);
 		addBtn.setFocusPainted(false);
-		addBtn.setRolloverIcon(new ImageIcon(getClass().getResource("/images/buttons/add-r.png")));
-		addBtn.setPressedIcon(new ImageIcon(getClass().getResource("/images/buttons/add-p.png")));
-		addBtn.setSize(new Dimension(addBtn.getIcon().getIconWidth(), addBtn.getIcon().getIconHeight()));
+		addBtn.setRolloverIcon(new ImageIcon(
+				getClass().getResource("/images/buttons/add-r.png")));
+		addBtn.setPressedIcon(new ImageIcon(
+				getClass().getResource("/images/buttons/add-p.png")));
+		addBtn.setSize(new Dimension(addBtn.getIcon().getIconWidth(),
+				addBtn.getIcon().getIconHeight()));
 		
 		addComponentsToPane();
 	}
@@ -211,12 +217,14 @@ public class AddAdjustmentsView extends JPanel {
 		g2d.setFont(Utils.headerFont);
         	g2d.drawString("Add Adjustments", 20, 35);
 		g2d.setFont(Utils.descFont);
-        	g2d.drawString("This section allows you to add adjustments to a personnel.", 20, 55);
+        	g2d.drawString("This section allows you to add adjustments to a personnel.",
+        			20, 55);
 		
 		g2d.setColor(Utils.statusBGColor);
-		g2d.fillRect(0, this.getHeight()-Utils.HEIGHT, this.getWidth(), Utils.HEIGHT);
+		g2d.fillRect(0, this.getHeight() - Utils.HEIGHT, this.getWidth(), Utils.HEIGHT);
 		g2d.setColor(Color.LIGHT_GRAY);
-		g2d.drawLine(0, this.getHeight()-Utils.HEIGHT, this.getWidth(), this.getHeight()-Utils.HEIGHT);
+		g2d.drawLine(0, this.getHeight() - Utils.HEIGHT, this.getWidth(),
+				this.getHeight()-Utils.HEIGHT);
 	}
 	
 	public boolean askConfirmation(){
@@ -277,7 +285,8 @@ public class AddAdjustmentsView extends JPanel {
 	}
 	
 	public void updatePersonnelList(){
-		ArrayList<String> personnel = model.getPersonnelList((String)clientCBox.getSelectedItem());
+		ArrayList<String> personnel = 
+				model.getPersonnelList((String)clientCBox.getSelectedItem());
 		
 		personnelCBox.removeAllItems();
 		for(String t : personnel){
@@ -298,7 +307,8 @@ public class AddAdjustmentsView extends JPanel {
 		ImageIcon img_icon = new ImageIcon(this.getClass().getResource(img_url));
 		int new_width = (int) (img_icon.getIconWidth()*percent);
 		int new_height = (int) (img_icon.getIconHeight()*percent);
-		Image img = img_icon.getImage().getScaledInstance(new_width,new_height,java.awt.Image.SCALE_SMOOTH);  
+		Image img = img_icon.getImage().getScaledInstance(new_width,new_height,
+				java.awt.Image.SCALE_SMOOTH);  
 		img_icon = new ImageIcon(img);
 		return img_icon;
 	}

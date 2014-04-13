@@ -27,7 +27,8 @@ import javax.swing.event.DocumentListener;
 import org.pushingpixels.trident.Timeline;
 
 /* Custom Text Field */
-public class CustomTextField extends JTextField implements FocusListener, DocumentListener {
+public class CustomTextField extends JTextField 
+		implements FocusListener, DocumentListener {
 	
 	private String hint;
 	private boolean show;
@@ -39,7 +40,8 @@ public class CustomTextField extends JTextField implements FocusListener, Docume
 	
 	private int width, height;
 	  
-	public CustomTextField(String hint, String img_url, String hover_url, int width, int height){
+	public CustomTextField(String hint, String img_url, String hover_url, 
+			int width, int height){
 		this.hint = hint;
 		on_focus = loadImage(img_url);
 		not_focus = loadImage(hover_url);
