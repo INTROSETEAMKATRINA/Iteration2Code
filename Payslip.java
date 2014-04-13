@@ -37,8 +37,11 @@
 	 *  Visibility: public
 	 *******************************************************/
 
+	 
 import java.util.Date;
 import java.math.BigDecimal;
+
+
 class Payslip{
 	
 	private String assignment;
@@ -85,25 +88,25 @@ class Payslip{
 	private String tin;
 	
 	public Payslip(String tin, String assignment, String name, Date periodStartDate,
-	String position, BigDecimal regularDaysWork, BigDecimal dailyRate,
-	BigDecimal grossPay, BigDecimal late, BigDecimal regularPay,
-	BigDecimal regularOvertime, BigDecimal regularOvertimePay,
-	BigDecimal regularNightShiftDifferential,
-	BigDecimal regularNightShiftDifferentialPay,
-	BigDecimal legalHoliday, BigDecimal legalHolidayPay,
-	BigDecimal legalHolidayOvertime, BigDecimal legalHolidayOvertimePay,
-	BigDecimal legalHolidayNightShiftDifferential,
-	BigDecimal legalHolidayNightShiftDifferentialPay,
-	BigDecimal legalHolidayOnRestDay, BigDecimal legalHolidayOnRestDayPay,
-	BigDecimal specialHoliday, BigDecimal specialHolidayPay,
-	BigDecimal specialHolidayOvertime, BigDecimal specialHolidayOvertimePay,
-	BigDecimal specialHolidayNightShiftDifferential,
-	BigDecimal specialHolidayNightShiftDifferentialPay,
-	BigDecimal specialHolidayOnRestDay, BigDecimal specialHolidayOnRestDayPay,
-	BigDecimal transpoAllow, BigDecimal adjustments, BigDecimal wTax,
-	BigDecimal sss, BigDecimal phic, BigDecimal hdmf, BigDecimal sssLoan,
-	BigDecimal hdmfLoan, BigDecimal payrollAdvance, BigDecimal houseRental,
-	BigDecimal uniformAndOthers, BigDecimal netPay){
+					String position, BigDecimal regularDaysWork, BigDecimal dailyRate,
+					BigDecimal grossPay, BigDecimal late, BigDecimal regularPay,
+					BigDecimal regularOvertime, BigDecimal regularOvertimePay,
+					BigDecimal regularNightShiftDifferential,
+					BigDecimal regularNightShiftDifferentialPay,
+					BigDecimal legalHoliday, BigDecimal legalHolidayPay,
+					BigDecimal legalHolidayOvertime, BigDecimal legalHolidayOvertimePay,
+					BigDecimal legalHolidayNightShiftDifferential,
+					BigDecimal legalHolidayNightShiftDifferentialPay,
+					BigDecimal legalHolidayOnRestDay, BigDecimal legalHolidayOnRestDayPay,
+					BigDecimal specialHoliday, BigDecimal specialHolidayPay,
+					BigDecimal specialHolidayOvertime, BigDecimal specialHolidayOvertimePay,
+					BigDecimal specialHolidayNightShiftDifferential,
+					BigDecimal specialHolidayNightShiftDifferentialPay,
+					BigDecimal specialHolidayOnRestDay, BigDecimal specialHolidayOnRestDayPay,
+					BigDecimal transpoAllow, BigDecimal adjustments, BigDecimal wTax,
+					BigDecimal sss, BigDecimal phic, BigDecimal hdmf, BigDecimal sssLoan,
+					BigDecimal hdmfLoan, BigDecimal payrollAdvance, BigDecimal houseRental,
+					BigDecimal uniformAndOthers, BigDecimal netPay){
 		this.tin = tin;
 		this.assignment = assignment;
 		this.name = name;
@@ -319,4 +322,5 @@ class Payslip{
 	public BigDecimal getTotalDeductions(){
 		return sss.add(hdmf).add(wTax).add(phic).add(sssLoan).add(hdmfLoan).add(payrollAdvance).add(houseRental).add(uniformAndOthers);
 	}
+	
 }

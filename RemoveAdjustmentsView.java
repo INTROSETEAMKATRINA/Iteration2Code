@@ -1,6 +1,6 @@
 /*******************************************************
 	 *  Class name: RemoveAdjustmentsView
- 	 *  Inheritance: JFrame
+ 	 *  Inheritance: JPanel
 	 *  Attributes: model
 	 *  Methods:	RemoveAdjustmentsView, askConfirmation, setRemoveListener, setCancelListener,
      *				setClientListener, setPersonnelListener, showSuccess,
@@ -30,6 +30,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import java.math.BigDecimal;
+
+
 public class RemoveAdjustmentsView extends JPanel {
 	
 	private JLabel selectClientLbl;
@@ -44,6 +46,8 @@ public class RemoveAdjustmentsView extends JPanel {
 	private JComboBox<Object> adjCBox;
 	
 	private PayrollSystemModel model;
+	
+	
 	public RemoveAdjustmentsView(PayrollSystemModel model) {
 		this.model = model;
 		removeBtn = new JButton(new ImageIcon(getClass().getResource("/images/buttons/remove.png")));
@@ -168,8 +172,7 @@ public class RemoveAdjustmentsView extends JPanel {
 		add(statusLbl,gbc);
 	}
 	
-	public void initFont()
-	{
+	public void initFont(){
 		clientCBox.setFont(Utils.comboBoxFont);
 		personnelCBox.setFont(Utils.comboBoxFont);
 		adjCBox.setFont(Utils.comboBoxFont);
@@ -179,8 +182,7 @@ public class RemoveAdjustmentsView extends JPanel {
 		statusLbl.setFont(Utils.statusBarFont);
 	}
 	
-	public void paintComponent(Graphics g)
-	{
+	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 		
@@ -300,8 +302,7 @@ public class RemoveAdjustmentsView extends JPanel {
 		return adjCBox.getItemCount();
 	}
 
-	private ImageIcon loadScaledImage(String img_url, float percent)
-	{	
+	private ImageIcon loadScaledImage(String img_url, float percent){	
 		ImageIcon img_icon = new ImageIcon(this.getClass().getResource(img_url));
 		int new_width = (int) (img_icon.getIconWidth()*percent);
 		int new_height = (int) (img_icon.getIconHeight()*percent);
