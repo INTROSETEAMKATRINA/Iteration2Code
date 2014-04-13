@@ -50,7 +50,8 @@ public class RemoveAdjustmentsView extends JPanel {
 	
 	public RemoveAdjustmentsView(PayrollSystemModel model) {
 		this.model = model;
-		removeBtn = new JButton(new ImageIcon(getClass().getResource("/images/buttons/remove.png")));
+		removeBtn = new JButton(new ImageIcon(
+				getClass().getResource("/images/buttons/remove.png")));
 		
 		adjCBox = new JComboBox<Object>();
 		
@@ -88,8 +89,10 @@ public class RemoveAdjustmentsView extends JPanel {
 		removeBtn.setOpaque(false);
 		removeBtn.setForeground(null);
 		removeBtn.setFocusPainted(false);
-		removeBtn.setRolloverIcon(new ImageIcon(getClass().getResource("/images/buttons/remove-r.png")));
-		removeBtn.setPressedIcon(new ImageIcon(getClass().getResource("/images/buttons/remove-p.png")));
+		removeBtn.setRolloverIcon(new ImageIcon(
+				getClass().getResource("/images/buttons/remove-r.png")));
+		removeBtn.setPressedIcon(new ImageIcon(
+				getClass().getResource("/images/buttons/remove-p.png")));
 		removeBtn.setSize(new Dimension(
 			removeBtn.getIcon().getIconWidth(), removeBtn.getIcon().getIconHeight()));
 		
@@ -193,18 +196,23 @@ public class RemoveAdjustmentsView extends JPanel {
 		g2d.setFont(Utils.headerFont);
         	g2d.drawString("Remove Adjustments", 20, 35);
 		g2d.setFont(Utils.descFont);
-        	g2d.drawString("This section allows you to remove adjustments of a personnel.", 20, 55);
+        	g2d.drawString("This section allows you to remove adjustments of a personnel.", 
+        			20, 55);
 		
 		g2d.setColor(Utils.statusBGColor);
-		g2d.fillRect(0, this.getHeight()-Utils.HEIGHT, this.getWidth(), Utils.HEIGHT);
+		g2d.fillRect(0, this.getHeight()-Utils.HEIGHT, this.getWidth(),
+				Utils.HEIGHT);
 		g2d.setColor(Color.LIGHT_GRAY);
-		g2d.drawLine(0, this.getHeight()-Utils.HEIGHT, this.getWidth(), this.getHeight()-Utils.HEIGHT);
+		g2d.drawLine(0, this.getHeight()-Utils.HEIGHT, this.getWidth(), 
+				this.getHeight()-Utils.HEIGHT);
 	}
 	
 	public boolean askConfirmation(){
-		int confirmation = JOptionPane.showConfirmDialog(null, "Are you sure you want to remove adjustments?!", "Remove adjustments!",
+		int confirmation = JOptionPane.showConfirmDialog(null, 
+				"Are you sure you want to remove adjustments?!", 
+				"Remove adjustments!",
 			JOptionPane.YES_NO_OPTION);
-		if(confirmation ==JOptionPane.YES_OPTION){
+		if(confirmation == JOptionPane.YES_OPTION){
 			return true;
 		}
 		return false;
@@ -266,36 +274,36 @@ public class RemoveAdjustmentsView extends JPanel {
 			return null;
 		}
 		
-		for(i = 0;i<s.length();i++){
-			if(s.charAt(i)=='~'){
+		for(i = 0;i < s.length(); i++){
+			if(s.charAt(i) == '~'){
 				break;
 			}
 		}
-		return s.substring(i+2,s.length());
+		return s.substring(i + 2, s.length());
 	}
 	
 	public String getTypeAdjustment(){
 		String s = (String)adjCBox.getSelectedItem();
 		int i;
 		
-		for(i = 0;i<s.length();i++){
-			if(s.charAt(i)=='~'){
+		for(i = 0;i < s.length(); i++){
+			if(s.charAt(i )== '~'){
 				break;
 			}
 		}
 		
-		return s.substring(0,i-1);
+		return s.substring(0,i - 1);
 	}
 	
 	public BigDecimal getAdjustment(){
 		String s = (String)adjCBox.getSelectedItem();
 		int i;
-		for(i = 0;i<s.length();i++){
-			if(s.charAt(i)=='~'){
+		for(i = 0;i < s.length(); i++){
+			if(s.charAt(i) == '~'){
 				break;
 			}
 		}
-		return new BigDecimal(s.substring(i+2,s.length()));
+		return new BigDecimal(s.substring(i + 2,s.length()));
 	}
 	
 	public int getNumAdjustments(){
@@ -319,5 +327,4 @@ public class RemoveAdjustmentsView extends JPanel {
 		}
 		super.setVisible(b);
 	}
-	
 }

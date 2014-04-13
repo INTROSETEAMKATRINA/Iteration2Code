@@ -88,55 +88,76 @@ class Payslip{
 	private String tin;
 	
 	public Payslip(String tin, String assignment, String name, Date periodStartDate,
-					String position, BigDecimal regularDaysWork, BigDecimal dailyRate,
-					BigDecimal grossPay, BigDecimal late, BigDecimal regularPay,
-					BigDecimal regularOvertime, BigDecimal regularOvertimePay,
-					BigDecimal regularNightShiftDifferential,
-					BigDecimal regularNightShiftDifferentialPay,
-					BigDecimal legalHoliday, BigDecimal legalHolidayPay,
-					BigDecimal legalHolidayOvertime, BigDecimal legalHolidayOvertimePay,
-					BigDecimal legalHolidayNightShiftDifferential,
-					BigDecimal legalHolidayNightShiftDifferentialPay,
-					BigDecimal legalHolidayOnRestDay, BigDecimal legalHolidayOnRestDayPay,
-					BigDecimal specialHoliday, BigDecimal specialHolidayPay,
-					BigDecimal specialHolidayOvertime, BigDecimal specialHolidayOvertimePay,
-					BigDecimal specialHolidayNightShiftDifferential,
-					BigDecimal specialHolidayNightShiftDifferentialPay,
-					BigDecimal specialHolidayOnRestDay, BigDecimal specialHolidayOnRestDayPay,
-					BigDecimal transpoAllow, BigDecimal adjustments, BigDecimal wTax,
-					BigDecimal sss, BigDecimal phic, BigDecimal hdmf, BigDecimal sssLoan,
-					BigDecimal hdmfLoan, BigDecimal payrollAdvance, BigDecimal houseRental,
-					BigDecimal uniformAndOthers, BigDecimal netPay){
+			String position, BigDecimal regularDaysWork, BigDecimal dailyRate,
+			BigDecimal grossPay, BigDecimal late, BigDecimal regularPay,
+			BigDecimal regularOvertime, BigDecimal regularOvertimePay,
+			BigDecimal regularNightShiftDifferential,
+			BigDecimal regularNightShiftDifferentialPay,
+			BigDecimal legalHoliday, BigDecimal legalHolidayPay,
+			BigDecimal legalHolidayOvertime, BigDecimal legalHolidayOvertimePay,
+			BigDecimal legalHolidayNightShiftDifferential,
+			BigDecimal legalHolidayNightShiftDifferentialPay,
+			BigDecimal legalHolidayOnRestDay, BigDecimal legalHolidayOnRestDayPay,
+			BigDecimal specialHoliday, BigDecimal specialHolidayPay,
+			BigDecimal specialHolidayOvertime, BigDecimal specialHolidayOvertimePay,
+			BigDecimal specialHolidayNightShiftDifferential,
+			BigDecimal specialHolidayNightShiftDifferentialPay,
+			BigDecimal specialHolidayOnRestDay, BigDecimal specialHolidayOnRestDayPay,
+			BigDecimal transpoAllow, BigDecimal adjustments, BigDecimal wTax,
+			BigDecimal sss, BigDecimal phic, BigDecimal hdmf, BigDecimal sssLoan,
+			BigDecimal hdmfLoan, BigDecimal payrollAdvance, BigDecimal houseRental,
+			BigDecimal uniformAndOthers, BigDecimal netPay){
 		this.tin = tin;
 		this.assignment = assignment;
 		this.name = name;
 		this.periodStartDate = periodStartDate;
 		this.position = position;
-		this.regularDaysWork = regularDaysWork.setScale(2, BigDecimal.ROUND_HALF_UP);
+		this.regularDaysWork = 
+				regularDaysWork.setScale(2, BigDecimal.ROUND_HALF_UP);
 		this.dailyRate = dailyRate.setScale(2, BigDecimal.ROUND_HALF_UP);
 		this.grossPay = grossPay.setScale(2, BigDecimal.ROUND_HALF_UP);
 		this.late = late.setScale(2, BigDecimal.ROUND_HALF_UP);
 		this.regularPay = regularPay.setScale(2, BigDecimal.ROUND_HALF_UP);
-		this.regularOvertime = regularOvertime.setScale(2, BigDecimal.ROUND_HALF_UP);
-		this.regularOvertimePay = regularOvertimePay.setScale(2, BigDecimal.ROUND_HALF_UP);
-		this.regularNightShiftDifferential = regularNightShiftDifferential.setScale(2, BigDecimal.ROUND_HALF_UP);
-		this.regularNightShiftDifferentialPay = regularNightShiftDifferentialPay.setScale(2, BigDecimal.ROUND_HALF_UP);
-		this.legalHoliday = legalHoliday.setScale(2, BigDecimal.ROUND_HALF_UP);
-		this.legalHolidayPay = legalHolidayPay.setScale(2, BigDecimal.ROUND_HALF_UP);
-		this.legalHolidayOvertime = legalHolidayOvertime.setScale(2, BigDecimal.ROUND_HALF_UP);
-		this.legalHolidayOvertimePay = legalHolidayOvertimePay.setScale(2, BigDecimal.ROUND_HALF_UP);
-		this.legalHolidayNightShiftDifferential = legalHolidayNightShiftDifferential.setScale(2, BigDecimal.ROUND_HALF_UP);
-		this.legalHolidayNightShiftDifferentialPay = legalHolidayNightShiftDifferentialPay.setScale(2, BigDecimal.ROUND_HALF_UP);
-		this.legalHolidayOnRestDay = legalHolidayOnRestDay.setScale(2, BigDecimal.ROUND_HALF_UP);
-		this.legalHolidayOnRestDayPay = legalHolidayOnRestDayPay.setScale(2, BigDecimal.ROUND_HALF_UP);
-		this.specialHoliday = specialHoliday.setScale(2, BigDecimal.ROUND_HALF_UP);
-		this.specialHolidayPay = specialHolidayPay.setScale(2, BigDecimal.ROUND_HALF_UP);
-		this.specialHolidayOvertime = specialHolidayOvertime.setScale(2, BigDecimal.ROUND_HALF_UP);
-		this.specialHolidayOvertimePay = specialHolidayOvertimePay.setScale(2, BigDecimal.ROUND_HALF_UP);
-		this.specialHolidayNightShiftDifferential = specialHolidayNightShiftDifferential.setScale(2, BigDecimal.ROUND_HALF_UP);
-		this.specialHolidayNightShiftDifferentialPay = specialHolidayNightShiftDifferentialPay.setScale(2, BigDecimal.ROUND_HALF_UP);
-		this.specialHolidayOnRestDay = specialHolidayOnRestDay.setScale(2, BigDecimal.ROUND_HALF_UP);
-		this.specialHolidayOnRestDayPay = specialHolidayOnRestDayPay.setScale(2, BigDecimal.ROUND_HALF_UP);
+		this.regularOvertime = 
+				regularOvertime.setScale(2, BigDecimal.ROUND_HALF_UP);
+		this.regularOvertimePay = 
+				regularOvertimePay.setScale(2, BigDecimal.ROUND_HALF_UP);
+		this.regularNightShiftDifferential = 
+				regularNightShiftDifferential.setScale(2, BigDecimal.ROUND_HALF_UP);
+		this.regularNightShiftDifferentialPay = 
+				regularNightShiftDifferentialPay.setScale(2, BigDecimal.ROUND_HALF_UP);
+		this.legalHoliday = 
+				legalHoliday.setScale(2, BigDecimal.ROUND_HALF_UP);
+		this.legalHolidayPay = 
+				legalHolidayPay.setScale(2, BigDecimal.ROUND_HALF_UP);
+		this.legalHolidayOvertime = 
+				legalHolidayOvertime.setScale(2, BigDecimal.ROUND_HALF_UP);
+		this.legalHolidayOvertimePay = 
+				legalHolidayOvertimePay.setScale(2, BigDecimal.ROUND_HALF_UP);
+		this.legalHolidayNightShiftDifferential = 
+				legalHolidayNightShiftDifferential.setScale(2, BigDecimal.ROUND_HALF_UP);
+		this.legalHolidayNightShiftDifferentialPay = 
+				legalHolidayNightShiftDifferentialPay.setScale(2, BigDecimal.ROUND_HALF_UP);
+		this.legalHolidayOnRestDay = 
+				legalHolidayOnRestDay.setScale(2, BigDecimal.ROUND_HALF_UP);
+		this.legalHolidayOnRestDayPay = 
+				legalHolidayOnRestDayPay.setScale(2, BigDecimal.ROUND_HALF_UP);
+		this.specialHoliday = 
+				specialHoliday.setScale(2, BigDecimal.ROUND_HALF_UP);
+		this.specialHolidayPay = 
+				specialHolidayPay.setScale(2, BigDecimal.ROUND_HALF_UP);
+		this.specialHolidayOvertime = 
+				specialHolidayOvertime.setScale(2, BigDecimal.ROUND_HALF_UP);
+		this.specialHolidayOvertimePay = 
+				specialHolidayOvertimePay.setScale(2, BigDecimal.ROUND_HALF_UP);
+		this.specialHolidayNightShiftDifferential = 
+				specialHolidayNightShiftDifferential.setScale(2, BigDecimal.ROUND_HALF_UP);
+		this.specialHolidayNightShiftDifferentialPay = 
+				specialHolidayNightShiftDifferentialPay.setScale(2, BigDecimal.ROUND_HALF_UP);
+		this.specialHolidayOnRestDay = 
+				specialHolidayOnRestDay.setScale(2, BigDecimal.ROUND_HALF_UP);
+		this.specialHolidayOnRestDayPay = 
+				specialHolidayOnRestDayPay.setScale(2, BigDecimal.ROUND_HALF_UP);
 		this.transpoAllow = transpoAllow.setScale(2, BigDecimal.ROUND_HALF_UP);
 		this.adjustments = adjustments.setScale(2, BigDecimal.ROUND_HALF_UP);
 		this.wTax = wTax.setScale(2, BigDecimal.ROUND_HALF_UP);
@@ -320,7 +341,8 @@ class Payslip{
 	}
 	
 	public BigDecimal getTotalDeductions(){
-		return sss.add(hdmf).add(wTax).add(phic).add(sssLoan).add(hdmfLoan).add(payrollAdvance).add(houseRental).add(uniformAndOthers);
+		return sss.add(hdmf).add(wTax).add(phic).add(sssLoan).add(hdmfLoan).
+				add(payrollAdvance).add(houseRental).add(uniformAndOthers);
 	}
 	
 }

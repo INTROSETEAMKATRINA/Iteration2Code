@@ -338,7 +338,9 @@ public class ViewPersonnelView extends JPanel {
 	}
 	
 	public boolean askConfirmation(){
-		int confirmation = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete personnel?!", "Delete Personnel!", JOptionPane.YES_NO_OPTION);
+		int confirmation = JOptionPane.showConfirmDialog(null,
+				"Are you sure you want to delete personnel?!", "Delete Personnel!",
+				JOptionPane.YES_NO_OPTION);
 		
 		if(confirmation ==JOptionPane.YES_OPTION){
 			return true;

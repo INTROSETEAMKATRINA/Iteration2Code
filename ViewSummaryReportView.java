@@ -32,7 +32,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
@@ -70,10 +69,12 @@ public class ViewSummaryReportView extends JPanel {
 		this.model = model;
 		
 		//
-		searchTxtFld = new CustomTextField("Enter search keyword here.", "/images/effects/in.png", "/images/effects/out.png", 180, 41);
+		searchTxtFld = new CustomTextField("Enter search keyword here.", 
+				"/images/effects/in.png", "/images/effects/out.png", 180, 41);
 		categoryLbl = new JLabel("Select Category to search: ");
 		categoryCBox = new JComboBox<Object>();
-		searchBtn = new JButton(new ImageIcon(getClass().getResource("/images/buttons/search.png")));
+		searchBtn = new JButton(new ImageIcon(
+				getClass().getResource("/images/buttons/search.png")));
 		
 		statusLbl = new JLabel("Status: No Data Found!");
 		statusLbl.setIcon(loadScaledImage("/images/notifs/warning.png",.08f));
@@ -109,23 +110,34 @@ public class ViewSummaryReportView extends JPanel {
 		
 		for(int i = 0; i < summaryTable.getColumnCount(); i++){
 			if(i == 0) {
-				summaryTable.getColumnModel().getColumn(i).setCellRenderer(new ColorfulCellRenderer(new Color(0xFAFAFA),Color.BLACK,Utils.colorfulSRColumn));
+				summaryTable.getColumnModel().getColumn(i).setCellRenderer(
+						new ColorfulCellRenderer(new Color(0xFAFAFA),Color.BLACK,
+								Utils.colorfulSRColumn));
 				summaryTable.getColumnModel().getColumn(i).setPreferredWidth(40);
 			}else if(Utils.colorfulSRColumn.contains(i)){
 				switch(i){
-				case 2:
-					summaryTable.getColumnModel().getColumn(i).setCellRenderer(new ColorfulCellRenderer(new Color(0xbee1fe),Color.BLACK,Utils.colorfulSRColumn));
-					break;
-				default:
-					summaryTable.getColumnModel().getColumn(i).setCellRenderer(new ColorfulCellRenderer(Color.ORANGE,Color.BLACK,Utils.colorfulSRColumn));
-					break;
+					case 2:
+						summaryTable.getColumnModel().getColumn(i).setCellRenderer(
+								new ColorfulCellRenderer(new Color(0xbee1fe),Color.BLACK,
+										Utils.colorfulSRColumn));
+						break;
+					default:
+						summaryTable.getColumnModel().getColumn(i).setCellRenderer(
+								new ColorfulCellRenderer(Color.ORANGE,Color.BLACK,
+										Utils.colorfulSRColumn));
+						break;
 				};
-			} else
-				summaryTable.getColumnModel().getColumn(i).setCellRenderer(new ColorfulCellRenderer(Color.WHITE,Color.BLACK,Utils.colorfulSRColumn));
+			} else{
+				summaryTable.getColumnModel().getColumn(i).setCellRenderer(
+						new ColorfulCellRenderer(Color.WHITE,Color.BLACK,
+								Utils.colorfulSRColumn));
+			}
+				
 		}
 		
 		summaryTable.addMouseListener(new TableMouseListener());
-		summaryPane = new JScrollPane(summaryTable, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		summaryPane = new JScrollPane(summaryTable, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, 
+				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		
 		modifyUI();
 		initFont();
@@ -159,9 +171,12 @@ public class ViewSummaryReportView extends JPanel {
 		searchBtn.setOpaque(false);
 		searchBtn.setForeground(null);
 		searchBtn.setFocusPainted(false);
-		searchBtn.setRolloverIcon(new ImageIcon(getClass().getResource("/images/buttons/search-r.png")));
-		searchBtn.setPressedIcon(new ImageIcon(getClass().getResource("/images/buttons/search-p.png")));
-		searchBtn.setSize(new Dimension(searchBtn.getIcon().getIconWidth(), searchBtn.getIcon().getIconHeight()));
+		searchBtn.setRolloverIcon(new ImageIcon(
+				getClass().getResource("/images/buttons/search-r.png")));
+		searchBtn.setPressedIcon(new ImageIcon(
+				getClass().getResource("/images/buttons/search-p.png")));
+		searchBtn.setSize(new Dimension(searchBtn.getIcon().getIconWidth(),
+				searchBtn.getIcon().getIconHeight()));
 		
 		addComponentsToPane();
 	}
@@ -266,7 +281,8 @@ public class ViewSummaryReportView extends JPanel {
 				int rowIndex = table.getSelectedRow();
 				int colIndex = table.getSelectedColumn();
 						
-				if(rowIndex == rowNum && Utils.colorfulSRColumn.contains(colIndex) && e.isPopupTrigger() && e.getComponent() instanceof JTable){
+				if(rowIndex == rowNum && Utils.colorfulSRColumn.contains(colIndex) &&
+						e.isPopupTrigger() && e.getComponent() instanceof JTable){
 					JMenuItem menuItem = new JMenuItem("View Formula");
 					menuItem.setFont(Utils.descFont);
 					menuItem.setBackground(Color.WHITE);
@@ -286,9 +302,11 @@ public class ViewSummaryReportView extends JPanel {
 		Graphics2D g2d = (Graphics2D) g;
 		
 		g2d.setColor(Utils.statusBGColor);
-		g2d.fillRect(0, this.getHeight()-Utils.HEIGHT, this.getWidth(), Utils.HEIGHT);
+		g2d.fillRect(0, this.getHeight()-Utils.HEIGHT, this.getWidth(), 
+				Utils.HEIGHT);
 		g2d.setColor(Color.LIGHT_GRAY);
-		g2d.drawLine(0, this.getHeight()-Utils.HEIGHT, this.getWidth(), this.getHeight()-Utils.HEIGHT);
+		g2d.drawLine(0, this.getHeight()-Utils.HEIGHT, this.getWidth(), 
+				this.getHeight()-Utils.HEIGHT);
 	}
 	
 	public void updateTableColumn(){
@@ -321,9 +339,11 @@ public class ViewSummaryReportView extends JPanel {
 	
 	public void updateTable(){
 		summaryModel.setRowCount(0);
-		statusLbl.setText("Status: You are now viewing " + getReport().toLowerCase() + ".");
+		statusLbl.setText("Status: You are now viewing " + 
+		getReport().toLowerCase() + ".");
 		statusLbl.setIcon(loadScaledImage("/images/notifs/right.png",.08f));
-		ArrayList<Object[]> row = model.getTableRow(getClient(),getPeriodStartDate(),getReport());
+		ArrayList<Object[]> row = model.getTableRow(getClient(),getPeriodStartDate(),
+				getReport());
 		for(Object[] t : row){
 			summaryModel.addRow(t);
 		}
@@ -373,7 +393,8 @@ public class ViewSummaryReportView extends JPanel {
 		ImageIcon img_icon = new ImageIcon(this.getClass().getResource(img_url));
 		int new_width = (int) (img_icon.getIconWidth()*percent);
 		int new_height = (int) (img_icon.getIconHeight()*percent);
-		Image img = img_icon.getImage().getScaledInstance(new_width,new_height,java.awt.Image.SCALE_SMOOTH);  
+		Image img = img_icon.getImage().getScaledInstance(new_width,new_height,
+				java.awt.Image.SCALE_SMOOTH);  
 		img_icon = new ImageIcon(img);
 		return img_icon;
 	}

@@ -83,20 +83,28 @@ public class SettingsView extends JPanel  {
 		sidePane.setLayout(new BoxLayout(sidePane, BoxLayout.PAGE_AXIS));
 		
 		changePassPanel.setOpaque(false);
-		changePassPanel.setSize(new Dimension(this.getWidth()-214,changePassPanel.getHeight()));
-		changePassPanel.setBounds(214, 50, changePassPanel.getWidth(), changePassPanel.getHeight());
+		changePassPanel.setSize(new Dimension(this.getWidth()-214,
+				changePassPanel.getHeight()));
+		changePassPanel.setBounds(214, 50, changePassPanel.getWidth(), 
+				changePassPanel.getHeight());
 		
 		restorePanel.setOpaque(false);
-		restorePanel.setSize(new Dimension(this.getWidth()-214,restorePanel.getHeight()));
-		restorePanel.setBounds(214, 50, restorePanel.getWidth(), restorePanel.getHeight());
+		restorePanel.setSize(new Dimension(this.getWidth()-214,
+				restorePanel.getHeight()));
+		restorePanel.setBounds(214, 50, restorePanel.getWidth(), 
+				restorePanel.getHeight());
 		
 		modifyVarPanel.setOpaque(false);
-		modifyVarPanel.setSize(new Dimension(this.getWidth()-214,modifyVarPanel.getHeight()));
-		modifyVarPanel.setBounds(214, 50, modifyVarPanel.getWidth(), modifyVarPanel.getHeight());
+		modifyVarPanel.setSize(new Dimension(this.getWidth()-214,
+				modifyVarPanel.getHeight()));
+		modifyVarPanel.setBounds(214, 50, modifyVarPanel.getWidth(), 
+				modifyVarPanel.getHeight());
 		
 		changeMinWagPanel.setOpaque(false);
-		changeMinWagPanel.setSize(new Dimension(this.getWidth()-214,changeMinWagPanel.getHeight()));
-		changeMinWagPanel.setBounds(214, 50, changeMinWagPanel.getWidth(), changeMinWagPanel.getHeight());
+		changeMinWagPanel.setSize(new Dimension(this.getWidth()-214,
+				changeMinWagPanel.getHeight()));
+		changeMinWagPanel.setBounds(214, 50, changeMinWagPanel.getWidth(), 
+				changeMinWagPanel.getHeight());
 		
 		initButtons();
 		addComponentsToPane();
@@ -228,7 +236,8 @@ public class SettingsView extends JPanel  {
 		ImageIcon img_icon = new ImageIcon(getClass().getResource(img_url));
 		int new_width = (int) (img_icon.getIconWidth()*percent);
 		int new_height = (int) (img_icon.getIconHeight()*percent);
-		Image img = img_icon.getImage().getScaledInstance(new_width,new_height,java.awt.Image.SCALE_SMOOTH);  
+		Image img = img_icon.getImage().getScaledInstance(new_width,new_height,
+				java.awt.Image.SCALE_SMOOTH);  
 		img_icon = new ImageIcon(img);
 		return img_icon;
 	}
@@ -237,8 +246,10 @@ public class SettingsView extends JPanel  {
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 		
-		g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-        g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+		g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, 
+				RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+        g2d.setRenderingHint(RenderingHints.KEY_RENDERING, 
+        		RenderingHints.VALUE_RENDER_QUALITY);
         
         g2d.drawImage(side_img, 0, 50, 213, this.getHeight(), null);
         
@@ -253,7 +264,8 @@ public class SettingsView extends JPanel  {
 		g2d.setColor(Utils.settingsHColor);
 		g2d.fillRect(0, 0, this.getWidth(), 50);
 		g2d.setColor(Color.WHITE);
-		g2d.drawImage(settings_img, 20, 16, settings_img.getWidth()/2, settings_img.getHeight()/2, null);
+		g2d.drawImage(settings_img, 20, 16, settings_img.getWidth()/2, 
+				settings_img.getHeight()/2, null);
 	}
 	
 	public ChangePasswordView getChangePasswordPanel(){

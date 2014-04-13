@@ -47,8 +47,10 @@ public class RestoreBackUpView extends JPanel {
 	
 	public RestoreBackUpView() {
 		
-		restoreBtn = new JButton(new ImageIcon(getClass().getResource("/images/buttons/restore.png")));
-		selSaveBtn = new JButton(new ImageIcon(getClass().getResource("/images/buttons/select.png")));
+		restoreBtn = new JButton(new ImageIcon(
+				getClass().getResource("/images/buttons/restore.png")));
+		selSaveBtn = new JButton(new ImageIcon(
+				getClass().getResource("/images/buttons/select.png")));
 		
 		saveLbl = new JLabel("Back Up Location: ");
 		locationLbl = new JLabel();
@@ -63,7 +65,8 @@ public class RestoreBackUpView extends JPanel {
 		
 		statusLbl.setForeground(Utils.statusFGColor);
 		
-		locationLbl.setBorder(new CompoundBorder(new LineBorder(Color.LIGHT_GRAY), new EmptyBorder(5,5,5,5)));
+		locationLbl.setBorder(new CompoundBorder(new LineBorder(Color.LIGHT_GRAY), 
+				new EmptyBorder(5,5,5,5)));
 		locationLbl.setPreferredSize(new Dimension(200,33));
 		
 		restoreBtn.setContentAreaFilled(false);
@@ -71,18 +74,24 @@ public class RestoreBackUpView extends JPanel {
 		restoreBtn.setOpaque(false);
 		restoreBtn.setForeground(null);
 		restoreBtn.setFocusPainted(false);
-		restoreBtn.setRolloverIcon(new ImageIcon(getClass().getResource("/images/buttons/restore-r.png")));
-		restoreBtn.setPressedIcon(new ImageIcon(getClass().getResource("/images/buttons/restore-p.png")));
-		restoreBtn.setSize(new Dimension(restoreBtn.getIcon().getIconWidth(), restoreBtn.getIcon().getIconHeight()));
+		restoreBtn.setRolloverIcon(new ImageIcon(
+				getClass().getResource("/images/buttons/restore-r.png")));
+		restoreBtn.setPressedIcon(new ImageIcon(
+				getClass().getResource("/images/buttons/restore-p.png")));
+		restoreBtn.setSize(new Dimension(restoreBtn.getIcon().getIconWidth(),
+				restoreBtn.getIcon().getIconHeight()));
 		
 		selSaveBtn.setContentAreaFilled(false);
 		selSaveBtn.setBorder(null);
 		selSaveBtn.setOpaque(false);
 		selSaveBtn.setForeground(null);
 		selSaveBtn.setFocusPainted(false);
-		selSaveBtn.setRolloverIcon(new ImageIcon(getClass().getResource("/images/buttons/select-r.png")));
-		selSaveBtn.setPressedIcon(new ImageIcon(getClass().getResource("/images/buttons/select-p.png")));
-		selSaveBtn.setPreferredSize(new Dimension(selSaveBtn.getIcon().getIconWidth(), selSaveBtn.getIcon().getIconHeight()));
+		selSaveBtn.setRolloverIcon(new ImageIcon(
+				getClass().getResource("/images/buttons/select-r.png")));
+		selSaveBtn.setPressedIcon(new ImageIcon(
+				getClass().getResource("/images/buttons/select-p.png")));
+		selSaveBtn.setPreferredSize(new Dimension(selSaveBtn.getIcon().getIconWidth(), 
+				selSaveBtn.getIcon().getIconHeight()));
 		
 		initFont();
 		addComponentsToPane();
@@ -152,19 +161,23 @@ public class RestoreBackUpView extends JPanel {
 		g2d.setFont(Utils.headerFont);
 		g2d.drawString("Restore From Back Up", 20, 35);
 		g2d.setFont(Utils.descFont);
-		g2d.drawString("This section allows you to recover your system from a back up file.", 20, 55);
+		g2d.drawString("This section allows you to recover your system from a back up file.",
+				20, 55);
 		
 		g2d.setColor(Utils.statusBGColor);
-		g2d.fillRect(0, this.getHeight()-Utils.HEIGHT, this.getWidth(), Utils.HEIGHT);
+		g2d.fillRect(0, this.getHeight()-Utils.HEIGHT, this.getWidth(), 
+				Utils.HEIGHT);
 		g2d.setColor(Color.LIGHT_GRAY);
-		g2d.drawLine(0, this.getHeight()-Utils.HEIGHT, this.getWidth(), this.getHeight()-Utils.HEIGHT);
+		g2d.drawLine(0, this.getHeight()-Utils.HEIGHT, this.getWidth(), 
+				this.getHeight()-Utils.HEIGHT);
 	}
 
 	private ImageIcon loadScaledImage(String img_url, float percent){	
 		ImageIcon img_icon = new ImageIcon(this.getClass().getResource(img_url));
 		int new_width = (int) (img_icon.getIconWidth()*percent);
 		int new_height = (int) (img_icon.getIconHeight()*percent);
-		Image img = img_icon.getImage().getScaledInstance(new_width,new_height,java.awt.Image.SCALE_SMOOTH);  
+		Image img = img_icon.getImage().getScaledInstance(new_width,new_height,
+				java.awt.Image.SCALE_SMOOTH);  
 		img_icon = new ImageIcon(img);
 		return img_icon;
 	}
@@ -199,7 +212,9 @@ public class RestoreBackUpView extends JPanel {
     }
         
     public boolean askConfirmation(){
-		int confirmation = JOptionPane.showConfirmDialog(null, "Are you sure you want to restore from back up?", "Restore from back up",
+		int confirmation = JOptionPane.showConfirmDialog(null, 
+				"Are you sure you want to restore from back up?", 
+				"Restore from back up",
 		JOptionPane.YES_NO_OPTION);
 		if(confirmation ==JOptionPane.YES_OPTION){
 			return true;
