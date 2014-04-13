@@ -1,9 +1,13 @@
 /*******************************************************
 	 *  Class name: ViewSummaryReportView
 
- 	 *  Inheritance: JFrame
+ 	 *  Inheritance: Jpanel
 	 *  Attributes: model
-	 *  Methods:	ViewSummaryReportView, getClient, setPickerListener
+	 *  Methods:	ViewSummaryReportView, getClient, getPeriodStartDate,
+	 * 		getReport, updateTableColumn, setPeriodStartDateListener,
+	 * 		setViewListener, updateTable, updateClientList,
+	 * 		updateDateList, updateViewList, showError,
+	 * 		empty
 	 *  Functionality: View
 	 *  Visibility: public
 	 *******************************************************/
@@ -262,11 +266,11 @@ public class ViewSummaryReportView extends JPanel {
 				if(rowIndex == rowNum && Utils.colorfulSRColumn.contains(colIndex) && e.isPopupTrigger() && e.getComponent() instanceof JTable)
 				{
 					JMenuItem menuItem = new JMenuItem("View Formula");
-						menuItem.setFont(Utils.descFont);
-						menuItem.setBackground(Color.WHITE);
-						menuItem.setOpaque(false);
+					menuItem.setFont(Utils.descFont);
+					menuItem.setBackground(Color.WHITE);
+					menuItem.setOpaque(false);
 					JPopupMenu popup = new JPopupMenu();
-						popup.setBackground(Color.WHITE);
+					popup.setBackground(Color.WHITE);
 						
 					popup.add(menuItem);
 					popup.show(e.getComponent(), e.getX(), e.getY());
@@ -287,10 +291,6 @@ public class ViewSummaryReportView extends JPanel {
 	
 	public void updateTableColumn(){
 		ArrayList<String> column = model.getColumnName(getReport());
-		//summaryModel.setColumnCount(column.size());
-		//for(int i = 0; i < column.size();i++){
-		//	summaryTable.getColumnModel().getColumn(i).setHeaderValue(column.get(i));
-		//}
 		summaryModel.setColumnCount(0);
 		for(int i = 0; i < column.size();i++)
 		{
@@ -318,10 +318,6 @@ public class ViewSummaryReportView extends JPanel {
 	public void setViewListener(ActionListener list){
 		viewCBox.addActionListener(list);
 	}
-	
-	//public void backListener(ActionListener list){
-	//	backBtn.addActionListener(list);
-	//}
 	
 	public void updateTable(){
 		summaryModel.setRowCount(0);
