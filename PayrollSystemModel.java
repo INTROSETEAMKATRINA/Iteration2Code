@@ -639,11 +639,11 @@ public class PayrollSystemModel {
 							totalDeductions = totalDeductions.add(hdmfLoan).add(payrollAdvance);
 							totalDeductions = totalDeductions.add(houseRental).add(uniformAndOthers);
 					BigDecimal eight = new BigDecimal("8");
-					BigDecimal hourlyRate = dailyRate.divide(eight, 2, BigDecimal.ROUND_HALF_UP);
-					BigDecimal shHourlyRate = dailyRate.add(shRate).divide(eight, 2, BigDecimal.ROUND_HALF_UP);
-					BigDecimal lhHourlyRate = dailyRate.add(lhRate).divide(eight, 2, BigDecimal.ROUND_HALF_UP);
+					BigDecimal hourlyRate = dailyRate.divide(eight, 10, BigDecimal.ROUND_HALF_UP);
+					BigDecimal shHourlyRate = dailyRate.add(shRate).divide(eight, 10, BigDecimal.ROUND_HALF_UP);
+					BigDecimal lhHourlyRate = dailyRate.add(lhRate).divide(eight, 10, BigDecimal.ROUND_HALF_UP);
 					BigDecimal basicPay = regularDaysWork.multiply(dailyRate);
-					BigDecimal deductionFromTardiness = dailyRate.divide(eight, 2, BigDecimal.ROUND_HALF_UP).divide(new BigDecimal("60"), 2, BigDecimal.ROUND_HALF_UP).multiply(late);
+					BigDecimal deductionFromTardiness = dailyRate.divide(eight, 10, BigDecimal.ROUND_HALF_UP).divide(new BigDecimal("60"), 10, BigDecimal.ROUND_HALF_UP).multiply(late);
 					BigDecimal colaAllowance = colaRate.multiply(regularDaysWork);
 					BigDecimal regularPay = basicPay.add(colaAllowance).subtract(deductionFromTardiness);
 					BigDecimal regularOvertimePay = regularOvertime.multiply(rotVar).multiply(hourlyRate);
@@ -856,7 +856,7 @@ public class PayrollSystemModel {
 			toBePrinted.add("SSS");
 			toBePrinted.add(p.getSSS().toString());
 			toBePrinted.add("Tardiness");
-			toBePrinted.add(p.getLate().multiply(p.getDailyRate().divide(new BigDecimal("8"), 2, BigDecimal.ROUND_HALF_UP).divide(new BigDecimal("60"), 2, BigDecimal.ROUND_HALF_UP)).setScale(2, BigDecimal.ROUND_HALF_UP).toString());
+			toBePrinted.add(p.getLate().multiply(p.getDailyRate().divide(new BigDecimal("8"), 10, BigDecimal.ROUND_HALF_UP).divide(new BigDecimal("60"), 10, BigDecimal.ROUND_HALF_UP)).setScale(2, BigDecimal.ROUND_HALF_UP).toString());
 			toBePrinted.add("SSS");
 			toBePrinted.add(p.getSSS().toString());
 
@@ -883,7 +883,7 @@ public class PayrollSystemModel {
 			toBePrinted.add(p.getHDMF().toString());
 
 			toBePrinted.add("Tardiness");
-			toBePrinted.add(p.getLate().multiply(p.getDailyRate().divide(new BigDecimal("8"), 2, BigDecimal.ROUND_HALF_UP).divide(new BigDecimal("60"), 2, BigDecimal.ROUND_HALF_UP)).setScale(2, BigDecimal.ROUND_HALF_UP).toString());
+			toBePrinted.add(p.getLate().multiply(p.getDailyRate().divide(new BigDecimal("8"), 10, BigDecimal.ROUND_HALF_UP).divide(new BigDecimal("60"), 10, BigDecimal.ROUND_HALF_UP)).setScale(2, BigDecimal.ROUND_HALF_UP).toString());
 			toBePrinted.add("SH on RD Hrs");
 			toBePrinted.add(p.getSpecialHolidayOnRestDay().toString());
 			toBePrinted.add("SSS Loan");
