@@ -1,3 +1,14 @@
+/*******************************************************
+	 *  Class name: DTRView
+ 	 *  Inheritance: JPanel
+	 *  Attributes: 
+	 *  Methods: setStatus, getFileLocation, setFileLocation,
+				setAddDTRListener, setFileLocationListener
+	 *  Functionality: View
+	 *  Visibility: public
+	 *******************************************************/
+
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -26,7 +37,6 @@ public class DTRView extends JPanel {
 	private JButton selSaveBtn;
 	
 	public DTRView() {
-		
 		addBtn = new JButton(new ImageIcon(getClass().getResource("/images/buttons/add.png")));
 		selSaveBtn = new JButton(new ImageIcon(getClass().getResource("/images/buttons/select.png")));
 		
@@ -117,15 +127,13 @@ public class DTRView extends JPanel {
 		add(statusLbl,gbc);
 	}
 	
-	public void initFont()
-	{
+	public void initFont(){
 		saveLbl.setFont(Utils.labelFont);
 		locationLbl.setFont(Utils.labelFont);
 		statusLbl.setFont(Utils.statusBarFont);
 	}
 	
-	public void paintComponent(Graphics g)
-	{
+	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 		
@@ -142,18 +150,23 @@ public class DTRView extends JPanel {
 		g2d.setColor(Color.LIGHT_GRAY);
 		g2d.drawLine(0, this.getHeight()-Utils.HEIGHT, this.getWidth(), this.getHeight()-Utils.HEIGHT);
 	}
+	
 	public void setFileLocationListener(ActionListener list){
 		selSaveBtn.addActionListener(list);
 	}
+	
 	public void setAddDTRListener(ActionListener list){
 		addBtn.addActionListener(list);
 	}
+	
 	public void setFileLocation(String location){
 		locationLbl.setText(location);
 	}
+	
 	public String getFileLocation(){
 		return locationLbl.getText();
 	}
+	
 	public void setStatus(String e, boolean b){
 		statusLbl.setText("Status: "+e);
 		
@@ -168,8 +181,8 @@ public class DTRView extends JPanel {
 		statusLbl.setText("Status: "+e);
 		statusLbl.setIcon(null);
 	}
-	private ImageIcon loadScaledImage(String img_url, float percent)
-	{	
+	
+	private ImageIcon loadScaledImage(String img_url, float percent){	
 		ImageIcon img_icon = new ImageIcon(this.getClass().getResource(img_url));
 		int new_width = (int) (img_icon.getIconWidth()*percent);
 		int new_height = (int) (img_icon.getIconHeight()*percent);
@@ -177,4 +190,5 @@ public class DTRView extends JPanel {
 		img_icon = new ImageIcon(img);
 		return img_icon;
 	}
+	
 }

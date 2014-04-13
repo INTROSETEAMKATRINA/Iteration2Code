@@ -44,7 +44,7 @@ public class LogInView extends JPanel  {
 	public LogInView() {
 		loginBtn = new JButton(loadScaledImage("/images/buttons/login.png",.5f));
 				
-		passwordTxtFld = new CustomPTextField("Enter password",  "/images/effects/in.png", "/images/effects/out.png", 250, 47);
+		passwordTxtFld = new CustomPTextField("",  "/images/effects/in.png", "/images/effects/out.png", 250, 47);
 		
 		modifyUI();
 		

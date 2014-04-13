@@ -40,6 +40,7 @@ public class GenerateSummaryReportView extends JPanel {
 	private JComboBox<Object> reportCBox;
 	private File file;
 	
+	
 	public GenerateSummaryReportView(PayrollSystemModel model){
 		this.model = model;
 		generateBtn = new JButton(new ImageIcon(getClass().getResource("/images/buttons/generate.png")));
@@ -206,8 +207,7 @@ public class GenerateSummaryReportView extends JPanel {
 		statusLbl.setFont(Utils.statusBarFont);
 	}
 	
-	public void paintComponent(Graphics g)
-	{
+	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 		
@@ -225,8 +225,7 @@ public class GenerateSummaryReportView extends JPanel {
 		g2d.drawLine(0, this.getHeight()-Utils.HEIGHT, this.getWidth(), this.getHeight()-Utils.HEIGHT);
 	}
 	
-	private ImageIcon loadScaledImage(String img_url, float percent)
-	{	
+	private ImageIcon loadScaledImage(String img_url, float percent){	
 		ImageIcon img_icon = new ImageIcon(this.getClass().getResource(img_url));
 		int new_width = (int) (img_icon.getIconWidth()*percent);
 		int new_height = (int) (img_icon.getIconHeight()*percent);
@@ -234,6 +233,7 @@ public class GenerateSummaryReportView extends JPanel {
 		img_icon = new ImageIcon(img);
 		return img_icon;
 	}
+	
 	public File fileSaver(){
 		JFileChooser fc = new JFileChooser();
 		int returnVal = fc.showSaveDialog(this);
@@ -271,12 +271,15 @@ public class GenerateSummaryReportView extends JPanel {
 	public void setViewListener(ActionListener list){
 		reportCBox.addActionListener(list);
 	}
+	
 	public void setFileDirectoryListener(ActionListener list){
 		selSaveBtn.addActionListener(list);
 	}
+	
 	public void setGenerateSummaryReportListener(ActionListener list){
 		generateBtn.addActionListener(list);
 	}
+
 	public void setFileDirectory(File f){
 		file = f;
 		
@@ -286,8 +289,10 @@ public class GenerateSummaryReportView extends JPanel {
 			locationLbl.setText("");
 		}
 	}
-	public void ShowError(int i){
+	
+	public void showError(int i){
 		String error = "";
+		
 		if(i == 0){
 			error = "Lacking input";
 		}else if(i == 1){
@@ -304,6 +309,7 @@ public class GenerateSummaryReportView extends JPanel {
 	
 	public void showSuccessful(int i){
 		String message = "";
+		
 		if(i == 0){
 			message = "Saved Successful!";
 			setFileDirectory(null);
@@ -315,6 +321,7 @@ public class GenerateSummaryReportView extends JPanel {
 		}
 		statusLbl.setText(message);
 	}
+	
 	public boolean askConfirmation(){
 		int confirmation = JOptionPane.showConfirmDialog(null, "Do you want to overwrite the file?", "Overwrite file?",
 		
@@ -324,28 +331,32 @@ public class GenerateSummaryReportView extends JPanel {
 		}
 		return false;
 	}
+	
 	public void updateClientList(){
-		clientCBox.removeAllItems();
 		ArrayList<String> clients = model.getClientList();
 		
+		clientCBox.removeAllItems();
 		for(String t : clients){
 			clientCBox.addItem(t);
 		}
 	}
 	
 	public void updateDateList(){
-		timePeriodCBox.removeAllItems();
 		ArrayList<String> dates = model.getDateListPayslips(getClient());
+
+		timePeriodCBox.removeAllItems();
 		for(String t : dates)
 			timePeriodCBox.addItem(t);		
 	}
 	
 	public void updateViewList(){
-		reportCBox.removeAllItems();
 		String[] summaryReports = model.getSummaryReports();
+
+		reportCBox.removeAllItems();
 		for(String t : summaryReports)
 			reportCBox.addItem(t);
 	}
+
 	public void setClientListener(ActionListener list){
 		clientCBox.addActionListener(list);
 	}

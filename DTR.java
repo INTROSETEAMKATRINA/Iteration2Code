@@ -18,9 +18,13 @@
 	 *  Visibility: public
 	 *******************************************************/
 
+	 
 import java.util.Date;
 import java.math.BigDecimal;
+
+
 public class DTR {
+
 	private String name;
 	private String tin;
 	private BigDecimal regularDaysWorks;
@@ -37,6 +41,7 @@ public class DTR {
 	private BigDecimal late;
 	private Date  periodStartDate;
 
+	
 	public DTR(String name, String tin, BigDecimal regularDaysWorks, BigDecimal regularOvertime, BigDecimal regularNightShiftDifferential,
 			   BigDecimal specialHoliday, BigDecimal specialHolidayOvertime, BigDecimal specialHolidayNightShiftDifferential,
 			   BigDecimal legalHoliday, BigDecimal legalHolidayOvertime, BigDecimal legalHolidayNightShiftDifferential, 

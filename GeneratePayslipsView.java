@@ -1,15 +1,16 @@
 /*******************************************************
 	 *  Class name: GeneratePayslipsView
- 	 *  Inheritance: JFrame
+ 	 *  Inheritance: JPanel
 	 *  Attributes: model, file
-	 *  Methods: 	GeneratePayslipsView, setSelectFileListener, setClientListener,
-	 *				setGenerateListener, setCancelListener, fileSaver,
-	 *				getClient, showSuccess, setFileDirectory,
-	 *				getPeriodStartDate, getFileDirectory, showError,
-	 *				updateClientList, updateDateList
+	 *  Methods: 	GeneratePayslipsView, setFileDirectory,
+	 *				setGenerateListener, fileSaver,
+	 *				getClient, setFileDirectory,
+	 *				getFileDirectory, updateClientList, 
+	 *				updateDateList, askConfirmation
 	 *  Functionality: View
 	 *  Visibility: public
 	 *******************************************************/
+	 
 	 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -35,6 +36,7 @@ import javax.swing.JOptionPane;
 import java.io.File;
 import java.util.ArrayList;
 
+
 public class GeneratePayslipsView extends JPanel {
 
 	private JLabel selectClientLbl;
@@ -50,6 +52,8 @@ public class GeneratePayslipsView extends JPanel {
 	private PayrollSystemModel model;
 	
 	private File file;
+	
+	
 	public GeneratePayslipsView(PayrollSystemModel model){
 		this.model = model;
 		generateBtn = new JButton(new ImageIcon(getClass().getResource("/images/buttons/generate.png")));
@@ -163,8 +167,7 @@ public class GeneratePayslipsView extends JPanel {
 		add(statusLbl,gbc);
 	}
 	
-	public void initFont()
-	{
+	public void initFont(){
 		clientCBox.setFont(Utils.comboBoxFont);
 		selectClientLbl.setFont(Utils.labelFont);
 		saveLbl.setFont(Utils.labelFont);
@@ -172,8 +175,7 @@ public class GeneratePayslipsView extends JPanel {
 		statusLbl.setFont(Utils.statusBarFont);
 	}
 	
-	public void paintComponent(Graphics g)
-	{
+	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 		
@@ -266,8 +268,7 @@ public class GeneratePayslipsView extends JPanel {
 		return false;
 	}
 	
-	private ImageIcon loadScaledImage(String img_url, float percent)
-	{	
+	private ImageIcon loadScaledImage(String img_url, float percent){	
 		ImageIcon img_icon = new ImageIcon(this.getClass().getResource(img_url));
 		int new_width = (int) (img_icon.getIconWidth()*percent);
 		int new_height = (int) (img_icon.getIconHeight()*percent);

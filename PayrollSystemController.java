@@ -582,7 +582,7 @@ public class PayrollSystemController{
 		report = generateSummaryReport.getReport();
 		file = generateSummaryReport.getDirectory();
 		if(client == null || date == null || file == null){
-			generateSummaryReport.ShowError(0);
+			generateSummaryReport.showError(0);
 		}
 		else{
 			if(file != null){
