@@ -1084,8 +1084,8 @@ public class PayrollSystemModel {
 	public void backupData(File directory) throws Exception{
 		Process exec = null;
         ProcessBuilder pb = new ProcessBuilder("mysqldump", "-uroot", "-pp@ssword",
-        		"Payroll System", "adjustmentsanddeductions", "client", "dtr", 
-        		"payslip", "personnel", "taxtable");
+        		"Payroll System", "adjustmentsanddeductions","client", "personnel", "dtr", 
+        		"payslip",  "taxtable");
             
         pb.redirectOutput(directory);
 		exec = pb.start();
