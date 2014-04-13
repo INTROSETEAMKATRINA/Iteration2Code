@@ -88,7 +88,7 @@ public class ViewSummaryReportView extends JPanel {
 		
 		updateViewList();
 		
-		summaryTable = new JTable(30,12);
+		summaryTable = new JTable(32, 100);
 		summaryTable.setRowHeight(32);
 		summaryTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		summaryTable.setColumnSelectionAllowed(true);
@@ -288,10 +288,9 @@ public class ViewSummaryReportView extends JPanel {
 	public void updateTableColumn(){
 		ArrayList<String> column = model.getColumnName(getReport());
 		summaryModel.setColumnCount(0);
-		for(int i = 0; i < column.size();i++){
-			summaryModel.addColumn(column.get(i));
+		for(String s : column){
+			summaryModel.addColumn(s);
 		}
-		summaryModel.setColumnCount(column.size());
 	}
 	
 	public String getClient(){ 
