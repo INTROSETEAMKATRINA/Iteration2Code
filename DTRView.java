@@ -38,8 +38,10 @@ public class DTRView extends JPanel {
 	private JButton selSaveBtn;
 	
 	public DTRView() {
-		addBtn = new JButton(new ImageIcon(getClass().getResource("/images/buttons/add.png")));
-		selSaveBtn = new JButton(new ImageIcon(getClass().getResource("/images/buttons/select.png")));
+		addBtn = new JButton(new ImageIcon(
+				getClass().getResource("/images/buttons/add.png")));
+		selSaveBtn = new JButton(new ImageIcon(
+				getClass().getResource("/images/buttons/select.png")));
 		
 		saveLbl = new JLabel("Save Location: ");
 		locationLbl = new JLabel();
@@ -55,7 +57,8 @@ public class DTRView extends JPanel {
 		
 		statusLbl.setForeground(Utils.statusFGColor);
 		
-		locationLbl.setBorder(new CompoundBorder(new LineBorder(Color.LIGHT_GRAY), new EmptyBorder(5,5,5,5)));
+		locationLbl.setBorder(new CompoundBorder(new LineBorder(
+				Color.LIGHT_GRAY), new EmptyBorder(5,5,5,5)));
 		locationLbl.setPreferredSize(new Dimension(300,33));
 		
 		addBtn.setContentAreaFilled(false);
@@ -63,18 +66,24 @@ public class DTRView extends JPanel {
 		addBtn.setOpaque(false);
 		addBtn.setForeground(null);
 		addBtn.setFocusPainted(false);
-		addBtn.setRolloverIcon(new ImageIcon(getClass().getResource("/images/buttons/add-r.png")));
-		addBtn.setPressedIcon(new ImageIcon(getClass().getResource("/images/buttons/add-p.png")));
-		addBtn.setSize(new Dimension(addBtn.getIcon().getIconWidth(), addBtn.getIcon().getIconHeight()));
+		addBtn.setRolloverIcon(new ImageIcon(
+				getClass().getResource("/images/buttons/add-r.png")));
+		addBtn.setPressedIcon(new ImageIcon(
+				getClass().getResource("/images/buttons/add-p.png")));
+		addBtn.setSize(new Dimension(addBtn.getIcon().getIconWidth(), 
+				addBtn.getIcon().getIconHeight()));
 		
 		selSaveBtn.setContentAreaFilled(false);
 		selSaveBtn.setBorder(null);
 		selSaveBtn.setOpaque(false);
 		selSaveBtn.setForeground(null);
 		selSaveBtn.setFocusPainted(false);
-		selSaveBtn.setRolloverIcon(new ImageIcon(getClass().getResource("/images/buttons/select-r.png")));
-		selSaveBtn.setPressedIcon(new ImageIcon(getClass().getResource("/images/buttons/select-p.png")));
-		selSaveBtn.setPreferredSize(new Dimension(selSaveBtn.getIcon().getIconWidth(), selSaveBtn.getIcon().getIconHeight()));
+		selSaveBtn.setRolloverIcon(new ImageIcon(
+				getClass().getResource("/images/buttons/select-r.png")));
+		selSaveBtn.setPressedIcon(new ImageIcon(
+				getClass().getResource("/images/buttons/select-p.png")));
+		selSaveBtn.setPreferredSize(new Dimension(selSaveBtn.getIcon().getIconWidth(),
+				selSaveBtn.getIcon().getIconHeight()));
 		
 		initFont();
 		addComponentsToPane();
@@ -147,9 +156,11 @@ public class DTRView extends JPanel {
         g2d.drawString("Select excel file directory of DTR.", 20, 55);
 		
 		g2d.setColor(Utils.statusBGColor);
-		g2d.fillRect(0, this.getHeight()-Utils.HEIGHT, this.getWidth(), Utils.HEIGHT);
+		g2d.fillRect(0, this.getHeight()-Utils.HEIGHT, this.getWidth(),
+				Utils.HEIGHT);
 		g2d.setColor(Color.LIGHT_GRAY);
-		g2d.drawLine(0, this.getHeight()-Utils.HEIGHT, this.getWidth(), this.getHeight()-Utils.HEIGHT);
+		g2d.drawLine(0, this.getHeight()-Utils.HEIGHT, this.getWidth(), 
+				this.getHeight()-Utils.HEIGHT);
 	}
 	
 	public void setFileLocationListener(ActionListener list){
@@ -187,7 +198,8 @@ public class DTRView extends JPanel {
 		ImageIcon img_icon = new ImageIcon(this.getClass().getResource(img_url));
 		int new_width = (int) (img_icon.getIconWidth()*percent);
 		int new_height = (int) (img_icon.getIconHeight()*percent);
-		Image img = img_icon.getImage().getScaledInstance(new_width,new_height,java.awt.Image.SCALE_SMOOTH);  
+		Image img = img_icon.getImage().getScaledInstance(new_width,new_height,
+				java.awt.Image.SCALE_SMOOTH);  
 		img_icon = new ImageIcon(img);
 		return img_icon;
 	}
@@ -199,5 +211,4 @@ public class DTRView extends JPanel {
 		}
 		super.setVisible(b);
 	}
-	
 }

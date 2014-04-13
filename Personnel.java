@@ -38,13 +38,13 @@ public class Personnel {
 	private BigDecimal dailyRate;
 	private BigDecimal colaRate;
 	private BigDecimal monthlyRate;
-	private DTR dtr;
 
-    public Personnel(String name, String position, String assignment,
-    				 String employeeStatus, String tin, String taxStatus,
-    				 BigDecimal sss, BigDecimal sssLoan, BigDecimal phic, BigDecimal hdmf, BigDecimal hdmfLoan,
-    				 BigDecimal payrollAdvance, BigDecimal houseRental, BigDecimal uniformAndOthers,
-    				 BigDecimal dailyRate, BigDecimal colaRate,BigDecimal monthlyRate) {
+    public Personnel(String name, String position, String assignment, 
+    		String employeeStatus, String tin, String taxStatus,
+    		BigDecimal sss, BigDecimal sssLoan, BigDecimal phic, BigDecimal hdmf,
+    		BigDecimal hdmfLoan, BigDecimal payrollAdvance, BigDecimal houseRental,
+    		BigDecimal uniformAndOthers, BigDecimal dailyRate, BigDecimal colaRate,
+    		BigDecimal monthlyRate) {
 		this.name = name;
 		this.position = position;
 		this.assignment = assignment;
@@ -62,7 +62,6 @@ public class Personnel {
 		this.dailyRate = dailyRate;
 		this.colaRate = colaRate;
 		this.monthlyRate = monthlyRate;
-		this.dtr = null;
     }
     
 	public String getName(){
@@ -107,10 +106,6 @@ public class Personnel {
 	
 	public void setTaxStatus(String taxStatus){
 		this.taxStatus = taxStatus;
-	}
-	
-	public void setDTR(DTR dtr){
-		this.dtr = dtr;
 	}
     
     public String getTIN(){

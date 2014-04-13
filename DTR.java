@@ -42,10 +42,13 @@ public class DTR {
 	private Date  periodStartDate;
 
 	
-	public DTR(String name, String tin, BigDecimal regularDaysWorks, BigDecimal regularOvertime, BigDecimal regularNightShiftDifferential,
-			   BigDecimal specialHoliday, BigDecimal specialHolidayOvertime, BigDecimal specialHolidayNightShiftDifferential,
-			   BigDecimal legalHoliday, BigDecimal legalHolidayOvertime, BigDecimal legalHolidayNightShiftDifferential, 
-			   BigDecimal legalHolidayOnRestDay, BigDecimal specialHolidayOnRestDay, BigDecimal late, Date periodStartDate){
+	public DTR(String name, String tin, BigDecimal regularDaysWorks, 
+			BigDecimal regularOvertime, BigDecimal regularNightShiftDifferential,
+			BigDecimal specialHoliday, BigDecimal specialHolidayOvertime, 
+			BigDecimal specialHolidayNightShiftDifferential, BigDecimal legalHoliday,
+			BigDecimal legalHolidayOvertime, BigDecimal legalHolidayNightShiftDifferential, 
+			BigDecimal legalHolidayOnRestDay, BigDecimal specialHolidayOnRestDay, 
+			BigDecimal late, Date periodStartDate){
 		this.name = name;
 		this.tin = tin;
 		this.regularDaysWorks = regularDaysWorks;
@@ -107,8 +110,10 @@ public class DTR {
 		return specialHolidayNightShiftDifferential;
 	}
 	
-	public void setSpecialHolidayNightShiftDifferential(BigDecimal specialHolidayNightShiftDifferential){
-		this.specialHolidayNightShiftDifferential = specialHolidayNightShiftDifferential;
+	public void setSpecialHolidayNightShiftDifferential
+			(BigDecimal specialHolidayNightShiftDifferential){
+		this.specialHolidayNightShiftDifferential = 
+				specialHolidayNightShiftDifferential;
 	}
 	
 	public BigDecimal getLegalHoliday(){
@@ -131,8 +136,10 @@ public class DTR {
 		return legalHolidayNightShiftDifferential;
 	}
 	
-	public void setLegalHolidayNightShiftDifferential(BigDecimal legalHolidayNightShiftDifferential){
-		this.legalHolidayNightShiftDifferential = legalHolidayNightShiftDifferential;
+	public void setLegalHolidayNightShiftDifferential(
+			BigDecimal legalHolidayNightShiftDifferential){
+		this.legalHolidayNightShiftDifferential = 
+				legalHolidayNightShiftDifferential;
 	}
 	
 	public Date getPeriodStartDate(){
@@ -158,5 +165,4 @@ public class DTR {
 	public BigDecimal getLate(){
 		return late;
 	}
-        
 }
