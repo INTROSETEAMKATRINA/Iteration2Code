@@ -82,30 +82,28 @@ public class ViewPersonnelView extends JPanel {
 		header.setReorderingAllowed(false);
 		
 		for(int i = 0; i < personnelTable.getColumnCount(); i++){
-			if(i == 0) {
+			if(i == 0){
 				personnelTable.getColumnModel().getColumn(i).setCellRenderer(
 						new ColorfulCellRenderer(new Color(0xFAFAFA),
 								Color.BLACK,Utils.colorfulPColumn));
 				personnelTable.getColumnModel().getColumn(i).setPreferredWidth(40);
-			}
-			else if(Utils.colorfulPColumn.contains(i))
-			{
+			}else if(Utils.colorfulPColumn.contains(i)){
 				switch(i){
-				case 2:
-					personnelTable.getColumnModel().getColumn(i).setCellRenderer(
+					case 2:
+						personnelTable.getColumnModel().getColumn(i).setCellRenderer(
 							new ColorfulCellRenderer(new Color(0xbee1fe),
 									Color.BLACK,Utils.colorfulPColumn));
-					break;
-				default:
-					personnelTable.getColumnModel().getColumn(i).setCellRenderer(
+						break;
+					default:
+						personnelTable.getColumnModel().getColumn(i).setCellRenderer(
 							new ColorfulCellRenderer(Color.ORANGE,Color.BLACK,
 									Utils.colorfulPColumn));
-					break;
+						break;
 				};
-			} else
+			}else
 				personnelTable.getColumnModel().getColumn(i).setCellRenderer(
-						new ColorfulCellRenderer(Color.WHITE,Color.BLACK,
-								Utils.colorfulPColumn));
+					new ColorfulCellRenderer(Color.WHITE,Color.BLACK,
+							Utils.colorfulPColumn));
 		}
 		
 		personnelTable.addMouseListener(new TableMouseListener());
@@ -222,8 +220,9 @@ public class ViewPersonnelView extends JPanel {
 				int rowIndex = table.getSelectedRow();
 				int colIndex = table.getSelectedColumn();
 						
-				if(rowIndex == rowNum && colIndex == 0 &&
-						e.getModifiers() == InputEvent.META_MASK && e.getComponent() instanceof JTable){
+				if(rowIndex == rowNum && colIndex == 0 && 
+						e.getModifiers() == InputEvent.META_MASK &&
+						e.getComponent() instanceof JTable){
 					JMenuItem menuItem = new JMenuItem("Delete Personnel");
 					
 					menuItem.setFont(Utils.descFont);
@@ -234,22 +233,24 @@ public class ViewPersonnelView extends JPanel {
 						    String client,personnel="",TIN="";
 						    int row = 0;
 						    client = getSelectedClient();
-							   for(int i = 0;i < personnelTable.getColumnCount(); i++){
-								   if(personnelTable.getColumnName(i).compareToIgnoreCase("name") == 0){
-							    		row = personnelTable.getSelectedRow();
-							    		personnel = (String)tableModel.getValueAt(row,i);
-							    	}else if(personnelTable.getColumnName(i).compareToIgnoreCase("tin") == 0){
-							    		row = personnelTable.getSelectedRow();
-							    		TIN = (String)tableModel.getValueAt(row,i);
-									}
-							   }
-							   try{
-								   model.removePersonnel(client, personnel, TIN);
-								   tableModel.removeRow(row);
-								   setStatus("Successfully deleted.",true);
-							   }catch(Exception ex){
-							    	setStatus(ex.getMessage(),false);
-							   }
+						    
+							for(int i = 0;i < personnelTable.getColumnCount(); i++){
+								if(personnelTable.getColumnName(i).compareToIgnoreCase("name") == 0){
+							    	row = personnelTable.getSelectedRow();
+							    	personnel = (String)tableModel.getValueAt(row,i);
+								}else if(personnelTable.getColumnName(i).compareToIgnoreCase("tin") == 0){
+									row = personnelTable.getSelectedRow();
+									TIN = (String)tableModel.getValueAt(row,i);
+								}
+							}
+							
+							try{
+								model.removePersonnel(client, personnel, TIN);
+								tableModel.removeRow(row);
+								setStatus("Successfully deleted.",true);
+							}catch(Exception ex){
+								setStatus(ex.getMessage(),false);
+							}
 						}
 					});
 						
@@ -313,7 +314,7 @@ public class ViewPersonnelView extends JPanel {
 	public void updateTable(){
 		tableModel.setRowCount(0);
 		try{
-			ArrayList<Object[]> rowData = model.getPesonnelData((String)clientCBox.getSelectedItem());
+			ArrayList<Object[]> rowData = model.getPesonnelData(getSelectedClient());
 			for(Object[] data:rowData){
 				tableModel.addRow(data);
 			}

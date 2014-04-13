@@ -583,19 +583,19 @@ public class PayrollSystemController{
         }
     }
 	
-    class addPeriodStartDateListener implements ActionListener{ //This is going to be updated
+    class addPeriodStartDateListener implements ActionListener{ 
 		public void actionPerformed(ActionEvent e){
 			viewSummaryReport.updateDateList();
 		}
 	}
 	
-	class generateSumRepDateListener implements ActionListener{ //This is going to be updated
+	class generateSumRepDateListener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
 			generateSummaryReport.updateDateList();
 		}
 	}
 	
-	class viewReportListener implements ActionListener{ //This is going to be updated
+	class viewReportListener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
 			if(viewSummaryReport.getPeriodStartDate() == null){
 				viewSummaryReport.showError(1);
@@ -621,32 +621,34 @@ public class PayrollSystemController{
 	
 	class generateSummaryReportListner implements ActionListener{
 		public void actionPerformed(ActionEvent e){	
-		String client,date,report;
-		File file;
-		int check;
-		client = generateSummaryReport.getClient();
-		date = generateSummaryReport.getPeriodStartDate();
-		report = generateSummaryReport.getReport();
-		file = generateSummaryReport.getDirectory();
-		if(client == null || date == null || file == null){
-			generateSummaryReport.showError(0);
-		}
-		if(date == null){
-			generateSummaryReport.showError(1);
-		}
-		else{
-			if(file != null){
-				boolean confirm = true;
-				if(file.exists()){
-					confirm = generateSummaryReport.askConfirmation();
-				}
-				if(confirm){
-					generateSummaryReport.showSuccessful(model.generateSummaryReport(file, date, client, report));
-					printOnFile(lastGeneratedReport, getDateToday() + " (" + client + ")");
-					view.updateLastGeneratedReport(getLast(lastGeneratedReport));
-				}
+			String client,date,report;
+			File file;
+			
+			client = generateSummaryReport.getClient();
+			date = generateSummaryReport.getPeriodStartDate();
+			report = generateSummaryReport.getReport();
+			file = generateSummaryReport.getDirectory();
+			
+			if(client == null || date == null || file == null){
+				generateSummaryReport.showError(0);
+			}
+			if(date == null){
+				generateSummaryReport.showError(1);
+			}
+			else{
+				if(file != null){
+					boolean confirm = true;
+					if(file.exists()){
+						confirm = generateSummaryReport.askConfirmation();
+					}
+					if(confirm){
+						generateSummaryReport.showSuccessful(model.generateSummaryReport(file,
+								date, client, report));
+						printOnFile(lastGeneratedReport, getDateToday() + " (" + client + ")");
+						view.updateLastGeneratedReport(getLast(lastGeneratedReport));
+					}
 				}else{
-				generatePayslips.setStatus("No file chosen!");
+					generatePayslips.setStatus("No file chosen!");
 				}
 			}
 		}

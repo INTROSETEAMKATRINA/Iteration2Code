@@ -28,7 +28,6 @@ public class PayrollSystem{
 			PayrollSystemModel model = new PayrollSystemModel(con);
 			SettingsView sView = new SettingsView(model);
 			PayrollSystemView view = new PayrollSystemView(sView, model);
-			PayrollSystemController controller = new PayrollSystemController(model, view, sView, con);
 			view.setVisible(true);
 			
 		}catch(Exception e){
