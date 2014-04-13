@@ -3,7 +3,7 @@
  	 *  Inheritance: JPanel
 	 *  Attributes: model
 	 *  Methods:	ViewPersonnelView, setClientListener, setRemoveListener,
-	 * 		updateClientList, updateTable, setStatus
+	 * 		updateClientList, updateTable, setStatus, askConfirmation
 	 *  Functionality: View
 	 *  Visibility: public
 	 *******************************************************/
@@ -31,6 +31,7 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 import javax.swing.table.JTableHeader;
@@ -329,8 +330,18 @@ public class ViewPersonnelView extends JPanel {
 			statusLbl.setIcon(loadScaledImage("/images/notifs/wrong.png",.08f));
 		}
 	}
+	
 	public void setStatus(String e){
 		statusLbl.setText("Status: "+e);
 		statusLbl.setIcon(null);
+	}
+	
+	public boolean askConfirmation(){
+		int confirmation = JOptionPane.showConfirmDialog(null, "Please confirm!", "Please confirm!", JOptionPane.YES_NO_OPTION);
+		
+		if(confirmation ==JOptionPane.YES_OPTION){
+			return true;
+		}
+		return false;
 	}
 }
