@@ -659,10 +659,12 @@ public class PayrollSystemController{
 			String s = changeMinWage.getMinWageTxtFld();
 			
 			try{
-				minWage = Integer.parseInt(s);
-				printOnFile(minimumWage, s);
-				changeMinWage.setText(s);
-				changeMinWage.showSuccess();
+				if(changeMinWage.askConfirmation()){
+					minWage = Integer.parseInt(s);
+					printOnFile(minimumWage, s);
+					changeMinWage.setText(s);
+					changeMinWage.showSuccess();
+				}
 			}catch(Exception ex){
 				changeMinWage.showError("Integer only.");
 			}
