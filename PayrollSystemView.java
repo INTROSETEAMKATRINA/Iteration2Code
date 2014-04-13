@@ -89,7 +89,6 @@ public class PayrollSystemView extends JPanel {
 	private GenerateSummaryReportView genSummaryPanel;
 	private ModifyTaxTableView modifyTaxPanel;
 	private RemoveAdjustmentsView removeAdjPanel;
-	private RemovePersonnelView removePersPanel;
 	private ViewPersonnelView viewPersPanel;
 	private ViewSummaryReportView viewSummPanel;
 	private BackUpView backUpPanel;
@@ -193,7 +192,6 @@ public class PayrollSystemView extends JPanel {
 		genSummaryPanel = new GenerateSummaryReportView(model);
 		modifyTaxPanel = new ModifyTaxTableView(model); 
 		removeAdjPanel = new RemoveAdjustmentsView(model); 
-		removePersPanel = new RemovePersonnelView(model); 
 		viewPersPanel = new ViewPersonnelView(model); 
 		viewSummPanel = new ViewSummaryReportView(model);
 		settingsPanel = sView;
@@ -486,7 +484,6 @@ public class PayrollSystemView extends JPanel {
 		add(genSummaryPanel);
 		add(modifyTaxPanel);
 		add(removeAdjPanel);
-		add(removePersPanel);
 		add(viewPersPanel);
 		add(viewSummPanel);
 		add(addDTRPanel);
@@ -498,7 +495,6 @@ public class PayrollSystemView extends JPanel {
 		genSummaryPanel.setVisible(false);
 		modifyTaxPanel.setVisible(false);
 		removeAdjPanel.setVisible(false);
-		removePersPanel.setVisible(false);
 		viewSummPanel.setVisible(false);
 		viewPersPanel.setVisible(false);
 		addDTRPanel.setVisible(false);
@@ -778,7 +774,6 @@ public class PayrollSystemView extends JPanel {
 				genSummaryPanel.setVisible(false);
 				modifyTaxPanel.setVisible(false);
 				removeAdjPanel.setVisible(false);
-				removePersPanel.setVisible(false);
 				viewSummPanel.setVisible(false);
 				viewPersPanel.setVisible(false);
 				backUpPanel.setVisible(false);
@@ -835,7 +830,6 @@ public class PayrollSystemView extends JPanel {
 				genSummaryPanel.setVisible(false);
 				modifyTaxPanel.setVisible(false);
 				removeAdjPanel.setVisible(false);
-				removePersPanel.setVisible(false);
 				viewSummPanel.setVisible(false);
 				viewPersPanel.setVisible(false);
 				backUpPanel.setVisible(false);
@@ -857,7 +851,6 @@ public class PayrollSystemView extends JPanel {
 				genSummaryPanel.setVisible(false);
 				modifyTaxPanel.setVisible(false);
 				removeAdjPanel.setVisible(false);
-				removePersPanel.setVisible(false);
 				viewSummPanel.setVisible(false);
 				viewPersPanel.setVisible(false);
 				backUpPanel.setVisible(false);
@@ -878,7 +871,6 @@ public class PayrollSystemView extends JPanel {
 				genSummaryPanel.setVisible(false);
 				modifyTaxPanel.setVisible(false);
 				removeAdjPanel.setVisible(false);
-				removePersPanel.setVisible(false);
 				viewSummPanel.setVisible(false);
 				viewPersPanel.setVisible(false);
 				backUpPanel.setVisible(false);
@@ -902,7 +894,6 @@ public class PayrollSystemView extends JPanel {
 				genSummaryPanel.setVisible(true);
 				modifyTaxPanel.setVisible(false);
 				removeAdjPanel.setVisible(false);
-				removePersPanel.setVisible(false);
 				viewSummPanel.setVisible(false);
 				viewPersPanel.setVisible(false);
 				backUpPanel.setVisible(false);
@@ -924,7 +915,6 @@ public class PayrollSystemView extends JPanel {
 				genSummaryPanel.setVisible(false);
 				modifyTaxPanel.setVisible(false);
 				removeAdjPanel.setVisible(false);
-				removePersPanel.setVisible(false);
 				viewSummPanel.setVisible(false);
 				viewPersPanel.setVisible(true);
 				backUpPanel.setVisible(false);
@@ -953,7 +943,6 @@ public class PayrollSystemView extends JPanel {
 				genSummaryPanel.setVisible(false);
 				modifyTaxPanel.setVisible(false);
 				removeAdjPanel.setVisible(false);
-				removePersPanel.setVisible(false);
 				viewSummPanel.setVisible(true);
 				viewPersPanel.setVisible(false);
 				backUpPanel.setVisible(false);
@@ -974,7 +963,6 @@ public class PayrollSystemView extends JPanel {
 				genSummaryPanel.setVisible(false);
 				modifyTaxPanel.setVisible(false);
 				removeAdjPanel.setVisible(false);
-				removePersPanel.setVisible(false);
 				viewSummPanel.setVisible(false);
 				viewPersPanel.setVisible(false);
 				backUpPanel.setVisible(false);
@@ -995,7 +983,6 @@ public class PayrollSystemView extends JPanel {
 				genSummaryPanel.setVisible(false);
 				modifyTaxPanel.setVisible(false);
 				removeAdjPanel.setVisible(true);
-				removePersPanel.setVisible(false);
 				viewSummPanel.setVisible(false);
 				viewPersPanel.setVisible(false);
 				backUpPanel.setVisible(false);
@@ -1017,7 +1004,6 @@ public class PayrollSystemView extends JPanel {
 				genSummaryPanel.setVisible(false);
 				modifyTaxPanel.setVisible(true);
 				removeAdjPanel.setVisible(false);
-				removePersPanel.setVisible(false);
 				viewSummPanel.setVisible(false);
 				viewPersPanel.setVisible(false);
 				backUpPanel.setVisible(false);
@@ -1038,7 +1024,6 @@ public class PayrollSystemView extends JPanel {
 				genSummaryPanel.setVisible(false);
 				modifyTaxPanel.setVisible(false);
 				removeAdjPanel.setVisible(false);
-				removePersPanel.setVisible(false);
 				viewSummPanel.setVisible(false);
 				viewPersPanel.setVisible(false);
 				backUpPanel.setVisible(true);
@@ -1158,10 +1143,6 @@ public class PayrollSystemView extends JPanel {
 	
 	public DTRView getAddDTRPanel(){
 		return addDTRPanel;
-	}
-	
-	public RemovePersonnelView getRemovePersPanel(){
-		return removePersPanel;
 	}
 	
 	public ViewPersonnelView getViewPersPanel(){
