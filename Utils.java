@@ -1,7 +1,29 @@
+/*******************************************************
+	 *  Class name: Utils
+ 	 *  Inheritance:
+	 *  Attributes: toolTipBGColor, toolTipFGColor, BODY_COLOR,
+					tableFont, menuFont, menuFGColor, menuHeaderFont,
+					menuHeader2Font, darkgray, dateFontColor, 
+					employFontColor, clientFontColor, headerFont,
+					descFont, genSummHColor, genPaysHColor, 
+					addAdjHColor, remAdjHColor, imptDTRHColor,
+					imptPersHColor, settingsHColor, modifyVarHColor, 
+					modifyTaxHColor, backUpHColor, menuHColor, 
+					statusBarFont, statusBGColor, statusIconSize,
+					statusFGColor, labelFont, colorfulSRColumn,
+					colorfulPColumn, textFieldFont, textPFieldFont,
+					comboBoxFont, comboBoxBGColor, comboBoxFGColor
+	 *  Methods:
+	 *  Functionality: View
+	 *  Visibility: public
+	 *******************************************************/
+	 
+	 
 import java.awt.Color;
 import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Arrays;
+
 
 public class Utils {
 	

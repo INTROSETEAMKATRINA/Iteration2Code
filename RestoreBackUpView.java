@@ -1,11 +1,10 @@
 /*******************************************************
-	 *  Class name: ChangePasswordView
- 	 *  Inheritance: JFrame
+	 *  Class name: RestoreBackUpView
+ 	 *  Inheritance: JPanel
 	 *  Attributes: 
-	 *  Methods:	ChangePasswordView, getOldPass, getNewPass,
-	 *				getConfirmNewPass, clear, setChangeListener,
-	 *				setCancelListener, setShowListener, askConfirmation,
-	 *				showPassword, showError, showSuccess
+	 *  Methods: setRestoreListener, setSelectFileListener, setStatus,
+	 *			askConfirmation, setFileDirectory,
+	 *			fileChooser, getFileDirectory, loadScaledImage 
 	 *  Functionality: View
 	 *  Visibility: public
 	 *******************************************************/
@@ -33,6 +32,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+
 public class RestoreBackUpView extends JPanel {
 	
 	private JLabel saveLbl;
@@ -42,8 +42,9 @@ public class RestoreBackUpView extends JPanel {
 	private JButton restoreBtn;
 	private JButton selSaveBtn;
 	
-        private File file;
+	private File file;
 
+	
 	public RestoreBackUpView() {
 		
 		restoreBtn = new JButton(new ImageIcon(getClass().getResource("/images/buttons/restore.png")));
@@ -141,8 +142,7 @@ public class RestoreBackUpView extends JPanel {
 		statusLbl.setFont(Utils.statusBarFont);
 	}
 	
-	public void paintComponent(Graphics g)
-	{		
+	public void paintComponent(Graphics g){		
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 	
@@ -160,8 +160,7 @@ public class RestoreBackUpView extends JPanel {
 		g2d.drawLine(0, this.getHeight()-Utils.HEIGHT, this.getWidth(), this.getHeight()-Utils.HEIGHT);
 	}
 
-	private ImageIcon loadScaledImage(String img_url, float percent)
-	{	
+	private ImageIcon loadScaledImage(String img_url, float percent){	
 		ImageIcon img_icon = new ImageIcon(this.getClass().getResource(img_url));
 		int new_width = (int) (img_icon.getIconWidth()*percent);
 		int new_height = (int) (img_icon.getIconHeight()*percent);
@@ -170,11 +169,11 @@ public class RestoreBackUpView extends JPanel {
 		return img_icon;
 	}
         
-        public File getFileDirectory(){
-            return file;
-        }
+    public File getFileDirectory(){
+		return file;
+    }
 
-        public File fileChooser(){
+    public File fileChooser(){
 		JFileChooser fc = null;
 		fc = new JFileChooser();
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("sql files", "sql");
@@ -189,7 +188,7 @@ public class RestoreBackUpView extends JPanel {
 		}
 	}
             
-        public void setFileDirectory(File f){
+    public void setFileDirectory(File f){
 		file = f;
 		
 		if(f!=null){
@@ -197,11 +196,10 @@ public class RestoreBackUpView extends JPanel {
 		}else{
 			locationLbl.setText("");
 		}
-        }
+    }
         
-        public boolean askConfirmation(){
+    public boolean askConfirmation(){
 		int confirmation = JOptionPane.showConfirmDialog(null, "Are you sure you want to restore from back up?", "Restore from back up",
-		
 		JOptionPane.YES_NO_OPTION);
 		if(confirmation ==JOptionPane.YES_OPTION){
 			return true;
@@ -209,22 +207,21 @@ public class RestoreBackUpView extends JPanel {
 		return false;
 	}
         
-        public void setStatus(String e, boolean b){
-		statusLbl.setText("Status: "+e);
-		
+    public void setStatus(String e, boolean b){
+		statusLbl.setText("Status: "+e);	
 		if(b){
 			statusLbl.setIcon(loadScaledImage("/images/notifs/right.png",.08f));
 		}else{
 			statusLbl.setIcon(loadScaledImage("/images/notifs/wrong.png",.08f));
 		}
-        }
+    }
         
-        public void setSelectFileListener(ActionListener list){
+	public void setSelectFileListener(ActionListener list){
 		selSaveBtn.addActionListener(list);
-        }
+    }
 	
-        public void setRestoreListener(ActionListener list){
+    public void setRestoreListener(ActionListener list){
 		restoreBtn.addActionListener(list);
-        }
+    }
 
 }

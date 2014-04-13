@@ -1,3 +1,14 @@
+/*******************************************************
+	 *  Class name: SettingsView
+ 	 *  Inheritance: JPanel
+	 *  Attributes: model
+	 *  Methods: SettingsView, getChangePasswordPanel, getModifyVarsPanel,
+     *		getRestorePanel, getMinWagePanel,
+	 *  Functionality: View
+	 *  Visibility: public
+	 *******************************************************/
+	 
+	 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -119,8 +130,7 @@ public class SettingsView extends JPanel  {
 		add(changeMinWagPanel);
 	}
 
-	private void initButtons()
-	{
+	private void initButtons(){
 		changePassBtn.setContentAreaFilled(false);
 		changePassBtn.setBorder(null);
 		changePassBtn.setHorizontalTextPosition(JButton.CENTER);
@@ -214,8 +224,7 @@ public class SettingsView extends JPanel  {
 		
 	}
 	
-	private ImageIcon loadScaledImage(String img_url, float percent)
-	{
+	private ImageIcon loadScaledImage(String img_url, float percent){
 		ImageIcon img_icon = new ImageIcon(getClass().getResource(img_url));
 		int new_width = (int) (img_icon.getIconWidth()*percent);
 		int new_height = (int) (img_icon.getIconHeight()*percent);
@@ -224,8 +233,7 @@ public class SettingsView extends JPanel  {
 		return img_icon;
 	}
 	
-	public void paintComponent(Graphics g)
-	{
+	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 		
