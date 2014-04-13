@@ -292,8 +292,7 @@ public class ViewSummaryReportView extends JPanel {
 	public void updateTableColumn(){
 		ArrayList<String> column = model.getColumnName(getReport());
 		summaryModel.setColumnCount(0);
-		for(int i = 0; i < column.size();i++)
-		{
+		for(int i = 0; i < column.size();i++){
 			summaryModel.addColumn(column.get(i));
 		}
 		summaryModel.setColumnCount(column.size());

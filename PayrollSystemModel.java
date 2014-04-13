@@ -1185,6 +1185,7 @@ public class PayrollSystemModel {
 			column.add("Savings");
 			column.add("NetPay");
 		}else if(report.equals("Atm/cash payroll summary")){
+			column.add("Seq No.");
 			column.add("Name");
     	 	column.add("Gross pay");
     	 	column.add("SSS");
@@ -1250,7 +1251,7 @@ public class PayrollSystemModel {
 				if(rs.first()){
 					String name,position;
 					String tin;
-					int j = 0;
+					int j = 1;
 					int TRDW = 0,TRegularPay = 0,TROT = 0,TROTPay = 0,TRNSD = 0,TRNSDPay = 0,TLH = 0,TLHPay = 0,TLHOT = 0,
 						TLHOTPay = 0,TLHNSD = 0,TLHNSDPay = 0,TSH = 0,TSHPay = 0,TSHOT = 0,TSHOTPay = 0,
 						TSHNSD = 0,TSHNSDPay = 0,TLHRD = 0,TLHRDPay = 0,TSHRD = 0,TSHRDPay = 0,TAdjustments = 0,TGrossPay = 0,TSSS = 0,TPHIC = 0,THDMF = 0,TSSSLoan = 0,
@@ -1303,7 +1304,7 @@ public class PayrollSystemModel {
 			    	 		SSS,PHIC,HDMF,SSSLoan,PayrollAdvance,HouseRental,UniformAndOthers,Savings,NetPay};
 			    	 		row.add(data1);
 						}else if(report.equals(getSummaryReport(2))){
-							Object[] data1 = {name,GrossPay,SSS,PHIC,HDMF,SSSLoan,HouseRental,Savings,0,NetPay,0,0,0,0};
+							Object[] data1 = {j,name,GrossPay,SSS,PHIC,HDMF,SSSLoan,HouseRental,Savings,0,NetPay,0,0,0,0};
 							row.add(data1);
 						}else if(report.equals(getSummaryReport(3))){
 							Object[] data1 = {j,name,
@@ -1327,7 +1328,7 @@ public class PayrollSystemModel {
 			    		TSSS,TPHIC,THDMF,TSSSLoan,TPayrollAdvance,THouseRental,TUniformAndOthers,TSavings,TNetPay};
 			    	 	row.add(data1);
 					}else if(report.equals(getSummaryReport(2))){
-						Object[] data1 = {"Total",TGrossPay,TSSS,TPHIC,THDMF,TSSSLoan,THouseRental,TSavings,0,TNetPay,0,0,0,0};
+						Object[] data1 = {j,"Total",TGrossPay,TSSS,TPHIC,THDMF,TSSSLoan,THouseRental,TSavings,0,TNetPay,0,0,0,0};
 						row.add(data1);
 					}else if(report.equals(getSummaryReport(3))){
 						Object[] data1 = {j,"TOTAL",

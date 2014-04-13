@@ -22,12 +22,13 @@ public class PayrollSystem{
 			UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
 			String url = "jdbc:mysql://localhost:3306/payroll system";
 			String uname = "root";
-			String pass = "1991829";
+			String pass = "p@ssword";
 			con = DriverManager.getConnection (url, uname, pass);
-			
+			System.out.println("Connected!");
 			PayrollSystemModel model = new PayrollSystemModel(con);
 			SettingsView sView = new SettingsView(model);
 			PayrollSystemView view = new PayrollSystemView(sView, model);
+			PayrollSystemController controller = new PayrollSystemController(model, view, sView, con);
 			view.setVisible(true);
 			
 		}catch(Exception e){
