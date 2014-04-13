@@ -1,3 +1,14 @@
+/*******************************************************
+	 *  Class name: BackUpView
+ 	 *  Inheritance:JPanel
+	 *  Attributes: 
+	 *  Methods:	setSelectFileListener, setGenerateListener, setFileDirectory,
+					getFileDirectory, askConfirmation, setStatus
+	 *  Functionality: View
+	 *  Visibility: public
+	 *******************************************************/
+	 
+	 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -19,6 +30,7 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+
 public class BackUpView extends JPanel {
 
 	private JLabel saveLbl;
@@ -28,10 +40,10 @@ public class BackUpView extends JPanel {
 	private JButton saveBtn;
 	private JButton selSaveBtn;
         
-        private File file;
-
+    private File file;
+	
+	
 	public BackUpView() {
-		
 		saveBtn = new JButton(new ImageIcon(getClass().getResource("/images/buttons/backup.png")));
 		selSaveBtn = new JButton(new ImageIcon(getClass().getResource("/images/buttons/select.png")));
 		
@@ -121,15 +133,13 @@ public class BackUpView extends JPanel {
 		add(statusLbl,gbc);
 	}
 	
-	public void initFont()
-	{
+	public void initFont(){
 		saveLbl.setFont(Utils.labelFont);
 		locationLbl.setFont(Utils.labelFont);
 		statusLbl.setFont(Utils.statusBarFont);
 	}
 	
-	public void paintComponent(Graphics g)
-	{
+	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 		
@@ -147,8 +157,7 @@ public class BackUpView extends JPanel {
 		g2d.drawLine(0, this.getHeight()-Utils.HEIGHT, this.getWidth(), this.getHeight()-Utils.HEIGHT);
 	}
 	
-	private ImageIcon loadScaledImage(String img_url, float percent)
-	{	
+	private ImageIcon loadScaledImage(String img_url, float percent){	
 		ImageIcon img_icon = new ImageIcon(this.getClass().getResource(img_url));
 		int new_width = (int) (img_icon.getIconWidth()*percent);
 		int new_height = (int) (img_icon.getIconHeight()*percent);
@@ -162,11 +171,11 @@ public class BackUpView extends JPanel {
 		JFileChooser fc = new JFileChooser();
 		//In response to a button click:
 		int returnVal = fc.showSaveDialog(this);
+		
 		if(returnVal == JFileChooser.APPROVE_OPTION){
 			if(fc.toString().contains(".sql")){
 				return fc.getSelectedFile();
 			}
-			
 			return new File(fc.getSelectedFile()+".sql");
 		}else{
 			return null;
@@ -207,7 +216,6 @@ public class BackUpView extends JPanel {
         
     public void setStatus(String e, boolean b){
 		statusLbl.setText("Status: "+e);
-		
 		if(b){
 			statusLbl.setIcon(loadScaledImage("/images/notifs/right.png",.08f));
 		}else{

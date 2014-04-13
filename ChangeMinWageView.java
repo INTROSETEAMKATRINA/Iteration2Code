@@ -1,8 +1,10 @@
 /*******************************************************
-	 *  Class name: 
- 	 *  Inheritance: JFrame
+	 *  Class name: ChangeMinWageView
+ 	 *  Inheritance: JPanel
 	 *  Attributes: 
-	 *  Methods:	
+	 *  Methods:	getMinWageTxtFld, clear, setChangeListener,
+					askConfirmation, showSuccess, showError,
+					setText
 	 *  Functionality: View
 	 *  Visibility: public
 	 *******************************************************/
@@ -25,13 +27,13 @@ import javax.swing.JOptionPane;
 import java.util.Scanner;
 import java.io.File;
 
+
 public class ChangeMinWageView extends JPanel {
 	
 	private JLabel minWageLbl;
 	private JLabel statusLbl;
 
 	private CustomTextField minWageTxtFldTxtFld;
-
 
 	private JButton applyBtn;
 	
@@ -40,24 +42,19 @@ public class ChangeMinWageView extends JPanel {
 	
 	public ChangeMinWageView() {
 		applyBtn = new JButton(new ImageIcon(getClass().getResource("/images/buttons/apply.png")));
-		
 		minWageLbl = new JLabel("Minimum Wage: ");
-
 		statusLbl = new JLabel();
-		
 		minWageTxtFldTxtFld = new CustomTextField("", "/images/effects/in.png", "/images/effects/out.png", TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
-
 		
 		modifyUI();
 		initFont();
 	}
 	
-	private void modifyUI() {
+	private void modifyUI(){
 		setSize(new Dimension(486,450));
 		setBackground(Utils.BODY_COLOR);
 		
 		statusLbl.setForeground(Utils.statusFGColor);
-		
 		minWageTxtFldTxtFld.setPreferredSize(new Dimension(TEXTBOX_WIDTH,TEXTBOX_HEIGHT));
 		
 		applyBtn.setContentAreaFilled(false);
@@ -74,7 +71,6 @@ public class ChangeMinWageView extends JPanel {
 	
 	private void addComponentsToPane(){
 		setLayout(new GridBagLayout());
-		
 		GridBagConstraints gbc = new GridBagConstraints();
 		
 		gbc.anchor = GridBagConstraints.WEST;
@@ -132,9 +128,8 @@ public class ChangeMinWageView extends JPanel {
 	}
 	
 	public boolean askConfirmation(){ 
-		int confirmation = JOptionPane.showConfirmDialog(null, "Please confirm!", "Please confirm!",
+		int confirmation = JOptionPane.showConfirmDialog(null, "Please confirm!", "Please confirm!", JOptionPane.YES_NO_OPTION);
 		
-		JOptionPane.YES_NO_OPTION);
 		if(confirmation ==JOptionPane.YES_OPTION){
 			return true;
 		}

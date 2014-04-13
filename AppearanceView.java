@@ -5,8 +5,7 @@
 
 public class AppearanceView {
 
-	public AppearanceView()
-	{
+	public AppearanceView(){
 		
 	}
 }

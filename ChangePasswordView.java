@@ -1,11 +1,11 @@
 /*******************************************************
 	 *  Class name: ChangePasswordView
- 	 *  Inheritance: JFrame
+ 	 *  Inheritance: JPanel
 	 *  Attributes: 
-	 *  Methods:	ChangePasswordView, getOldPass, getNewPass,
+	 *  Methods:	getOldPass, getNewPass,
 	 *				getConfirmNewPass, clear, setChangeListener,
-	 *				setCancelListener, setShowListener, askConfirmation,
-	 *				showPassword, showError, showSuccess
+	 *				setCancelListener, askConfirmation,
+	 *				showError, showSuccess
 	 *  Functionality: View
 	 *  Visibility: public
 	 *******************************************************/
@@ -25,6 +25,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JOptionPane;
 
+
 public class ChangePasswordView extends JPanel {
 	
 	private JLabel oldPassLbl;
@@ -40,6 +41,7 @@ public class ChangePasswordView extends JPanel {
 	
 	private final static int TEXTBOX_WIDTH = 180;
 	private final static int TEXTBOX_HEIGHT = 41;
+	
 	
 	public ChangePasswordView() {
 		applyBtn = new JButton(new ImageIcon(getClass().getResource("/images/buttons/apply.png")));

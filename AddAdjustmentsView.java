@@ -1,6 +1,6 @@
 /*******************************************************
 	 *  Class name: AddAdjustmentsView
- 	 *  Inheritance:
+ 	 *  Inheritance:JPanel
 	 *  Attributes: model
 	 *  Methods:	AddAdjustmentsView, askConfirmation, setAddListener, setCancelListener,
 	 * 				setClientListener, getTypeAdjustment, getAdjustment,
@@ -9,6 +9,8 @@
 	 *  Functionality: View
 	 *  Visibility: public
 	 *******************************************************/
+	 
+	 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -29,6 +31,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import java.math.BigDecimal;
+
+
 public class AddAdjustmentsView extends JPanel {
 	
 	private JLabel selectClientLbl;
@@ -49,6 +53,7 @@ public class AddAdjustmentsView extends JPanel {
 	private final static int TEXTBOX_HEIGHT = 41;
 	
 	private PayrollSystemModel model;
+	
 	public AddAdjustmentsView(PayrollSystemModel model) {
 		this.model = model;
 		addBtn = new JButton(new ImageIcon(getClass().getResource("/images/buttons/add.png")));
@@ -185,8 +190,7 @@ public class AddAdjustmentsView extends JPanel {
 		add(statusLbl,gbc);
 	}
 	
-	public void initFont()
-	{
+	public void initFont(){
 		clientCBox.setFont(Utils.comboBoxFont);
 		personnelCBox.setFont(Utils.comboBoxFont);
 		selectClientLbl.setFont(Utils.labelFont);
@@ -197,8 +201,7 @@ public class AddAdjustmentsView extends JPanel {
 		statusLbl.setFont(Utils.statusBarFont);
 	}
 	
-	public void paintComponent(Graphics g)
-	{
+	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 		
@@ -215,10 +218,10 @@ public class AddAdjustmentsView extends JPanel {
 		g2d.setColor(Color.LIGHT_GRAY);
 		g2d.drawLine(0, this.getHeight()-Utils.HEIGHT, this.getWidth(), this.getHeight()-Utils.HEIGHT);
 	}
+	
 	public boolean askConfirmation(){
-		int confirmation = JOptionPane.showConfirmDialog(null, "Please confirm!", "Please confirm!",
+		int confirmation = JOptionPane.showConfirmDialog(null, "Please confirm!", "Please confirm!", JOptionPane.YES_NO_OPTION);
 		
-		JOptionPane.YES_NO_OPTION);
 		if(confirmation ==JOptionPane.YES_OPTION){
 			return true;
 		}
@@ -274,24 +277,24 @@ public class AddAdjustmentsView extends JPanel {
 	}
 	
 	public void updatePersonnelList(){
-		personnelCBox.removeAllItems();
 		ArrayList<String> personnel = model.getPersonnelList((String)clientCBox.getSelectedItem());
 		
+		personnelCBox.removeAllItems();
 		for(String t : personnel){
 			personnelCBox.addItem(t);
 		}
 	}
 	
 	public void updateClientList(){
-		clientCBox.removeAllItems();
 		ArrayList<String> clients = model.getClientList();
+		
+		clientCBox.removeAllItems();
 		for(String t : clients){
 			clientCBox.addItem(t);
 		}
 	}
 	
-	private ImageIcon loadScaledImage(String img_url, float percent)
-	{	
+	private ImageIcon loadScaledImage(String img_url, float percent){	
 		ImageIcon img_icon = new ImageIcon(this.getClass().getResource(img_url));
 		int new_width = (int) (img_icon.getIconWidth()*percent);
 		int new_height = (int) (img_icon.getIconHeight()*percent);
