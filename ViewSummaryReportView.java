@@ -88,16 +88,22 @@ public class ViewSummaryReportView extends JPanel {
 		
 		updateViewList();
 		
-		summaryTable = new JTable(32, 100);
+		summaryModel = new DefaultTableModel(32, 12) {
+		    public boolean isCellEditable(int rowIndex, int columnIndex) {
+	            return false;
+	        }
+		};
+		
+		summaryTable = new JTable(summaryModel);
 		summaryTable.setRowHeight(32);
 		summaryTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		summaryTable.setColumnSelectionAllowed(true);
 		summaryTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-		summaryModel = (DefaultTableModel) summaryTable.getModel();
+		//summaryModel = (DefaultTableModel) summaryTable.getModel();
 		
 		header = summaryTable.getTableHeader();
 		header.setBackground(new Color(0xFAFAFA));
-		header.setPreferredSize(new Dimension(header.getPreferredSize().width, 25));
+		header.setPreferredSize(new Dimension(header.getPreferredSize().width * 999, 25));
 		header.setAlignmentX(JLabel.CENTER_ALIGNMENT);
 		header.setReorderingAllowed(false);
 		

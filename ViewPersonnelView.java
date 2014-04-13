@@ -77,7 +77,7 @@ public class ViewPersonnelView extends JPanel {
 		
 		header = personnelTable.getTableHeader();
 		header.setBackground(new Color(0xFAFAFA));
-		header.setPreferredSize(new Dimension(header.getPreferredSize().width, 25));
+		header.setPreferredSize(new Dimension(header.getPreferredSize().width * 999, 25));
 		header.setAlignmentX(JLabel.CENTER_ALIGNMENT);
 		header.setReorderingAllowed(false);
 		
