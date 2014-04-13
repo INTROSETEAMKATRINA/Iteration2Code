@@ -553,8 +553,8 @@ public class PayrollSystemController{
 	
 	class viewReportListener implements ActionListener{ //This is going to be updated
 		public void actionPerformed(ActionEvent e){
-			if(viewSummaryReport.getClient() == null || viewSummaryReport.getPeriodStartDate() == null){
-				viewSummaryReport.showError(0);
+			if(viewSummaryReport.getPeriodStartDate() == null){
+				viewSummaryReport.showError(1);
 			}else{
 				String client = viewSummaryReport.getClient();
 				String psd = viewSummaryReport.getPeriodStartDate();
@@ -583,6 +583,9 @@ public class PayrollSystemController{
 		file = generateSummaryReport.getDirectory();
 		if(client == null || date == null || file == null){
 			generateSummaryReport.showError(0);
+		}
+		if(date == null){
+			generateSummaryReport.showError(1);
 		}
 		else{
 			if(file != null){

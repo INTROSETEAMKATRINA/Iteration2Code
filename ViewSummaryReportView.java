@@ -340,8 +340,12 @@ public class ViewSummaryReportView extends JPanel {
 	public void updateDateList(){
 		timePeriodCBox.removeAllItems();
 		ArrayList<String> dates = model.getDateListPayslips(getClient());
-		for(String t : dates)
-			timePeriodCBox.addItem(t);		
+		if(dates.size() == 0){
+			showError(1);
+		}
+		for(String t : dates){
+			timePeriodCBox.addItem(t);
+		}
 	}
 	
 	public void updateViewList(){
@@ -356,14 +360,13 @@ public class ViewSummaryReportView extends JPanel {
 		if(i == 0){
 			error = "Lacking Input!";
 		}else if(i==1){
-			error = "No payslips for client in current period!";
+			error = "No payslips for client!";
 		}
 		statusLbl.setText(error);
 		statusLbl.setIcon(loadScaledImage("/images/notifs/wrong.png",.08f));
 	}
 	
-	private ImageIcon loadScaledImage(String img_url, float percent)
-	{	
+	private ImageIcon loadScaledImage(String img_url, float percent){	
 		ImageIcon img_icon = new ImageIcon(this.getClass().getResource(img_url));
 		int new_width = (int) (img_icon.getIconWidth()*percent);
 		int new_height = (int) (img_icon.getIconHeight()*percent);

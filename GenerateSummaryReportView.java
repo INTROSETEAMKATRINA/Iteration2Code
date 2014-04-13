@@ -310,7 +310,7 @@ public class GenerateSummaryReportView extends JPanel {
 		if(i == 0){
 			error = "Lacking input";
 		}else if(i == 1){
-			error = "No payslips for client in current period!";
+			error = "No payslips for client!";
 		}
 		statusLbl.setText(error);
 		statusLbl.setIcon(loadScaledImage("/images/notifs/wrong.png",.08f));
@@ -357,7 +357,9 @@ public class GenerateSummaryReportView extends JPanel {
 	
 	public void updateDateList(){
 		ArrayList<String> dates = model.getDateListPayslips(getClient());
-
+		if(dates.size() == 0){
+			showError(1);
+		}
 		timePeriodCBox.removeAllItems();
 		for(String t : dates)
 			timePeriodCBox.addItem(t);		
