@@ -1,18 +1,20 @@
 /*******************************************************
 	 *  Class name: PayrollSystemModel
  	 *  Inheritance:
-	 *  Attributes: con, sdf, periodStartdate, model, view, removeAdjustments,
-	 *				addAdjustments, viewSummaryReport, changePassword,
-	 *				generatePayslips
-	 *  Methods:	PayrollSystemModel, setPeriodStartDate, addPersonnel
-	 *				addDTR, removePersonnel, getPersonnel,
-	 *				addAdjustment, removeAdjustment, changePassword,
-	 *				modifyTaxTable, modfyClientVariables, generatePayslips,
-	 *				generateSummaryReport, backupDate, getSummaryReport,
+	 *  Attributes: con, sdf, periodStartdate, client, taxStatus,
+	 *				summaryReports
+	 *  Methods:	PayrollSystemModel, setPeriodStartDate, addPersonnel,
+	 *				addDTR, removePersonnel, getTableColumn, getPesonnelData, 
+	 *				addAdjustment, removeAdjustment, checkPassword, changePassword,
+	 *				generatePayslips, backupDate, restoreFromBackUp, 
+	 *				nextTimePeriod, tryGetFloat, tryGetBigDecimal,
+	 *				getExtension, countClient, countEmployee, getVariables,
+	 *				modifyVariables, getTaxTable, getWholeTaxTable,
+	 *				updateTaxTable, getBracketList, getBracketListInArray
 	 *				getClientList, getPersonnelList, getAdjustmentsList, 
 	 *				getDateListDTR, checkPeriodForDTR, checkPeriodForPayslips,
 	 *				getDateListPayslips, getColumnName, getTableRow, 
-	 *				getSummaryReport, tryGetFloat
+	 *				getSummaryReport, getClient, generateSummaryReport
 	 *  Functionality: Model
 	 *  Visibility: public
 	 *******************************************************/
@@ -35,6 +37,7 @@ import jxl.Sheet;
 import jxl.Workbook;
 
 import java.math.BigDecimal;
+
 
 public class PayrollSystemModel {
 
@@ -62,8 +65,8 @@ public class PayrollSystemModel {
 		
         try{
 			File file = fileDirectory;
-			
 			String ext = getExtension(fileDirectory.toString());
+			
 			if(!ext.equals("xls")){
 				throw new Exception("File is not an excel file.");
 			}
@@ -79,8 +82,8 @@ public class PayrollSystemModel {
 
 			row = 0;
 			column = 1;
-
 			assignment = sheet.getCell(column,row).getContents();
+			
 			if(assignment.length() <= 0){
 				throw new Exception("No client name in excel file.");
 			}
@@ -180,7 +183,7 @@ public class PayrollSystemModel {
             stmt=con.prepareStatement(sql);
             stmt.execute(sql);
 
-        } catch (SQLException ex) {
+        }catch (SQLException ex) {
 			if(ex.getErrorCode()!=1062){
 				System.out.println(ex);
 			}
@@ -246,6 +249,7 @@ public class PayrollSystemModel {
 			throw new Exception(ex);
 		}
 	}
+	
 	public void removePersonnel(String client, String personnel, String TIN) throws Exception{
 		try{
 			String sql = "DELETE From personnel WHERE name = '"+personnel+
@@ -257,6 +261,7 @@ public class PayrollSystemModel {
 			throw new Exception(ex);
 		}
 	}
+	
 	public ArrayList<String> getTableColumn(String tableName){
 		ArrayList<String> columnName = new ArrayList<String>();
 		
@@ -278,6 +283,7 @@ public class PayrollSystemModel {
 		ArrayList<String> columnName = getTableColumn("personnel");
 		ArrayList<Object[]> rowData = new ArrayList<>();
 		int num = 1;
+		
 		try{
 			String sql="Select * FROM `personnel` where assignment = '"+client+"' order by name";
 			Statement st = con.createStatement();
@@ -291,7 +297,7 @@ public class PayrollSystemModel {
 				}
 				rowData.add(data.toArray());
 			}
-        } catch (Exception ex) {
+        }catch (Exception ex){
 			System.out.println(ex);
         }
 		if(rowData.size() == 0){
@@ -305,8 +311,8 @@ public class PayrollSystemModel {
 
         try{
 			File file = fileDirectory;
-			
 			String ext = getExtension(fileDirectory.toString());
+			
 			if(!ext.equals("xls")){
 				throw new Exception("File is not an excel file.");
 			}
@@ -344,7 +350,6 @@ public class PayrollSystemModel {
 			row += 2;
 			
 			while(row < sheet.getRows()){
-			
 				column = 0;
 				name = sheet.getCell(column,row).getContents();
 
@@ -452,8 +457,6 @@ public class PayrollSystemModel {
 		return true;
 	}
 
-	
-
 	public void addAdjustment(String reason, BigDecimal adjustment, String tin, Date periodStartDate) {
         Statement stmt = null;
         
@@ -509,12 +512,6 @@ public class PayrollSystemModel {
 			System.out.println(e);
 		}
 		return x;
-	}
-
-	public void modifyTaxTable(String fileDirectory){
-	}
-
-	public void modfyClientVariables(float specialHoliday, float legalHoliday){
 	}
 
 	public int generatePayslips(File directory, String client, String psd, int minWage){
@@ -996,9 +993,6 @@ public class PayrollSystemModel {
 		writer.close();
 		return 0;
 	}
-	
-	public void generateSummaryReport(File directory, String client){
-	}
 
 	public void backupData(File directory) throws Exception{
         Process exec = null;
@@ -1016,11 +1010,6 @@ public class PayrollSystemModel {
         pb.redirectInput(directory);
         exec = pb.start();
     }
-
-
-	public ArrayList<String> getSummaryReport(String client, String report, Date periodStartDate){
-		return new ArrayList<String>();
-	}
 
 	public ArrayList<String> getClientList(){
 		Statement stmt = null;
@@ -1072,20 +1061,6 @@ public class PayrollSystemModel {
             }
 		return adjustments;
 	}
-
-
-	/*public String getTIN(String personnelName){
-		try{
-			String sql="Select `TIN` FROM `personnel` where name = '"+personnelName+"'";
-			Statement st = con.createStatement();
-			ResultSet rs = st.executeQuery(sql);
-			rs.next();
-			return rs.getString("TIN");
-		}catch(Exception ex){
-			System.out.println(ex+"!");
-		}
-		return "";
-	}*/
 	
 	public ArrayList<String> getDateListDTR(String client){
 		Statement stmt = null;
@@ -1460,6 +1435,7 @@ public class PayrollSystemModel {
 	public BigDecimal[] getVariables(String client) throws Exception{
 		Statement stmt = null;
 		BigDecimal variables[] = new BigDecimal[12];
+		
             try{
 				String sql="Select rotVar, rnsdVar, lhRate, lhVar, lhOTVar," +
 					"lhNSDVar, lhRDVar, shRate, shVar, shOTVar, shNSDVar," +
@@ -1565,6 +1541,7 @@ public class PayrollSystemModel {
 	public String getClient(){
 		return client;
 	}
+	
 	public int generateSummaryReport(File directory, String date,String client, String report){
 		PrintWriter writer = null;
 		ArrayList<Object[]> data = getTableRow(client,date,report);
