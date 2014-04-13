@@ -1,12 +1,15 @@
 /*******************************************************
-	 *  Class name: ViewPersonnelView
- 	 *  Inheritance: JFrame
+	 *  Class name: ModifyTaxTableView
+ 	 *  Inheritance: JPanel
 	 *  Attributes: model
-	 *  Methods:	ViewPersonnelView, getClient, setPickerListener
+	 *  Methods:	ModifyTaxTableView, getBracket, getTable,
+	 * 				setTable, setBracketListener, setApplyListener,
+	 *				showSuccess, showError, updateBracketList
 	 *  Functionality: View
 	 *  Visibility: public
 	 *******************************************************/
 
+	 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -27,6 +30,8 @@ import javax.swing.JTextField;
 import java.math.BigDecimal;
 
 import java.util.ArrayList;
+
+
 public class ModifyTaxTableView extends JPanel {
 
 	private JButton applyBtn;
@@ -56,7 +61,10 @@ public class ModifyTaxTableView extends JPanel {
 
 	private final static int TEXTBOX_WIDTH = 180;
 	private final static int TEXTBOX_HEIGHT = 41;
+	
 	private PayrollSystemModel model;
+	
+	
 	public ModifyTaxTableView(PayrollSystemModel model) {
 		this.model = model;
 		applyBtn = new JButton(loadScaledImage("/images/buttons/apply.png",1f));
@@ -277,8 +285,7 @@ public class ModifyTaxTableView extends JPanel {
 		add(statusLbl,gbc);
 	}
 
-	public void initFont()
-	{
+	public void initFont(){
 		bracketCBox.setFont(Utils.comboBoxFont);
 		bracketLbl.setFont(Utils.labelFont);
 		taxLbl.setFont(Utils.labelFont);
@@ -340,7 +347,6 @@ public class ModifyTaxTableView extends JPanel {
 		me2TxtFld.setHint(table[5].toString());
 		me3TxtFld.setHint(table[6].toString());
 		me4TxtFld.setHint(table[7].toString());
-
 	}
 	
 	public void setBracketListener(ActionListener list){
@@ -378,4 +384,5 @@ public class ModifyTaxTableView extends JPanel {
 			bracketCBox.addItem(t);
 		}
 	}
+	
 }

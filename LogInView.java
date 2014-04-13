@@ -1,3 +1,13 @@
+/*******************************************************
+	 *  Class name: LogInView
+ 	 *  Inheritance: JPanel
+	 *  Attributes: 
+	 *  Methods:	setLoginListener, getPassword
+	 *  Functionality: Controller
+	 *  Visibility: public
+	 *******************************************************/
+	 
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -24,6 +34,7 @@ import net.java.balloontip.BalloonTip.AttachLocation;
 import net.java.balloontip.BalloonTip.Orientation;
 import net.java.balloontip.styles.RoundedBalloonStyle;
 import net.java.balloontip.utils.FadingUtils;
+
 
 public class LogInView extends JPanel  {
 
@@ -67,8 +78,7 @@ public class LogInView extends JPanel  {
         });
 	}
 	
-	private void modifyUI()
-	{
+	private void modifyUI(){
 		this.setSize(new Dimension(370,120));
 		this.setOpaque(false);
 		this.setLayout(null);
@@ -78,8 +88,7 @@ public class LogInView extends JPanel  {
 		addComponentsToPane();
 	}
 	
-	private void initToolTips()
-	{
+	private void initToolTips(){
 		RoundedBalloonStyle rbs = new RoundedBalloonStyle(6,6,transparent_red,Color.LIGHT_GRAY);
 		
 		String blank_password = "<html>Oops! You entered a wrong password.<br></html>";
@@ -106,8 +115,7 @@ public class LogInView extends JPanel  {
 		btip1.setVisible(false);
 	}
 	
-	private void initButtons()
-	{
+	private void initButtons(){
 		loginBtn.setContentAreaFilled(false);
 		loginBtn.setBorder(null);
 		loginBtn.setOpaque(false);
@@ -119,8 +127,7 @@ public class LogInView extends JPanel  {
 		loginBtn.setSize(new Dimension(loginBtn.getIcon().getIconWidth(), loginBtn.getIcon().getIconHeight()));
 	}
 	
-	private void addComponentsToPane()
-	{
+	private void addComponentsToPane(){
 		passwordTxtFld.setBounds(8,65,passwordTxtFld.getWidth(),passwordTxtFld.getHeight());
 		loginBtn.setBounds(passwordTxtFld.getWidth()+10,70,loginBtn.getWidth(),loginBtn.getHeight());
 		
@@ -128,8 +135,7 @@ public class LogInView extends JPanel  {
 		add(loginBtn);
 	}
 	
-	public void paintComponent(Graphics g)
-	{
+	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 		
@@ -147,8 +153,7 @@ public class LogInView extends JPanel  {
 	    g2d.drawString("E N T E R    P A S S W O R D", 20, 35);       
 	}
 	
-	private ImageIcon loadScaledImage(String img_url, float percent)
-	{
+	private ImageIcon loadScaledImage(String img_url, float percent){
 		ImageIcon img_icon = new ImageIcon(getClass().getResource(img_url));
 		int new_width = (int) (img_icon.getIconWidth()*percent);
 		int new_height = (int) (img_icon.getIconHeight()*percent);
