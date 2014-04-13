@@ -1,8 +1,9 @@
 /*******************************************************
 	 *  Class name: ViewPersonnelView
- 	 *  Inheritance: JFrame
+ 	 *  Inheritance: JPanel
 	 *  Attributes: model
-	 *  Methods:	ViewPersonnelView, getClient, setPickerListener
+	 *  Methods:	ViewPersonnelView, setClientListener, setRemoveListener,
+	 * 		updateClientList, updateTable, setStatus
 	 *  Functionality: View
 	 *  Visibility: public
 	 *******************************************************/
