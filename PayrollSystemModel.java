@@ -1280,7 +1280,7 @@ public class PayrollSystemModel {
 							HDMF += rs2.getInt("HDMF"); SSSLoan += rs2.getInt("SSSLoan"); PayrollAdvance += rs2.getInt("PayrollAdvance"); HouseRental += rs2.getInt("HouseRental");
 							UniformAndOthers += rs2.getInt("UniformAndOthers"); Savings += rs2.getInt("Savings"); NetPay += rs2.getInt("NetPay");LHRD += rs2.getInt("LHRD");
 							LHRDPay += rs2.getInt("LHRDPay"); SHRD += rs2.getInt("SHRD"); SHRDPay += rs2.getInt("SHRDPay");
-							TRDW += rs2.getInt("RDW"); DailyRate += rs2.getInt("DailyRate"); TranspoAllow += rs2.getInt("TranspoAllow");
+							TRDW += rs2.getInt("RDW"); TranspoAllow += rs2.getInt("TranspoAllow");
 							TRegularPay += rs2.getInt("RegularPay"); TROT += rs2.getInt("ROT"); TROTPay += rs2.getInt("ROTPay"); TRNSD += rs2.getInt("RNSD");
 							TRNSDPay += rs2.getInt("RNSDPay"); TLH += rs2.getInt("LH"); TLHPay += rs2.getInt("LHPay"); TLHOT += rs2.getInt("LHOT");
 							TLHOTPay += rs2.getInt("LHOTPay"); TLHNSD += rs2.getInt("LHNSD");
