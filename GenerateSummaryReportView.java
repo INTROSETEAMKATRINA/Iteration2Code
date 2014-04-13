@@ -1,3 +1,17 @@
+/*******************************************************
+	 *  Class name: GenerateSummaryReport
+ 	 *  Inheritance:
+	 *  Attributes: model
+	 *  Methods:	fileSaver, getClient, getPeriodStartDate,
+	 * 		getReport, getDirectory, setPeriodStartDateListener
+	 * 		setViewListener, setFileDirectoryListener, setGenerateSummaryReportListener
+	 * 		setFileDirectory, showError, showSuccessful,
+	 * 		askConfirmation, updateClientList, updateDateList,
+	 * 		updateViewList, setClientListener
+	 *  Functionality: View
+	 *  Visibility: public
+	 *******************************************************/
+
 import java.awt.Color;
 
 import java.awt.Dimension;
