@@ -209,9 +209,9 @@ public class AddAdjustmentsView extends JPanel {
 		g2d.fillRect(0, 0, this.getWidth(), 70);
 		g2d.setColor(Color.WHITE);
 		g2d.setFont(Utils.headerFont);
-        g2d.drawString("Add Adjustments", 20, 35);
+        	g2d.drawString("Add Adjustments", 20, 35);
 		g2d.setFont(Utils.descFont);
-        g2d.drawString("This section allows you to add adjustments to a personnel.", 20, 55);
+        	g2d.drawString("This section allows you to add adjustments to a personnel.", 20, 55);
 		
 		g2d.setColor(Utils.statusBGColor);
 		g2d.fillRect(0, this.getHeight()-Utils.HEIGHT, this.getWidth(), Utils.HEIGHT);
