@@ -100,7 +100,10 @@ public class ViewSummaryReportView extends JPanel {
 		summaryTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		summaryTable.setColumnSelectionAllowed(true);
 		summaryTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-
+		
+		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+		centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+		summaryTable.setDefaultRenderer(Object.class, centerRenderer);
 		
 		header = summaryTable.getTableHeader();
 		header.setBackground(new Color(0xFAFAFA));
