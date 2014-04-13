@@ -16,6 +16,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.event.InputEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
@@ -38,22 +39,22 @@ import javax.swing.JButton;
 
 public class ViewPersonnelView extends JPanel {
 
-	@SuppressWarnings("unused")
-	private PayrollSystemModel model;
-	
+	private JButton deleteBtn;
+	private JComboBox<Object> clientCBox;
+	private DefaultTableModel tableModel;
 	private JLabel selectClientLbl;
 	private JLabel statusLbl;
-	private JComboBox<Object> clientCBox;
+	private JScrollPane personnelPane;
 	private JTable personnelTable;
 	private JTableHeader header;
-	private DefaultTableModel tableModel;
-	private JScrollPane personnelPane;
-	private JButton deleteBtn;
+	private PayrollSystemModel model;
 	
 	public ViewPersonnelView(PayrollSystemModel model) {
 		this.model = model;
 		
-		deleteBtn = new JButton(new ImageIcon(getClass().getResource("/images/buttons/delete.png")));
+		deleteBtn = new JButton(new ImageIcon(
+				getClass().getResource("/images/buttons/delete.png")));
+		
 		statusLbl = new JLabel("Status: No Data Found!");
 		statusLbl.setIcon(loadScaledImage("/images/notifs/warning.png",.08f));
 		
@@ -71,55 +72,68 @@ public class ViewPersonnelView extends JPanel {
 		ArrayList<String> columnName = model.getTableColumn("personnel");
 		columnName.add(0, "No.");
 		tableModel = new DefaultTableModel(columnName.toArray(),0);
-		personnelTable.setModel(tableModel);		
+		personnelTable.setModel(tableModel);
+		
 		header = personnelTable.getTableHeader();
 		header.setBackground(new Color(0xFAFAFA));
 		header.setPreferredSize(new Dimension(header.getPreferredSize().width, 25));
 		header.setAlignmentX(JLabel.CENTER_ALIGNMENT);
 		header.setReorderingAllowed(false);
 		
-		for(int i = 0; i < personnelTable.getColumnCount(); i++)
-		{
+		for(int i = 0; i < personnelTable.getColumnCount(); i++){
 			if(i == 0) {
-				personnelTable.getColumnModel().getColumn(i).setCellRenderer(new ColorfulCellRenderer(new Color(0xFAFAFA),Color.BLACK,Utils.colorfulPColumn));
+				personnelTable.getColumnModel().getColumn(i).setCellRenderer(
+						new ColorfulCellRenderer(new Color(0xFAFAFA),
+								Color.BLACK,Utils.colorfulPColumn));
 				personnelTable.getColumnModel().getColumn(i).setPreferredWidth(40);
 			}
 			else if(Utils.colorfulPColumn.contains(i))
 			{
 				switch(i){
 				case 2:
-					personnelTable.getColumnModel().getColumn(i).setCellRenderer(new ColorfulCellRenderer(new Color(0xbee1fe),Color.BLACK,Utils.colorfulPColumn));
+					personnelTable.getColumnModel().getColumn(i).setCellRenderer(
+							new ColorfulCellRenderer(new Color(0xbee1fe),
+									Color.BLACK,Utils.colorfulPColumn));
 					break;
 				default:
-					personnelTable.getColumnModel().getColumn(i).setCellRenderer(new ColorfulCellRenderer(Color.ORANGE,Color.BLACK,Utils.colorfulPColumn));
+					personnelTable.getColumnModel().getColumn(i).setCellRenderer(
+							new ColorfulCellRenderer(Color.ORANGE,Color.BLACK,
+									Utils.colorfulPColumn));
 					break;
 				};
 			} else
-				personnelTable.getColumnModel().getColumn(i).setCellRenderer(new ColorfulCellRenderer(Color.WHITE,Color.BLACK,Utils.colorfulPColumn));
+				personnelTable.getColumnModel().getColumn(i).setCellRenderer(
+						new ColorfulCellRenderer(Color.WHITE,Color.BLACK,
+								Utils.colorfulPColumn));
 		}
+		
 		personnelTable.addMouseListener(new TableMouseListener());
 		
-		personnelPane = new JScrollPane(personnelTable, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		personnelPane = new JScrollPane(personnelTable, 
+				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		
 		modifyUI();
 	}
-	
-	
 	
 	private void modifyUI() {
 		setSize(new Dimension(851,670));
 		setBackground(Utils.BODY_COLOR);
 		
-		personnelPane.setPreferredSize(new Dimension(this.getWidth()-500,this.getHeight()-300));
+		personnelPane.setPreferredSize(
+				new Dimension(this.getWidth()-500,this.getHeight()-300));
 	
 		deleteBtn.setContentAreaFilled(false);
 		deleteBtn.setBorder(null);
 		deleteBtn.setOpaque(false);
 		deleteBtn.setForeground(null);
 		deleteBtn.setFocusPainted(false);
-		deleteBtn.setRolloverIcon(new ImageIcon(getClass().getResource("/images/buttons/delete-r.png")));
-		deleteBtn.setPressedIcon(new ImageIcon(getClass().getResource("/images/buttons/delete-p.png")));
-		deleteBtn.setSize(new Dimension(deleteBtn.getIcon().getIconWidth(), deleteBtn.getIcon().getIconHeight()));
+		deleteBtn.setRolloverIcon(
+				new ImageIcon(getClass().getResource("/images/buttons/delete-r.png")));
+		deleteBtn.setPressedIcon(
+				new ImageIcon(getClass().getResource("/images/buttons/delete-p.png")));
+		deleteBtn.setSize(new Dimension(deleteBtn.getIcon().getIconWidth(),
+				deleteBtn.getIcon().getIconHeight()));
 		
 		clientCBox.setPreferredSize(new Dimension(350,25));
 		clientCBox.setBackground(Utils.comboBoxBGColor);
@@ -196,8 +210,7 @@ public class ViewPersonnelView extends JPanel {
 				table.setColumnSelectionInterval(0, table.getColumnCount()-1);
 			}
 					
-			if(SwingUtilities.isRightMouseButton(e))
-			{
+			if(SwingUtilities.isRightMouseButton(e)){
 				table.clearSelection();
 				table.changeSelection(rowNum, colNum, false, false);
 				
@@ -208,39 +221,39 @@ public class ViewPersonnelView extends JPanel {
 				int rowIndex = table.getSelectedRow();
 				int colIndex = table.getSelectedColumn();
 						
-				if(rowIndex == rowNum && colIndex == 0 && e.getModifiers() == e.META_MASK && e.getComponent() instanceof JTable)
-				{
+				if(rowIndex == rowNum && colIndex == 0 &&
+						e.getModifiers() == InputEvent.META_MASK && e.getComponent() instanceof JTable){
 					JMenuItem menuItem = new JMenuItem("Delete Personnel");
-						menuItem.setFont(Utils.descFont);
-						menuItem.setBackground(Color.WHITE);
-						menuItem.setOpaque(false);
-						menuItem.addActionListener(new ActionListener(){
-							public void actionPerformed(ActionEvent actionEvent) {
-							    String client,personnel="",TIN="";
-							    int row=0;
-							    client = getSelectedClient();
-							    for(int i=0;i < personnelTable.getColumnCount();i++){
-							    	if(personnelTable.getColumnName(i).compareToIgnoreCase("name") == 0){
+					
+					menuItem.setFont(Utils.descFont);
+					menuItem.setBackground(Color.WHITE);
+					menuItem.setOpaque(false);
+					menuItem.addActionListener(new ActionListener(){
+						public void actionPerformed(ActionEvent actionEvent) {
+						    String client,personnel="",TIN="";
+						    int row = 0;
+						    client = getSelectedClient();
+							   for(int i = 0;i < personnelTable.getColumnCount(); i++){
+								   if(personnelTable.getColumnName(i).compareToIgnoreCase("name") == 0){
 							    		row = personnelTable.getSelectedRow();
 							    		personnel = (String)tableModel.getValueAt(row,i);
-							    	}
-							    	else if(personnelTable.getColumnName(i).compareToIgnoreCase("tin") == 0){
+							    	}else if(personnelTable.getColumnName(i).compareToIgnoreCase("tin") == 0){
 							    		row = personnelTable.getSelectedRow();
 							    		TIN = (String)tableModel.getValueAt(row,i);
 									}
-							    }
-							    try{
-							    	model.removePersonnel(client, personnel, TIN);
-							    	tableModel.removeRow(row);
-							    	setStatus("Successfully deleted.",true);
-							    }catch(Exception ex){
+							   }
+							   try{
+								   model.removePersonnel(client, personnel, TIN);
+								   tableModel.removeRow(row);
+								   setStatus("Successfully deleted.",true);
+							   }catch(Exception ex){
 							    	setStatus(ex.getMessage(),false);
-							    }
-							  }
-						});
+							   }
+						}
+					});
 						
 					JPopupMenu popup = new JPopupMenu();
-						popup.setBackground(Color.WHITE);
+					popup.setBackground(Color.WHITE);
 						
 					popup.add(menuItem);
 					popup.show(e.getComponent(), e.getX(), e.getY());
@@ -249,24 +262,26 @@ public class ViewPersonnelView extends JPanel {
 		}
 	}
 	
-	public void paintComponent(Graphics g)
-	{
+	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 		
 		g2d.setColor(Utils.statusBGColor);
 		g2d.fillRect(0, this.getHeight()-Utils.HEIGHT, this.getWidth(), Utils.HEIGHT);
 		g2d.setColor(Color.LIGHT_GRAY);
-		g2d.drawLine(0, this.getHeight()-Utils.HEIGHT, this.getWidth(), this.getHeight()-Utils.HEIGHT);
+		g2d.drawLine(0, this.getHeight()-Utils.HEIGHT, 
+				this.getWidth(),this.getHeight()-Utils.HEIGHT);
 	}
 	
-	private ImageIcon loadScaledImage(String img_url, float percent)
-	{	
+	private ImageIcon loadScaledImage(String img_url, float percent){	
 		ImageIcon img_icon = new ImageIcon(this.getClass().getResource(img_url));
 		int new_width = (int) (img_icon.getIconWidth()*percent);
 		int new_height = (int) (img_icon.getIconHeight()*percent);
-		Image img = img_icon.getImage().getScaledInstance(new_width,new_height,java.awt.Image.SCALE_SMOOTH);  
+		
+		Image img = img_icon.getImage().getScaledInstance(new_width,new_height,
+				java.awt.Image.SCALE_SMOOTH);  
 		img_icon = new ImageIcon(img);
+		
 		return img_icon;
 	}
 	
@@ -281,6 +296,7 @@ public class ViewPersonnelView extends JPanel {
 	public String getSelectedClient(){
 		String client = "";
 		client = (String)clientCBox.getSelectedItem();
+		
 		return client;
 	}
 	
@@ -300,11 +316,11 @@ public class ViewPersonnelView extends JPanel {
 			for(Object[] data:rowData){
 				tableModel.addRow(data);
 			}
-			setStatus("Right click personnel's number to delete personnel.");
 		}catch(Exception ex){
 			setStatus(ex.getMessage(),false);
 		}
 	}
+	
 	public void setStatus(String e, boolean b){
 		statusLbl.setText("Status: "+e);
 		if(b){
