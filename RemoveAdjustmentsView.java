@@ -90,7 +90,8 @@ public class RemoveAdjustmentsView extends JPanel {
 		removeBtn.setFocusPainted(false);
 		removeBtn.setRolloverIcon(new ImageIcon(getClass().getResource("/images/buttons/remove-r.png")));
 		removeBtn.setPressedIcon(new ImageIcon(getClass().getResource("/images/buttons/remove-p.png")));
-		removeBtn.setSize(new Dimension(removeBtn.getIcon().getIconWidth(), removeBtn.getIcon().getIconHeight()));
+		removeBtn.setSize(new Dimension(
+			removeBtn.getIcon().getIconWidth(), removeBtn.getIcon().getIconHeight()));
 		
 		addComponentsToPane();
 	}
@@ -190,9 +191,9 @@ public class RemoveAdjustmentsView extends JPanel {
 		g2d.fillRect(0, 0, this.getWidth(), 70);
 		g2d.setColor(Color.WHITE);
 		g2d.setFont(Utils.headerFont);
-        g2d.drawString("Remove Adjustments", 20, 35);
+        	g2d.drawString("Remove Adjustments", 20, 35);
 		g2d.setFont(Utils.descFont);
-        g2d.drawString("This section allows you to remove adjustments of a personnel.", 20, 55);
+        	g2d.drawString("This section allows you to remove adjustments of a personnel.", 20, 55);
 		
 		g2d.setColor(Utils.statusBGColor);
 		g2d.fillRect(0, this.getHeight()-Utils.HEIGHT, this.getWidth(), Utils.HEIGHT);
@@ -202,8 +203,7 @@ public class RemoveAdjustmentsView extends JPanel {
 	
 	public boolean askConfirmation(){
 		int confirmation = JOptionPane.showConfirmDialog(null, "Please confirm!", "Please confirm!",
-		
-		JOptionPane.YES_NO_OPTION);
+			JOptionPane.YES_NO_OPTION);
 		if(confirmation ==JOptionPane.YES_OPTION){
 			return true;
 		}
@@ -306,7 +306,8 @@ public class RemoveAdjustmentsView extends JPanel {
 		ImageIcon img_icon = new ImageIcon(this.getClass().getResource(img_url));
 		int new_width = (int) (img_icon.getIconWidth()*percent);
 		int new_height = (int) (img_icon.getIconHeight()*percent);
-		Image img = img_icon.getImage().getScaledInstance(new_width,new_height,java.awt.Image.SCALE_SMOOTH);  
+		Image img = img_icon.getImage().getScaledInstance(
+			new_width,new_height,java.awt.Image.SCALE_SMOOTH);  
 		img_icon = new ImageIcon(img);
 		return img_icon;
 	}
