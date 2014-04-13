@@ -40,6 +40,8 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 import javax.swing.table.*;
+
+
 public class ViewSummaryReportView extends JPanel {
 
 	private PayrollSystemModel model;
@@ -62,6 +64,7 @@ public class ViewSummaryReportView extends JPanel {
 	private JScrollPane summaryPane;
 	
     private JTableHeader header;
+	
 	
 	public ViewSummaryReportView(PayrollSystemModel model) {
 		this.model = model;
@@ -98,14 +101,11 @@ public class ViewSummaryReportView extends JPanel {
 		header.setAlignmentX(JLabel.CENTER_ALIGNMENT);
 		header.setReorderingAllowed(false);
 		
-		for(int i = 0; i < summaryTable.getColumnCount(); i++)
-		{
+		for(int i = 0; i < summaryTable.getColumnCount(); i++){
 			if(i == 0) {
 				summaryTable.getColumnModel().getColumn(i).setCellRenderer(new ColorfulCellRenderer(new Color(0xFAFAFA),Color.BLACK,Utils.colorfulSRColumn));
 				summaryTable.getColumnModel().getColumn(i).setPreferredWidth(40);
-			}
-			else if(Utils.colorfulSRColumn.contains(i))
-			{
+			}else if(Utils.colorfulSRColumn.contains(i)){
 				switch(i){
 				case 2:
 					summaryTable.getColumnModel().getColumn(i).setCellRenderer(new ColorfulCellRenderer(new Color(0xbee1fe),Color.BLACK,Utils.colorfulSRColumn));
@@ -119,7 +119,6 @@ public class ViewSummaryReportView extends JPanel {
 		}
 		
 		summaryTable.addMouseListener(new TableMouseListener());
-		
 		summaryPane = new JScrollPane(summaryTable, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		
 		modifyUI();
@@ -253,18 +252,15 @@ public class ViewSummaryReportView extends JPanel {
 					
 			if(colNum == 0) {
 				table.setColumnSelectionInterval(0, table.getColumnCount()-1);
-			}
-					
-			if(SwingUtilities.isRightMouseButton(e))
-			{
+			}					
+			if(SwingUtilities.isRightMouseButton(e)){
 				table.clearSelection();
 				table.changeSelection(rowNum, colNum, false, false);
 			
 				int rowIndex = table.getSelectedRow();
 				int colIndex = table.getSelectedColumn();
 						
-				if(rowIndex == rowNum && Utils.colorfulSRColumn.contains(colIndex) && e.isPopupTrigger() && e.getComponent() instanceof JTable)
-				{
+				if(rowIndex == rowNum && Utils.colorfulSRColumn.contains(colIndex) && e.isPopupTrigger() && e.getComponent() instanceof JTable){
 					JMenuItem menuItem = new JMenuItem("View Formula");
 					menuItem.setFont(Utils.descFont);
 					menuItem.setBackground(Color.WHITE);
@@ -341,6 +337,9 @@ public class ViewSummaryReportView extends JPanel {
 		ArrayList<String> dates = model.getDateListPayslips(getClient());
 		if(dates.size() == 0){
 			showError(1);
+		}else{
+			statusLbl.setText("Payslips found!");
+			statusLbl.setIcon(loadScaledImage("/images/notifs/right.png",.08f));
 		}
 		for(String t : dates){
 			timePeriodCBox.addItem(t);

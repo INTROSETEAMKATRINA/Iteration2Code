@@ -302,4 +302,12 @@ public class AddAdjustmentsView extends JPanel {
 		img_icon = new ImageIcon(img);
 		return img_icon;
 	}
+	
+public void setVisible(boolean b){
+		if(b){
+			statusLbl.setText("Status: ");
+			statusLbl.setIcon(loadScaledImage("/images/notifs/right.png",.08f));
+		}
+		super.setVisible(b);
+	}
 }

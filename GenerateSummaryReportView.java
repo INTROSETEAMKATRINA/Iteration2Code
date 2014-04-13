@@ -359,7 +359,11 @@ public class GenerateSummaryReportView extends JPanel {
 		ArrayList<String> dates = model.getDateListPayslips(getClient());
 		if(dates.size() == 0){
 			showError(1);
+		}else{
+			statusLbl.setText("Payslips found!");
+			statusLbl.setIcon(loadScaledImage("/images/notifs/right.png",.08f));
 		}
+		
 		timePeriodCBox.removeAllItems();
 		for(String t : dates)
 			timePeriodCBox.addItem(t);		

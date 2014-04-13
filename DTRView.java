@@ -3,7 +3,8 @@
  	 *  Inheritance: JPanel
 	 *  Attributes: 
 	 *  Methods: setStatus, getFileLocation, setFileLocation,
-				setAddDTRListener, setFileLocationListener
+				setAddDTRListener, setFileLocationListener,
+				setVisible
 	 *  Functionality: View
 	 *  Visibility: public
 	 *******************************************************/
@@ -189,6 +190,14 @@ public class DTRView extends JPanel {
 		Image img = img_icon.getImage().getScaledInstance(new_width,new_height,java.awt.Image.SCALE_SMOOTH);  
 		img_icon = new ImageIcon(img);
 		return img_icon;
+	}
+	
+	public void setVisible(boolean b){
+		if(b){
+			statusLbl.setText("Status: ");
+			statusLbl.setIcon(loadScaledImage("/images/notifs/right.png",.08f));
+		}
+		super.setVisible(b);
 	}
 	
 }
