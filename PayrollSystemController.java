@@ -9,13 +9,11 @@
 	 *  Visibility: public
 	 *******************************************************/
 
-import javax.swing.JOptionPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -24,15 +22,20 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
 
+import javax.swing.JOptionPane;
+
 import java.math.BigDecimal;
 
 public class PayrollSystemController{
 
 	private Connection con;
+	
 	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	private Date periodStartDate;
+	
 	private PayrollSystemModel model;
 	private PayrollSystemView view;
+	
 	private LogInView loginPanel;
 	private PersonnelView addPersonnel;
 	private DTRView addDTR;
@@ -58,7 +61,9 @@ public class PayrollSystemController{
 	private String lastBackUp = "lastBackUp.txt";
 	private String minimumWage = "minimumWage";
 	private int minWage;
-	public PayrollSystemController(PayrollSystemModel model, PayrollSystemView view, SettingsView sView, Connection con){
+	
+	public PayrollSystemController(PayrollSystemModel model,
+			PayrollSystemView view, SettingsView sView, Connection con){
 		this.model = model;
 		this.view = view;
 		this.con = con;
@@ -94,6 +99,7 @@ public class PayrollSystemController{
 		view.updateLastClientModified(getLast(lastClientModified));
 		view.updateLastGeneratedPayslips(getLast(lastGeneratedPayslips));
 		view.updateLastBackUp(getLast(lastBackUp));
+		view.setNextTimeListener(new nextTimePeriod());
 		
 		model.setPeriodStartDate(periodStartDate);
 		
@@ -113,7 +119,8 @@ public class PayrollSystemController{
 		viewPersonnel.setRemoveListener(new removePersonnelButtonListener());
 		
 		generatePayslips = view.getGenPayslips();
-		generatePayslips.setSelectFileListener(new fileSaverGeneratePayslipsButtonListener());
+		generatePayslips.setSelectFileListener(
+				new fileSaverGeneratePayslipsButtonListener());
 		generatePayslips.setGenerateListener(new generatePayslipsButtonListener());
 		
 		addAdjustments = view.getAdjPanel();
@@ -122,7 +129,8 @@ public class PayrollSystemController{
 		
 		removeAdjustments = view.getRemAdjPanel();
 		removeAdjustments.setClientListener(new clientListRemoveAdjustmentListener());
-		removeAdjustments.setPersonnelListener(new personnelListRemoveAdjustmentListener());
+		removeAdjustments.setPersonnelListener(
+				new personnelListRemoveAdjustmentListener());
 		removeAdjustments.setRemoveListener(new removeAdjustmentButtonListener());
 		
 		changePassword = sView.getChangePasswordPanel();
@@ -136,13 +144,16 @@ public class PayrollSystemController{
 		modifyTaxPanel.setApplyListener(new modifyTax());
 		modifyTaxPanel.setBracketListener(new updateTax());
 		
-		viewSummaryReport = view.getViewSummPanel(); /////////
-		viewSummaryReport.setPeriodStartDateListener(new addPeriodStartDateListener());
+		viewSummaryReport = view.getViewSummPanel();
+		viewSummaryReport.setPeriodStartDateListener(
+				new addPeriodStartDateListener());
 		viewSummaryReport.setViewListener(new viewReportListener());
 		
 		generateSummaryReport = view.getGenerateSummaryPanel();
-		generateSummaryReport.setFileDirectoryListener(new saveFileGenerateSummaryReport());
-		generateSummaryReport.setGenerateSummaryReportListener(new generateSummaryReportListner());
+		generateSummaryReport.setFileDirectoryListener(
+				new saveFileGenerateSummaryReport());
+		generateSummaryReport.setGenerateSummaryReportListener(
+				new generateSummaryReportListner());
 		generateSummaryReport.setClientListener(new generateSumRepDateListener());
 		
         backUpData = view.getbackUpPanel();
@@ -150,31 +161,24 @@ public class PayrollSystemController{
 		backUpData.setGenerateListener(new backUpDataButtonListener());
 
         restoreBackUp = sView.getRestorePanel();
-        restoreBackUp.setSelectFileListener(new fileChooserRestoreBackUpButtonListener());
+        restoreBackUp.setSelectFileListener(
+        		new fileChooserRestoreBackUpButtonListener());
         restoreBackUp.setRestoreListener(new RestoreBackUpButtonListener());
                 
 		changeMinWage = sView.getMinWagePanel();		
 		changeMinWage.setText(minWage + "");
 		changeMinWage.setChangeListener(new changeMinWageListener());
-		
-		view.setNextTimeListener(new nextTimePeriod());
-		
-		/*
-		view.setAddAdjustmentListener(new addAdjustmentListener());
-		view.setRemoveAdjustmentListener(new removeAdjustmentListener());
-		view.setGeneratePayslipsListener(new generatePayslipsListener());
-		view.setChangePasswordListener(new changePasswordListener());
-		*/
 	}
 	
 	private void printOnFile(String dir, String s){
 		PrintWriter writer = null;
-			try{
-				writer = new PrintWriter(dir);
-			}catch(Exception ex){
-				System.out.println(ex);
-				return ;
-			}
+		
+		try{
+			writer = new PrintWriter(dir);
+		}catch(Exception ex){
+			System.out.println(ex);
+			return ;
+		}
 		writer.println(s);
 		writer.close();
 	}
@@ -195,24 +199,26 @@ public class PayrollSystemController{
 	}
 	
 	//Login Button Listener
+	
 	class loginListener implements ActionListener{
 		public void actionPerformed(ActionEvent arg0) {
 			if(!model.checkPassword(loginPanel.getPassword())){
 				loginPanel.fadeInBalloon();
-			}
-			else{
+			}else{
 				loginPanel.removeBalloon();
 				loginPanel.setVisible(false);
 				PayrollSystemView.showBlackPane(false);
 			}
 		}
 	}
+	
 	//Main Menu Buttons Listeners
 
 	class addPersonnelListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			view.setStatusPersonnel("Importing...");
 			File f = new File(addPersonnel.getFileLocation());
+			
 			if(f != null && f.isFile()){
 				try{
 					model.addPersonnel(f, periodStartDate);
@@ -230,6 +236,7 @@ public class PayrollSystemController{
 	class personnelFileLocationListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			File f = view.fileChooser();
+			
 			if(f != null && f.isFile()){
 				addPersonnel.setFileLocation(f.getPath());
 			}else{
@@ -239,10 +246,13 @@ public class PayrollSystemController{
 	}
 	
 	//Add DTR button in main menu
+	
 	class addDTRListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
-			view.setStatusDTR("Importing...");
 			File f = new File(addDTR.getFileLocation());
+			
+			view.setStatusDTR("Importing...");
+			
 			if(f.isFile()){
 				try{
 					model.addDTR(f, periodStartDate);
@@ -255,10 +265,12 @@ public class PayrollSystemController{
 			}
 		}
 	}
+	
 	class dtrFileLocationListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			File f = view.fileChooser();
-			if(f!=null){
+			
+			if(f != null){
 				addDTR.setFileLocation(f.getPath());
 			}else{
 				System.out.println("No file chosen");
@@ -268,10 +280,11 @@ public class PayrollSystemController{
 	
 	//listener in view personnel
 	//client combo box listener
+	
 	class clientListViewPersonnelListener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
 			viewPersonnel.updateTable();
-			viewPersonnel.setStatus("viewing personnel data.", true);
+			viewPersonnel.setStatus("You are now viewing personnel data.", true);
 		}
 	}
 	
@@ -284,14 +297,17 @@ public class PayrollSystemController{
 			}catch(Exception ex){}
 		}
 	}
+	
 	//Listeners in Adjustments view
 	//Add adjustments button in add adjustments view
+	
 	class addAdjustmentButtonListener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
 			String type = addAdjustments.getTypeAdjustment();
 			BigDecimal adjustment = addAdjustments.getAdjustment();
 			String tin = addAdjustments.getTIN();
-			if(type.length()!=0 && adjustment.signum() !=0 && tin.length() != 0){
+			
+			if(type.length() !=0 && adjustment.signum() != 0 && tin.length() != 0){
 				if(addAdjustments.askConfirmation()){
 					model.addAdjustment(type, adjustment, tin, periodStartDate);
 					addAdjustments.showSuccess();
@@ -303,6 +319,7 @@ public class PayrollSystemController{
 	}
 
 	//client list combo box listener in add adjustments view
+	
 	class clientListAddAdjustmentListener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
 			addAdjustments.updatePersonnelList();
@@ -311,23 +328,27 @@ public class PayrollSystemController{
 	
 	//listeners in remove adjustments view
 	//remove adjustments in remove adjustments view
+	
 	class removeAdjustmentButtonListener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
-			if(removeAdjustments.getNumAdjustments()>0){
+			if(removeAdjustments.getNumAdjustments() > 0){
 				String type = removeAdjustments.getTypeAdjustment();
 				BigDecimal adjustment = removeAdjustments.getAdjustment();
 				String tin = removeAdjustments.getTIN();
+				
 				if(removeAdjustments.askConfirmation()){
 					model.removeAdjustment(type, adjustment, tin, periodStartDate);
 					removeAdjustments.updateAdjustmentsList();
 					removeAdjustments.showSuccess();
 				}
-			}else
+			}else{
 				removeAdjustments.showNoAdjustments();
+			}
 		}
 	}
 
 	//client list combo box in remove adjustments view
+	
 	class clientListRemoveAdjustmentListener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
 			removeAdjustments.updatePersonnelList();
@@ -335,6 +356,7 @@ public class PayrollSystemController{
 	}
 
 	//personnel list combo box in remove adjustments view
+	
 	class personnelListRemoveAdjustmentListener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
 			removeAdjustments.updateAdjustmentsList();
@@ -343,19 +365,23 @@ public class PayrollSystemController{
 	
 	//listeners in change password view
 	//change password button in change password view
+	
 	class changePasswordButtonListener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
 			try{
 				if(changePassword.askConfirmation()){
 					Statement st = con.createStatement();
 					ResultSet rs = st.executeQuery("select password from password");
-					rs.next();
 					String oldPass = changePassword.getOldPass();
-					if(oldPass.equals(rs.getString("password"))){//GetPasswordFromDatabase
+					
+					rs.next();
+					
+					if(oldPass.equals(rs.getString("password"))){ //GetPasswordFromDatabase
 						String newPass = changePassword.getNewPass();
 						String confirmNewPass = changePassword.getConfirmNewPass();
+						
 						if(newPass.equals(confirmNewPass)){
-							if(model.changePassword(oldPass, newPass)==1){
+							if(model.changePassword(oldPass, newPass) == 1){
 								changePassword.showSuccess();
 								changePassword.clear();
 							}else{
@@ -376,20 +402,23 @@ public class PayrollSystemController{
 	
 	//listeners in generate payslips view
 	//generate payslips in generate payslips view
+	
 	class generatePayslipsButtonListener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
 			File f = generatePayslips.getFileDirectory();
 			String client = generatePayslips.getClient();
 			String psd = sdf.format(periodStartDate);
+			
 			generatePayslips.setStatus("Generating...");
 			if(model.checkPeriodForDTR(client,psd)){
-				if(f!=null){
+				if(f != null){
 					boolean go = true;
+					
 					if(f.exists()){
 						go = generatePayslips.askConfirmation();
 					}
 					if(go){
-						if(model.generatePayslips(f, client, psd, minWage)==0){
+						if(model.generatePayslips(f, client, psd, minWage) == 0){
 							generatePayslips.setStatus("Success!", true);
 							printOnFile(lastGeneratedPayslips, getDateToday() + " (" + client + ")");
 							view.updateLastGeneratedPayslips(getLast(lastGeneratedPayslips));
@@ -408,6 +437,7 @@ public class PayrollSystemController{
 	}
 
 	//choose where to save listener in generate payslips view
+	
 	class fileSaverGeneratePayslipsButtonListener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
 			generatePayslips.setFileDirectory(generatePayslips.fileSaver());
@@ -415,11 +445,12 @@ public class PayrollSystemController{
 	}
 	
 	//next time period listener
+	
 	class nextTimePeriod implements ActionListener{
 		public void actionPerformed(ActionEvent e){
 			if(view.askConfirmation()){
 				periodStartDate = model.nextTimePeriod();
-				System.out.println(sdf.format(periodStartDate));
+				
 				printOnFile(directory, sdf.format(periodStartDate));
 				view.updateTimePeriod(sdf.format(periodStartDate));
 			}
@@ -437,6 +468,7 @@ public class PayrollSystemController{
 			try{
 				BigDecimal[] variables = modifyClientsVar.getVariables();
 				String client = modifyClientsVar.getClient();
+				
 				model.modifyVariables(variables, client);
 				modifyClientsVar.showSuccess();
 				printOnFile(lastClientModified, getDateToday() + " (" + client + ")");
@@ -459,6 +491,7 @@ public class PayrollSystemController{
 			try{
 				BigDecimal[] table = modifyTaxPanel.getTable();
 				int bracket = modifyTaxPanel.getBracket();
+				
 				model.updateTaxTable(bracket, table);
 				modifyTaxPanel.showSuccess();
 			}catch(Exception ex){
@@ -477,26 +510,28 @@ public class PayrollSystemController{
     class backUpDataButtonListener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
 			File file = backUpData.getFileDirectory();
+			
+			if(file != null){
+				boolean go = true;
 				
-                            if(file!=null){
-                                boolean go = true;
-                                if(file.exists()){
-                                        go = backUpData.askConfirmation();
-                                }
-                                if(go){
-                                        try{ 
-                                            model.backupData(file);
-                                            backUpData.setStatus("Success!", true);
-                                            printOnFile(lastBackUp, getDateToday());
-                                            view.updateLastBackUp(getLast(lastBackUp));
-                                            backUpData.setFileDirectory(null);
-                                        }catch(Exception ex){
-                                                backUpData.setStatus(ex.getMessage(), false);
-                                        }
-                                }
-                            }else{
-                                    backUpData.setStatus("No file chosen!", false);
-                            }
+                if(file.exists()){
+                	go = backUpData.askConfirmation();
+                }
+                
+	            if(go){
+	            	try{ 
+		                model.backupData(file);
+		                backUpData.setStatus("Success!", true);
+		                printOnFile(lastBackUp, getDateToday());
+		                view.updateLastBackUp(getLast(lastBackUp));
+		                backUpData.setFileDirectory(null);
+	                }catch(Exception ex){
+	                	backUpData.setStatus(ex.getMessage(), false);
+	                }
+	          	}
+			}else{
+            	backUpData.setStatus("No file chosen!", false);
+           	}
 		}
 	}
     
@@ -508,37 +543,44 @@ public class PayrollSystemController{
     
     class RestoreBackUpButtonListener implements ActionListener{
         public void actionPerformed(ActionEvent e){
-                File file = restoreBackUp.getFileDirectory();
-                if(file!=null){
-                    boolean go = true;
-                    if(file.exists()){
-						go = restoreBackUp.askConfirmation();
-                    }
-					if(go){
-						try{
-							model.restoreFromBackUp(file);
-							restoreBackUp.setStatus("Success!", true);
-							restoreBackUp.setFileDirectory(null);
-						}catch(Exception ex){
-							restoreBackUp.setStatus(ex.getMessage(), false);
-							System.out.println(ex.getMessage());
-						}
-                    }
-                }else{
-					restoreBackUp.setStatus("No file chosen!", false);
-				}
+        	File file = restoreBackUp.getFileDirectory();
+                
+            if(file != null){
+            	boolean go = true;
+                    
+                if(file.exists()){
+                	go = restoreBackUp.askConfirmation();
+                }
+				
+                if(go){
+					try{
+						model.restoreFromBackUp(file);
+						restoreBackUp.setStatus("Success!", true);
+						restoreBackUp.setFileDirectory(null);
+					}catch(Exception ex){
+						restoreBackUp.setStatus(ex.getMessage(), false);
+						System.out.println(ex.getMessage());
+					}
+                }
+            }else{
+				restoreBackUp.setStatus("No file chosen!", false);
+			}
         }
     }
 
 	class exitListener extends WindowAdapter{
 		public void windowClosing(WindowEvent e) {
-			int confirm = JOptionPane.showOptionDialog(null, "Are You Sure to Close Application?", "Exit Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
-			if (confirm == 0) {
+			int confirm = JOptionPane.showOptionDialog(null,
+					"Are You Sure to Close Application?", "Exit Confirmation", 
+					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+			
+			if(confirm == 0) {
 				printOnFile(lastChecked, getDateToday());
 				System.exit(0);
 			}
         }
     }
+	
     class addPeriodStartDateListener implements ActionListener{ //This is going to be updated
 		public void actionPerformed(ActionEvent e){
 			viewSummaryReport.updateDateList();
@@ -553,11 +595,13 @@ public class PayrollSystemController{
 	
 	class viewReportListener implements ActionListener{ //This is going to be updated
 		public void actionPerformed(ActionEvent e){
-			if(viewSummaryReport.getClient() == null || viewSummaryReport.getPeriodStartDate() == null){
+			if(viewSummaryReport.getClient() == null || 
+					viewSummaryReport.getPeriodStartDate() == null){
 				viewSummaryReport.showError(0);
 			}else{
 				String client = viewSummaryReport.getClient();
 				String psd = viewSummaryReport.getPeriodStartDate();
+				
 				if(model.checkPeriodForPayslips(client, psd)){
 					viewSummaryReport.updateTableColumn();
 					viewSummaryReport.updateTable();
@@ -567,36 +611,37 @@ public class PayrollSystemController{
 			}
 		}
 	}
+	
 	class saveFileGenerateSummaryReport implements ActionListener{
 		public void actionPerformed(ActionEvent e){
 			generateSummaryReport.setFileDirectory(generateSummaryReport.fileSaver());
 		}
 	}
+	
 	class generateSummaryReportListner implements ActionListener{
 		public void actionPerformed(ActionEvent e){	
-		String client,date,report;
-		File file;
-		int check;
-		client = generateSummaryReport.getClient();
-		date = generateSummaryReport.getPeriodStartDate();
-		report = generateSummaryReport.getReport();
-		file = generateSummaryReport.getDirectory();
-		if(client == null || date == null || file == null){
-			generateSummaryReport.showError(0);
-		}
-		else{
-			if(file != null){
-				boolean confirm = true;
-				if(file.exists()){
-					confirm = generateSummaryReport.askConfirmation();
-				}
-				if(confirm){
-					generateSummaryReport.showSuccessful(model.generateSummaryReport(file, date, client, report));
-					printOnFile(lastGeneratedReport, getDateToday() + " (" + client + ")");
-					view.updateLastGeneratedReport(getLast(lastGeneratedReport));
-				}
-				}else{
-				generatePayslips.setStatus("No file chosen!");
+			String client,date,report;
+			File file;
+	
+			client = generateSummaryReport.getClient();
+			date = generateSummaryReport.getPeriodStartDate();
+			report = generateSummaryReport.getReport();
+			file = generateSummaryReport.getDirectory();
+			
+			if(client == null || date == null || file == null){
+				generateSummaryReport.showError(0);
+			}else{
+				if(file != null){
+					boolean confirm = true;
+					if(file.exists()){
+						confirm = generateSummaryReport.askConfirmation();
+					}
+					if(confirm){
+						generateSummaryReport.showSuccessful(model.generateSummaryReport(file,
+								date, client, report));
+						printOnFile(lastGeneratedReport, getDateToday() + " (" + client + ")");
+						view.updateLastGeneratedReport(getLast(lastGeneratedReport));
+					}
 				}
 			}
 		}
@@ -605,6 +650,7 @@ public class PayrollSystemController{
 	class changeMinWageListener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
 			String s = changeMinWage.getMinWageTxtFld();
+			
 			try{
 				minWage = Integer.parseInt(s);
 				printOnFile(minimumWage, s);
@@ -613,7 +659,6 @@ public class PayrollSystemController{
 			}catch(Exception ex){
 				changeMinWage.showError("Integer only.");
 			}
-			
 		}
 	}
 }
