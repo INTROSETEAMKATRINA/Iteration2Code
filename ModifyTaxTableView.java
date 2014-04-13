@@ -367,7 +367,7 @@ public class ModifyTaxTableView extends JPanel {
 	}
 	
 	public void showSuccess(){
-		statusLbl.setText("Status: Variables succesfully updated!");
+		statusLbl.setText("Status: Tax table succesfully updated!");
 		statusLbl.setIcon(loadScaledImage("/images/notifs/right.png",.08f));
 	}
 	
@@ -383,6 +383,14 @@ public class ModifyTaxTableView extends JPanel {
 		for(String t : brackets){
 			bracketCBox.addItem(t);
 		}
+	}
+	
+	public void setVisible(boolean b){
+		if(b){
+			statusLbl.setText("");
+			statusLbl.setIcon(null);
+		}
+		super.setVisible(b);
 	}
 	
 }

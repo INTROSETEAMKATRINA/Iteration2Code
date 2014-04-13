@@ -40,6 +40,8 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 import javax.swing.table.*;
+
+
 public class ViewSummaryReportView extends JPanel {
 
 	private PayrollSystemModel model;
@@ -63,6 +65,7 @@ public class ViewSummaryReportView extends JPanel {
 	
     private JTableHeader header;
 	
+	
 	public ViewSummaryReportView(PayrollSystemModel model) {
 		this.model = model;
 		
@@ -85,27 +88,30 @@ public class ViewSummaryReportView extends JPanel {
 		
 		updateViewList();
 		
-		summaryTable = new JTable(30,12);
+		summaryModel = new DefaultTableModel(32, 12) {
+		    public boolean isCellEditable(int rowIndex, int columnIndex) {
+	            return false;
+	        }
+		};
+		
+		summaryTable = new JTable(summaryModel);
 		summaryTable.setRowHeight(32);
 		summaryTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		summaryTable.setColumnSelectionAllowed(true);
 		summaryTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-		summaryModel = (DefaultTableModel) summaryTable.getModel();
+
 		
 		header = summaryTable.getTableHeader();
 		header.setBackground(new Color(0xFAFAFA));
-		header.setPreferredSize(new Dimension(header.getPreferredSize().width, 25));
+		header.setPreferredSize(new Dimension(header.getPreferredSize().width * 999, 25));
 		header.setAlignmentX(JLabel.CENTER_ALIGNMENT);
 		header.setReorderingAllowed(false);
 		
-		for(int i = 0; i < summaryTable.getColumnCount(); i++)
-		{
+		for(int i = 0; i < summaryTable.getColumnCount(); i++){
 			if(i == 0) {
 				summaryTable.getColumnModel().getColumn(i).setCellRenderer(new ColorfulCellRenderer(new Color(0xFAFAFA),Color.BLACK,Utils.colorfulSRColumn));
 				summaryTable.getColumnModel().getColumn(i).setPreferredWidth(40);
-			}
-			else if(Utils.colorfulSRColumn.contains(i))
-			{
+			}else if(Utils.colorfulSRColumn.contains(i)){
 				switch(i){
 				case 2:
 					summaryTable.getColumnModel().getColumn(i).setCellRenderer(new ColorfulCellRenderer(new Color(0xbee1fe),Color.BLACK,Utils.colorfulSRColumn));
@@ -119,7 +125,6 @@ public class ViewSummaryReportView extends JPanel {
 		}
 		
 		summaryTable.addMouseListener(new TableMouseListener());
-		
 		summaryPane = new JScrollPane(summaryTable, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		
 		modifyUI();
@@ -253,18 +258,15 @@ public class ViewSummaryReportView extends JPanel {
 					
 			if(colNum == 0) {
 				table.setColumnSelectionInterval(0, table.getColumnCount()-1);
-			}
-					
-			if(SwingUtilities.isRightMouseButton(e))
-			{
+			}					
+			if(SwingUtilities.isRightMouseButton(e)){
 				table.clearSelection();
 				table.changeSelection(rowNum, colNum, false, false);
 			
 				int rowIndex = table.getSelectedRow();
 				int colIndex = table.getSelectedColumn();
 						
-				if(rowIndex == rowNum && Utils.colorfulSRColumn.contains(colIndex) && e.isPopupTrigger() && e.getComponent() instanceof JTable)
-				{
+				if(rowIndex == rowNum && Utils.colorfulSRColumn.contains(colIndex) && e.isPopupTrigger() && e.getComponent() instanceof JTable){
 					JMenuItem menuItem = new JMenuItem("View Formula");
 					menuItem.setFont(Utils.descFont);
 					menuItem.setBackground(Color.WHITE);
@@ -292,10 +294,9 @@ public class ViewSummaryReportView extends JPanel {
 	public void updateTableColumn(){
 		ArrayList<String> column = model.getColumnName(getReport());
 		summaryModel.setColumnCount(0);
-		for(int i = 0; i < column.size();i++){
-			summaryModel.addColumn(column.get(i));
+		for(String s : column){
+			summaryModel.addColumn(s);
 		}
-		summaryModel.setColumnCount(column.size());
 	}
 	
 	public String getClient(){ 
@@ -341,6 +342,9 @@ public class ViewSummaryReportView extends JPanel {
 		ArrayList<String> dates = model.getDateListPayslips(getClient());
 		if(dates.size() == 0){
 			showError(1);
+		}else{
+			statusLbl.setText("Payslips found!");
+			statusLbl.setIcon(loadScaledImage("/images/notifs/right.png",.08f));
 		}
 		for(String t : dates){
 			timePeriodCBox.addItem(t);

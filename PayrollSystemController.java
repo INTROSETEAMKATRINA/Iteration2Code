@@ -291,9 +291,11 @@ public class PayrollSystemController{
 	class removePersonnelButtonListener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
 			try{
-				model.removePersonnel(viewPersonnel.getSelectedClient());
-				viewPersonnel.updateClientList();
-				viewPersonnel.updateTable();
+				if(viewPersonnel.askConfirmation()){
+					model.removePersonnel(viewPersonnel.getSelectedClient());
+					viewPersonnel.updateClientList();
+					viewPersonnel.updateTable();
+				}
 			}catch(Exception ex){}
 		}
 	}

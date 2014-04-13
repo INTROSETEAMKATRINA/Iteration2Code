@@ -223,4 +223,12 @@ public class BackUpView extends JPanel {
 		}
     }
 
+	public void setVisible(boolean b){
+		if(b){
+			statusLbl.setText("Do you wanna back up?");
+			statusLbl.setIcon(loadScaledImage("/images/notifs/right.png",.08f));
+		}
+		super.setVisible(b);
+	}
+	
 }
