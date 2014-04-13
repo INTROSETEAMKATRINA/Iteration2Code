@@ -1338,7 +1338,7 @@ public class PayrollSystemModel {
 				String name,position;
 				String tin;
 				int j = 1;
-				int TRDW = 0, TRegularPay = 0, TROT = 0, TROTPay = 0, TRNSD = 0, TRNSDPay = 0,
+				float TRDW = 0, TRegularPay = 0, TROT = 0, TROTPay = 0, TRNSD = 0, TRNSDPay = 0,
 						TLH = 0, TLHPay = 0, TLHOT = 0, TLHOTPay = 0, TLHNSD = 0, TLHNSDPay = 0,
 						TSH = 0, TSHPay = 0, TSHOT = 0, TSHOTPay = 0, TSHNSD = 0, TSHNSDPay = 0,
 						TLHRD = 0, TSHRD = 0, TAdjustments = 0,
@@ -1355,7 +1355,7 @@ public class PayrollSystemModel {
 					rs2 = st.executeQuery(sql);
 						
 					position = "";
-					int RDW = 0,DailyRate = 0, TranspoAllow = 0, RegularPay = 0, ROT = 0, 
+					float RDW = 0,DailyRate = 0, TranspoAllow = 0, RegularPay = 0, ROT = 0, 
 							ROTPay = 0, RNSD = 0, RNSDPay = 0, LH = 0, LHPay = 0, LHOT = 0,
 							LHOTPay = 0, LHNSD = 0, LHNSDPay = 0, SH = 0, SHPay = 0, SHOT = 0,
 							SHOTPay = 0, SHNSD = 0, SHNSDPay = 0, LHRD = 0, SHRD = 0,
