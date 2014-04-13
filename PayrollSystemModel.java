@@ -1341,7 +1341,7 @@ public class PayrollSystemModel {
 				int TRDW = 0, TRegularPay = 0, TROT = 0, TROTPay = 0, TRNSD = 0, TRNSDPay = 0,
 						TLH = 0, TLHPay = 0, TLHOT = 0, TLHOTPay = 0, TLHNSD = 0, TLHNSDPay = 0,
 						TSH = 0, TSHPay = 0, TSHOT = 0, TSHOTPay = 0, TSHNSD = 0, TSHNSDPay = 0,
-						TLHRD = 0, TLHRDPay = 0, TSHRD = 0, TSHRDPay = 0, TAdjustments = 0,
+						TLHRD = 0, TSHRD = 0, TAdjustments = 0,
 						TGrossPay = 0, TSSS = 0, TPHIC = 0, THDMF = 0, TSSSLoan = 0,
 						TPayrollAdvance = 0, THouseRental = 0, TUniformAndOthers = 0,
 						TSavings = 0, TNetPay = 0;
@@ -1358,8 +1358,8 @@ public class PayrollSystemModel {
 					int RDW = 0,DailyRate = 0, TranspoAllow = 0, RegularPay = 0, ROT = 0, 
 							ROTPay = 0, RNSD = 0, RNSDPay = 0, LH = 0, LHPay = 0, LHOT = 0,
 							LHOTPay = 0, LHNSD = 0, LHNSDPay = 0, SH = 0, SHPay = 0, SHOT = 0,
-							SHOTPay = 0, SHNSD = 0, SHNSDPay = 0, LHRD = 0, LHRDPay = 0, SHRD = 0,
-							SHRDPay = 0, Adjustments = 0, GrossPay = 0, SSS = 0,PHIC = 0, HDMF = 0,
+							SHOTPay = 0, SHNSD = 0, SHNSDPay = 0, LHRD = 0, SHRD = 0,
+							Adjustments = 0, GrossPay = 0, SSS = 0,PHIC = 0, HDMF = 0,
 							SSSLoan = 0, PayrollAdvance = 0, HouseRental = 0, UniformAndOthers = 0,
 							Savings = 0, NetPay = 0;
 					if(rs2.next()){
@@ -1383,8 +1383,7 @@ public class PayrollSystemModel {
 						UniformAndOthers += rs2.getInt("UniformAndOthers"); 
 						Savings += rs2.getInt("Savings"); NetPay += rs2.getInt("NetPay");
 						LHRD += rs2.getInt("LHRD");
-						LHRDPay += rs2.getInt("LHRDPay"); SHRD += rs2.getInt("SHRD");
-						SHRDPay += rs2.getInt("SHRDPay");
+						SHRD += rs2.getInt("SHRD");
 						TRDW += rs2.getInt("RDW"); TranspoAllow += rs2.getInt("TranspoAllow");
 						TRegularPay += rs2.getInt("RegularPay"); TROT += rs2.getInt("ROT"); 
 						TROTPay += rs2.getInt("ROTPay"); TRNSD += rs2.getInt("RNSD");
@@ -1404,8 +1403,7 @@ public class PayrollSystemModel {
 						TUniformAndOthers += rs2.getInt("UniformAndOthers"); 
 						TSavings += rs2.getInt("Savings"); TNetPay += rs2.getInt("NetPay");
 						TLHRD += rs2.getInt("LHRD");
-						TLHRDPay += rs2.getInt("LHRDPay"); TSHRD += rs2.getInt("SHRD"); 
-						TSHRDPay += rs2.getInt("SHRDPay");
+						TSHRD += rs2.getInt("SHRD"); 
 		    	 	}
 						
 					if(report.equals(getSummaryReport(0))){
