@@ -202,7 +202,7 @@ public class RemoveAdjustmentsView extends JPanel {
 	}
 	
 	public boolean askConfirmation(){
-		int confirmation = JOptionPane.showConfirmDialog(null, "Please confirm!", "Please confirm!",
+		int confirmation = JOptionPane.showConfirmDialog(null, "Are you sure you want to remove adjustments?!", "Remove adjustments!",
 			JOptionPane.YES_NO_OPTION);
 		if(confirmation ==JOptionPane.YES_OPTION){
 			return true;

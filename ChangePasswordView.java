@@ -180,7 +180,7 @@ public class ChangePasswordView extends JPanel {
 	}
 	
 	public boolean askConfirmation(){ 
-		int confirmation = JOptionPane.showConfirmDialog(null, "Please confirm!", "Please confirm!",
+		int confirmation = JOptionPane.showConfirmDialog(null, "Are you sure you want to change password!", "Change Password!",
 		
 		JOptionPane.YES_NO_OPTION);
 		if(confirmation ==JOptionPane.YES_OPTION){
